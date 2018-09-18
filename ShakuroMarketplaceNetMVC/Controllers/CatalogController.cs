@@ -109,6 +109,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                             Characteristics = p.Characteristics
                         }).First();
                     ViewBag.GoodData = GoodData;
+
+                    ViewBag.Rev = db.Goods.First().Reviews.First().Mark;
                     return View();
                 }
                 else

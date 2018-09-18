@@ -271,6 +271,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\ReviewGood.cs" />
     <Compile Include="Models\Subcategory.cs" />
     <Compile Include="Models\SubcategoryGoodsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -281,10 +282,6 @@
     <Content Include="App_Data\aspnet-ShakuroMarketplaceNetMVC-20180918104423_log.ldf">
       <DependentUpon>aspnet-ShakuroMarketplaceNetMVC-20180918104423.mdf</DependentUpon>
     </Content>
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\Categories\cell-phones.png" />
     <Content Include="Content\Images\Categories\desktop-computers.png" />
     <Content Include="Content\Images\Categories\games.png" />
@@ -738,7 +735,6 @@
     <Content Include="Content\Images\Subcategories\xbox.png" />
     <Content Include="Content\owl.carousel.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\Roboto-BlackItalic\Roboto-BlackItalic.svg" />
     <Content Include="fonts\Roboto-Black\Roboto-Black.svg" />
     <Content Include="fonts\Roboto-BoldItalic\Roboto-BoldItalic.svg" />
@@ -752,8 +748,6 @@
     <Content Include="fonts\Roboto-Thin\Roboto-Thin.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -907,14 +901,6 @@
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\Sony-Xperia-XA1-White\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap.min.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
-    <Content Include="Content\bootstrap-theme.min.css.map" />
-    <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
