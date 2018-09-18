@@ -1,0 +1,53 @@
+﻿@model WebApplication5.Models.SubcategoryGoodsViewModel
+
+@{
+    ViewBag.Title = "Subcategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="category-goods-conteiner">
+    <div class="category-goods">
+        <div class="category-goods-list">
+            @foreach (var item in ViewBag.GoodsList)
+            {
+                <div class="category-goods-list-item">
+                    <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@item.GoodUrl" class="category-list-item-link">
+                        <div class="category-goods-list-item-photo">
+                            @if (item.NewGood)
+                            {
+                                <div class="new-good"></div>
+                            }
+                            else if (item.SalesGood)
+                            {
+                                <div class="sales-good"></div>
+                            }
+                            else if (item.RecommendedGood)
+                            {
+                                <div class="recommended-good"></div>
+                            }
+                            <div class="category-goods-list-item-special-buttons">
+                                <div class="category-goods-list-item-special-buttons-favorite"></div>
+                                <div class="category-goods-list-item-special-buttons-compare"></div>
+                            </div>
+                            <img src="/Content/Images/Goods/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="120">
+                        </div>
+                        <div class="category-goods-list-item-name"><p>@item.GoodBrand @item.GoodName, @item.GoodColor</p></div>
+                        <div class="category-goods-list-item-rating-and-reviews">
+                            <div class="stars-container">
+                                <div class="stars-container-green-block" style='width: @Convert.ToInt32(20*item.GoodRating)%;'></div>
+                                <div class="stars-container-gray-block" style="width: calc(100% - @Convert.ToInt32(20*item.GoodRating)%); left: @Convert.ToInt32(20*item.GoodRating)%;"></div>
+                            </div>
+                            <div class="category-goods-list-item-review">
+                                <div class="category-goods-list-item-reviews-number">@item.ReviewsNumber</div>
+                                <!-- <div class="category-goods-list-item-reviews-icon"></div> -->
+                            </div>
+                        </div>
+                        <div class="category-goods-list-item-price">
+                            $ @item.GoodPrice
+                        </div>
+                    </a>
+                </div>                
+             }
+        </div>
+    </div>
+</div>

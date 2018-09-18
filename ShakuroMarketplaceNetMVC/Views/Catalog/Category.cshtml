@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Good";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="category-conteiner">
+    <div class="category">
+        <div class="category-list">
+            @foreach (var item in ViewBag.SubcategoriesList)
+            {
+                <div class="category-list-item">
+                    <a href="/catalog/@ViewBag.CategoryUrl/@item.SubcategoryUrl/" class="category-list-item-link">
+                        <div class="category-list-item-photo">
+                            <img src="@item.SubcategoryImageUrl" width="255" height="120">
+                        </div>
+                        <div class="category-list-item-name">@item.SubcategoryName</div>
+                    </a>
+                </div>
+            }           
+        </div>
+    </div>
+</div>

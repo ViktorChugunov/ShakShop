@@ -1,0 +1,180 @@
+﻿@model WebApplication5.Models.GoodViewModel
+
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="good-header">
+    <div class="good-menu">
+        <div class="good-menu-additional-block"></div>
+        <div class="good-menu-selected-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl" class="good-menu-item-link">Description</a>
+        </div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Reviews" class="good-menu-item-link">Reviews</a>
+        </div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Overview" class="good-menu-item-link">Overview</a>
+        </div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Discussions" class="good-menu-item-link">Discussions</a>
+        </div>
+        <div class="good-menu-additional-block"></div>
+    </div>
+</div>
+
+<div class="good-container">
+    <div class="good">
+        <div class="good-images">
+            <div class="small-good-images">
+                @foreach (var url in @ViewBag.GoodData.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <div class="small-good-image-container">
+                        <img src="/Content/Images/Goods/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodData.GoodUrl/@url" height="60">
+                    </div>
+                }
+            </div>
+            <div class="big-good-image-container">
+                <img src="/Content/Images/Goods/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodData.GoodUrl/@ViewBag.GoodData.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="365">
+            </div>
+        </div>
+        <div class="good-characteristics">
+            <p class="good-name">@ViewBag.GoodData.GoodName</p>
+            <div class="select-good-color-container">
+                <select class="select-color" name="color[]">
+                    <option disabled selected>Color</option>
+                    <option value="Audio">Audio</option>
+                    <option value="TV">TV</option>
+                    <option value="Smartphone">Smartphone</option>
+                    <option value="PC">PC</option>
+                </select>
+            </div>
+            <p class="good-description">Product Description</p>
+            <ul class="good-description-list">
+                @foreach (var characteristic in ViewBag.GoodData.Characteristics.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
+                {
+                    <li class="good-description-list-item">@characteristic</li>
+                }
+            </ul>
+        </div>
+        <div class="purchase-options">
+            <div class="purchase-options-price">@ViewBag.GoodData.GoodPrice USD</div>
+            <div class="purchase-options-color">
+                <div class="purchase-options-color-text">Color:</div>
+                <div class="purchase-options-color-image" style="background-color: @ViewBag.GoodData.GoodColor;"></div>
+            </div>
+            <div class="purchase-options-rating">
+                <div class="purchase-options-rating-text">Rating:</div>
+                <div class="purchase-options-rating-value">
+                    <div class="purchase-options-rating-value-star-icon"></div>
+                    <div class="purchase-options-rating-value-number">@ViewBag.GoodData.GoodRating.ToString("0.00")</div>                                    
+                </div>
+            </div>
+            <div class="purchase-options-delivery">
+                <div class="purchase-options-delivery-icon"></div>
+                <div class="purchase-options-delivery-text">Delivery of 10$, tomorrow</div>
+            </div>
+            <div class="add-to-cart-button">Add to cart</div>
+
+
+            <div class="purchase-options-favorite">
+                <div class="purchase-options-favorite-icon"></div>
+                <div class="purchase-options-favorite-text">Add To Favorite</div>
+            </div>
+
+            <div class="purchase-options-compare">
+                <div class="purchase-options-compare-icon"></div>
+                <div class="purchase-options-compare-text">Add To Compare</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="similar-offers-container">
+    <div class="similar-offers">
+        <div class="similar-offers-title">
+            <span class="similar-offers-title-icon"></span>
+            <span class="similar-offers-title-text">Similar offers</span>
+        </div>
+        <div class="similar-offers-list">
+            <!-- 1 -->
+            <div class="similar-offers-list-item">
+                <div class="similar-offers-list-item-number-container">
+                    <div class="similar-offers-list-item-number">1</div>
+                </div>
+                <div class="similar-offers-list-item-name">Apple 5 SE</div>
+                <div class="similar-offers-list-item-photo"><img src="/Content/Images/Goods/Cell_phones/Apple-iPhone-SE-32Gb-3.png" width="80" height="60"></div>
+                <div class="similar-offers-list-item-rating">
+                    <div class="similar-offers-list-item-rating-icon"></div>
+                    <div class="similar-offers-list-item-rating-text">4.2</div>
+                </div>
+                <div class="similar-offers-list-item-reviews">
+                    <div class="similar-offers-list-item-reviews-icon"></div>
+                    <div class="similar-offers-list-item-reviews-text">42</div>
+                </div>
+                <div class="similar-offers-list-item-color">
+                    <div class="similar-offers-list-item-color-image"></div>
+                    <div class="similar-offers-list-item-color-text">Red</div>
+                </div>
+                <div class="similar-offers-list-item-sale"></div>
+                <div class="similar-offers-list-item-price">1400 $</div>
+                <div class="similar-offers-list-item-add-to-cart">
+                    <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
+                </div>
+            </div>
+            <!-- 2 -->
+            <div class="similar-offers-list-item">
+                <div class="similar-offers-list-item-number-container">
+                    <div class="similar-offers-list-item-number">1</div>
+                </div>
+                <div class="similar-offers-list-item-name">Apple 5 SE</div>
+                <div class="similar-offers-list-item-photo"><img src="/Content/Images/Goods/Cell_phones/Apple-iPhone-SE-32Gb-3.png" width="80" height="60"></div>
+                <div class="similar-offers-list-item-rating">
+                    <div class="similar-offers-list-item-rating-icon"></div>
+                    <div class="similar-offers-list-item-rating-text">4.2</div>
+                </div>
+                <div class="similar-offers-list-item-reviews">
+                    <div class="similar-offers-list-item-reviews-icon"></div>
+                    <div class="similar-offers-list-item-reviews-text">42</div>
+                </div>
+                <div class="similar-offers-list-item-color">
+                    <div class="similar-offers-list-item-color-image"></div>
+                    <div class="similar-offers-list-item-color-text">Red</div>
+                </div>
+                <div class="similar-offers-list-item-sale"></div>
+                <div class="similar-offers-list-item-price">1400 $</div>
+                <div class="similar-offers-list-item-add-to-cart">
+                    <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
+                </div>
+            </div>
+            <!-- 3 -->
+            <div class="similar-offers-list-item">
+                <div class="similar-offers-list-item-number-container">
+                    <div class="similar-offers-list-item-number">1</div>
+                </div>
+                <div class="similar-offers-list-item-name">Apple 5 SE</div>
+                <div class="similar-offers-list-item-photo"><img src="/Content/Images/Goods/Cell_phones/Apple-iPhone-SE-32Gb-3.png" width="80" height="60"></div>
+                <div class="similar-offers-list-item-rating">
+                    <div class="similar-offers-list-item-rating-icon"></div>
+                    <div class="similar-offers-list-item-rating-text">4.2</div>
+                </div>
+                <div class="similar-offers-list-item-reviews">
+                    <div class="similar-offers-list-item-reviews-icon"></div>
+                    <div class="similar-offers-list-item-reviews-text">42</div>
+                </div>
+                <div class="similar-offers-list-item-color">
+                    <div class="similar-offers-list-item-color-image"></div>
+                    <div class="similar-offers-list-item-color-text">Red</div>
+                </div>
+                <div class="similar-offers-list-item-sale"></div>
+                <div class="similar-offers-list-item-price">1400 $</div>
+                <div class="similar-offers-list-item-add-to-cart">
+                    <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

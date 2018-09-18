@@ -1,0 +1,135 @@
+@import '_variables';
+@import '_mixins';
+
+@media only screen and (min-width: 1128px){
+  .slider{
+    max-width: 1080px;
+    height: 330px;
+    margin: 30px auto 0 auto;
+  }
+}
+
+@media only screen and (min-width: 760px) and (max-width: 1127px){
+  .slider{
+    width: calc(~"100% - 48px");
+    height: 330px;
+    background-position-x: center;
+    margin: 30px auto 0 auto;
+  }
+}
+
+@media only screen and (max-width: 759px){
+  .slider{
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    margin-top: 0 !important;
+  }
+}
+
+//Common styles
+.slider{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slide{
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.owl-nav{
+  position: relative;
+  top: -195px;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.owl-prev{
+  margin-left: 30px;
+}
+
+.owl-next{
+  margin-right: 30px;
+}
+
+.owl-prev, .owl-next{
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, .3) !important;
+  border-radius: 30px !important;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.owl-prev:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 45px;
+    height: 30px;
+    width: 30px;
+    background: url('/Content/Images/Icons/icons.png') no-repeat;
+    background-position: -200px 0;
+}
+
+.owl-next:before {
+    content: "";
+    position: absolute;
+    top: 15px;
+    right: 44px;
+    height: 30px;
+    width: 30px;
+    background: url('/Content/Images/Icons/icons.png') no-repeat;
+    background-position: -230px 0;
+}
+
+.slider-middle{
+  height: 100%;
+}
+
+.slider-info{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: center;
+  height: 100%;
+}
+
+.slider-badge-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFFFFF;
+  width: 90px;
+  height: 30px;
+  font-size: 12px;
+  font-family: @mediumFontFamily; 
+  background-color: #FF004F;
+  border-radius: 15px;
+  margin-top: 73px;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
+.slider-title{
+  color: #FFFFFF;
+  font-size: 36px;
+  font-family: @mediumFontFamily; 
+  margin-top: 53px;
+}
+
+.slider-description{
+  margin-top: 60px;
+  height: 30px;
+  color: #FFFFFF;
+  font-size: 14px;
+}

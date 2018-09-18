@@ -25,6 +25,19 @@ namespace ShakuroMarketplaceNetMVC
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            var lessBundle = new Bundle("~/Content/Less").IncludeDirectory("~/Content/Styles/Less/", "style.less");
+            lessBundle.Transforms.Add(new LessTransform());
+            //lessBundle.Transforms.Add(new CssMinify());
+            bundles.Add(lessBundle);
+        }
+    }
+    public class LessTransform : IBundleTransform
+    {
+        public void Process(BundleContext context, BundleResponse response)
+        {
+            response.Content = dotless.Core.Less.Parse(response.Content);
+            response.ContentType = "text/css";
         }
     }
 }

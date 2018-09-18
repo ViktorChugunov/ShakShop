@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using ShakuroMarketplaceNetMVC.Models;
 
 namespace ShakuroMarketplaceNetMVC.Controllers
 {
@@ -10,6 +12,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.CategoriesData = GetCategoriesData();
             return View();
         }
 
@@ -25,6 +28,15 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public IEnumerable<GoodCategory> GetCategoriesData()
+        {
+            using (GoodContext db = new GoodContext())
+            {
+                IEnumerable<GoodCategory> goodCategories = db.GoodCategories.ToList();
+                return goodCategories;
+            }
         }
     }
 }

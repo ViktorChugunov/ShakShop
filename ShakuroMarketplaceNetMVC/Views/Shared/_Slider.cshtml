@@ -1,0 +1,70 @@
+﻿<div class="owl-carousel slider">
+    <!-- 1 -->
+    <div style="background: url('/Content/Images/Slider/slide-1.png') no-repeat center; height: 330px;">
+        <div class="slider-middle">
+            <div class="slider-info">
+                <div class="slider-badge-button" style="color: #FFFFFF;">Badge</div>
+                <div class="slider-title" style="color: #FFFFFF;">The Best Place to Play</div>
+                <div class="slider-description" style="color: rgba(255, 255, 255, .6);">Space The Final Frontier</div>
+            </div>
+        </div>
+    </div>
+    <!-- 2 -->
+    <div style="background: url('/Content/Images/Slider/slide-2.png') no-repeat center; height: 330px;">
+        <div class="slider-middle">
+            <div class="slider-info">
+                <div class="slider-badge-button" style="color: #FFFFFF;">Badge</div>
+                <div class="slider-title" style="color: #FF0000;">Air conditioning drop in prices</div>
+                <div class="slider-description" style="color: rgba(0, 0, 0, .8);">Up to 30% discount on LG air conditioning</div>
+            </div>
+        </div>
+    </div>
+    <!-- 3 -->
+    <div style="background: url('/Content/Images/Slider/slide-3.png') no-repeat center; height: 330px;">
+        <div class="slider-middle">
+            <div class="slider-info">
+                <div class="slider-badge-button" style="color: #FFFFFF;">Badge</div>
+                <div class="slider-title" style="color: #FFFFFF;">QLED TV</div>
+                <div class="slider-description" style="color: rgba(255, 255, 255, 1);">Now TV picture is more realistic than ever</div>
+            </div>
+        </div>
+    </div>
+    <!-- 4 -->
+    <div style="background: url('/Content/Images/Slider/slide-4.png') no-repeat center; height: 330px;">
+        <div class="slider-middle">
+            <div class="slider-info">
+                <div class="slider-badge-button" style="color: #FFFFFF;">Badge</div>
+                <div class="slider-title" style="color: rgba(255, 0, 255, 1);">New generetion of slim laptops</div>
+                <div class="slider-description" style="color: #000;">Look at newest Lenovo laptop series!</div>
+            </div>
+        </div>
+    </div>
+    <!-- 5 -->
+    <div style="background: url('/Content/Images/Slider/slide-5.png') no-repeat center; height: 330px;">
+        <div class="slider-middle">
+            <div class="slider-info">
+                <div class="slider-badge-button" style="color: #FFFFFF;">Badge</div>
+                <div class="slider-title" style="color: #FFFFFF;">Free access to AppMusic</div>
+                <div class="slider-description" style="color: rgba(0, 0, 0, 1);">Buy iPhone X and use AppMusic for free</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            center: true,
+            items: 1,
+            mergeFit: true,
+            nav: true,
+            dots: false,
+            mouseDrag: false,
+            autoplay: true, //Автозапуск слайдера
+            smartSpeed: 1000, //Время движения слайда
+            autoplayTimeout: 5000, //Время смены слайда
+            navText: ["", ""],
+            mergeFit: false
+        });
+    });
+</script>

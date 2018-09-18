@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Catalog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="category-conteiner">
+    <div class="category">
+        <div class="category-list">
+            @foreach (var item in ViewBag.CategoriesData)
+            {
+                <div class="category-list-item">
+                    <a href="/catalog/@item.CategoryUrl" class="category-list-item-link">
+                        <div class="category-list-item-photo">
+                            <img src="@item.CategoryImageUrl" width="255" height="110">
+                        </div>
+                        <div class="category-list-item-name">@item.CategoryName</div>
+                    </a>
+                </div>
+            }            
+        </div>
+    </div>
+</div>

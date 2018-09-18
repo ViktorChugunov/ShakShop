@@ -1,0 +1,95 @@
+﻿<div class="header">
+    <div class="header-top">
+        <div class="header-search-box">
+            <form class="search-form">
+                <input type="text" placeholder="Search goods..." required />
+                <input type="submit" value="">
+            </form>
+        </div>
+        <div class="header-logo">
+        </div>
+        <div class="header-user-bar">
+            <ul class="header-user-bar-list">
+                <li class="header-user-bar-list-item">
+                    <a href="" class="header-user-bar-list-item-link">
+                        <span class="header-user-bar-list-item-icon-favorite">125</span>
+                        <span class="header-user-bar-list-item-text">Favorite</span>
+                    </a>
+                </li>
+                <li class="header-user-bar-list-item">
+                    <a href="" class="header-user-bar-list-item-link">
+                        <span class="header-user-bar-list-item-icon-compare"></span>
+                        <span class="header-user-bar-list-item-text">Compare</span>
+                    </a>
+                </li>
+                <li class="header-user-bar-list-item">
+                    <a href="" class="header-user-bar-list-item-link">
+                        <span class="header-user-bar-list-item-icon-cart"></span>
+                        <span class="header-user-bar-list-item-text">Cart</span>
+                    </a>
+                </li>
+            </ul>
+            @using Microsoft.AspNet.Identity
+            @if (Request.IsAuthenticated)
+            {
+                <div class="header-user-bar-user-avatar"></div>
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            @Html.ActionLink("Здравствуйте, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                        </li>
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                    </ul>
+                }
+            }
+            else
+            {
+                <div class="header-user-bar-login-icon"></div>
+                <!--
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                        <li>@Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    </ul>
+                -->
+            }
+
+
+
+
+
+        </div>
+    </div>
+    <div class="header-middle">
+        <ul class="header-menu">
+            @foreach (var item in ViewBag.CategoriesData)
+            {
+                <li class="header-menu-list-item">
+                    <a href="/catalog/@item.CategoryUrl" class="header-menu-list-item-link">@item.CategoryName</a>
+                </li>
+            }            
+        </ul>
+    </div>
+</div>
+@if (Request.Path != "/")
+{
+    <div class="header-bottom">
+        <div class="header-bottom-inside">
+            <div class="header-bottom-title">
+                <span class="header-bottom-title-star-icon"></span>
+                <span class="header-bottom-title-text">@ViewBag.PageHeader</span>
+            </div>
+            <div class="header-bottom-breadcrumb">
+                <div class="header-bottom-breadcrumb-selected-item">Apple iPhone SE 32Gb</div>
+                <div class="header-bottom-breadcrumb-arrow"><</div>
+                <div class="header-bottom-breadcrumb-item"><a href="#">Cell phones</a></div>
+                <div class="header-bottom-breadcrumb-arrow"><</div>
+                <div class="header-bottom-breadcrumb-item"><a href="#">Electronics</a></div>
+                <div class="header-bottom-breadcrumb-arrow"><</div>
+                <div class="header-bottom-breadcrumb-item"><a href="#">Main</a></div>
+            </div>
+        </div>
+    </div>
+}
