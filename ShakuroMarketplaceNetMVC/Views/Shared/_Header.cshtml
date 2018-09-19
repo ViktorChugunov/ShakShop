@@ -1,7 +1,4 @@
-﻿@using ShakuroMarketplaceNetMVC.Models
-@model LoginViewModel
-
-<div class="header">
+﻿<div class="header">
     <div class="header-top">
         <div class="header-search-box">
             <form class="search-form">
@@ -32,64 +29,7 @@
                     </a>
                 </li>
             </ul>
-            @using Microsoft.AspNet.Identity
-            @if (Request.IsAuthenticated)
-            {
-                <div class="header-user-bar-user-avatar"></div>
-                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <div class="user-menu-container">
-                        <ul class="user-menu-list">
-                            <li class="user-menu-list-item">
-                                @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                            </li>
-                            <li class="user-menu-list-item">
-                                <a href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
-                            </li>
-                        </ul>
-                    </div>                    
-                }
-            }
-            else
-            {
-                <div class="header-user-bar-login-icon"></div>
-                <div class="login-form-container">
-                    <p class="login-form-container-header">Log in</p>                    
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <div class="login-form-email-container">
-                            @Html.LabelFor(m => m.Email, new { @class = "login-form-email-label" })
-                            <div class="login-form-email">
-                                @Html.TextBoxFor(m => m.Email, new { @class = "login-form-email-input" })
-                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="login-form-password-container">
-                            @Html.LabelFor(m => m.Password, new { @class = "login-form-password-label" })
-                            <div class="login-form-password">
-                                @Html.PasswordFor(m => m.Password, new { @class = "login-form-password-input" })
-                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="login-form-checkbox-container">
-                            @Html.CheckBoxFor(m => m.RememberMe, new { @class = "login-form-checkbox" })
-                            @Html.LabelFor(m => m.RememberMe, new { @class = "login-form-checkbox-label" })
-                        </div>
-                        <input type="submit" value="Log In" class="log-in-button" />
-                        <p class="login-form-registrate-link">
-                            @Html.ActionLink("Create account", "Register")
-                        </p>
-                        @*Включите, когда будет включено подтверждение учетной записи для функции сброса пароля*@
-                        <p class="login-form-forget-password-link">
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>
-                    }
-                    @*Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })*@
-                </div>               
-            }
+            @Html.Action("Login", "Home")
         </div>
     </div>
     <div class="header-middle">

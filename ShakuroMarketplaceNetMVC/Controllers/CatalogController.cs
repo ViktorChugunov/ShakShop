@@ -134,19 +134,50 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.CategoryUrl = category;
                     ViewBag.SubcategoryUrl = subcategory;
                     ViewBag.GoodUrl = goodName;
-                    
-
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodName).First().Id;
-                    ViewBag.GoodRating = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Average(x => x.Mark) : 0;
-                    ViewBag.OneMark = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 1).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 1).Count() : 0;
-                    var GoodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews;
-                    ViewBag.GoodReviewsList = GoodReviewsList;
-                    return View();
+
+                    
+                    var viewModel = new ReviewViewModel()
+                    {
+                        GoodRating = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Any() ? 
+                                     db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Average(x => x.Mark) : 0,
+                        ReviewsRationList = GetReviewsRationList(currentGoodId),
+                        GoodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList()                        
+                    };
+                    return View(viewModel);
                 }
                 else
                 {
                     return Redirect("/");
                 }
+            }
+        }
+
+        public int[] GetReviewsRationList(int currentGoodId)
+        {
+            using (GoodContext db = new GoodContext())
+            {
+                int[] reviewsRationList;
+                int reviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Count() : 0;
+                int reviewsNumberWithMarkOne = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 1).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 1).Count() : 0;
+                int reviewsNumberWithMarkTwo = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 2).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 2).Count() : 0;
+                int reviewsNumberWithMarkThree = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 3).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 3).Count() : 0;
+                int reviewsNumberWithMarkFour = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 4).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 4).Count() : 0;
+                int reviewsNumberWithMarkFive = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 5).Any() ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Where(x => x.Mark == 5).Count() : 0;
+                if (reviewsNumber == 0)
+                {
+                    reviewsRationList = new[] { 0, 0, 0, 0, 0 };
+                }
+                else
+                {
+                    int reviewsRationWithMarkOne = 100 * reviewsNumberWithMarkOne / reviewsNumber;
+                    int reviewsRationWithMarkTwo = 100 * reviewsNumberWithMarkTwo / reviewsNumber;
+                    int reviewsRationWithMarkThree = 100 * reviewsNumberWithMarkThree / reviewsNumber;
+                    int reviewsRationWithMarkFour = 100 * reviewsNumberWithMarkFour / reviewsNumber;
+                    int reviewsRationWithMarkFive = 100 - reviewsRationWithMarkOne - reviewsRationWithMarkTwo - reviewsRationWithMarkThree - reviewsRationWithMarkFour;
+                    reviewsRationList = new[] { reviewsRationWithMarkOne, reviewsRationWithMarkTwo, reviewsRationWithMarkThree, reviewsRationWithMarkFour, reviewsRationWithMarkFive };
+                }
+                return reviewsRationList;
             }
         }
 

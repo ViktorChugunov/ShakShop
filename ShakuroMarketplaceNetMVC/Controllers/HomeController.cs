@@ -30,6 +30,16 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             return View();
         }
 
+        public PartialViewResult Register()
+        {
+            return PartialView("Register", new RegisterViewModel());
+        }
+
+        public PartialViewResult Login()
+        {
+            return PartialView("Login", new LoginViewModel());
+        }
+
         public IEnumerable<GoodCategory> GetCategoriesData()
         {
             using (GoodContext db = new GoodContext())
