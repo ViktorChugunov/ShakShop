@@ -22,5 +22,7 @@ namespace ShakuroMarketplaceNetMVC.Models
 
         public virtual GoodSubcategory GoodSubcategory { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
+        public virtual ICollection<Discussion> Discussions { get; set; }
+        public virtual ICollection<Overview> Overviews { get; set; }
     }
 }

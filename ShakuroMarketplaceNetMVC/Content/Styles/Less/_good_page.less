@@ -50,12 +50,15 @@
 }
 .good-container {
     width: 100%;
+    background-color: #F7F7F7;
+    padding: 24px 0;
 }
 
 .good {
     width: 1080px;
     margin: 0 auto;
-    padding: 60px 24px;
+    padding: 48px 24px;
+    background-color: #FFF;
     display: flex;
     flex-direction: row;
 }
@@ -508,7 +511,7 @@
 ///////////////////////////////////////////////////////////////////////
 
 .discussions-container {
-    margin: 24px 0;
+    margin: 0;
     width: 100%;
     background-color: #F7F7F7;
 }
@@ -648,7 +651,7 @@
     background-color: #FFF;
 }
 
-.discussions-info-item:first-child {
+.discussions-info-item:last-child {
     border-top: 2px solid #F5F5F5;
     height: 88px;
     width: 100%;
@@ -658,7 +661,7 @@
     align-items: center;
 }
 
-.discussions-info-item:not(:first-child) {
+.discussions-info-item:not(:last-child) {
     border-top: 2px solid #F5F5F5;
     height: 58px;
     width: 100%;
@@ -958,7 +961,7 @@
     line-height: 50px;
     text-align: center;
     margin: 0 auto;
-    cursor: pointer;
+    //cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -1049,6 +1052,7 @@
 .overview-container {
     width: 100%;
     background-color: #F7F7F7;
+    padding: 24px 0;
 }
 
 .overview {

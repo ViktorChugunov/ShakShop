@@ -7,8 +7,8 @@ namespace ShakuroMarketplaceNetMVC.Models
 {
     public class ReviewViewModel
     {
-        public double GoodRating;
-        public int[] ReviewsRationList;
-        public List<Review> GoodReviewsList;        
+        public double goodRating;
+        public int[] reviewsNumberList;
+        public List<Review> goodReviewsList;        
     }
 }

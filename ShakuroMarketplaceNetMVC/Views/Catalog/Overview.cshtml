@@ -1,0 +1,31 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.ReviewViewModel
+
+@{
+    ViewBag.Title = "Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="good-header">
+    <div class="good-menu">
+        <div class="good-menu-additional-block"></div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl" class="good-menu-item-link">Description</a>
+        </div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Reviews" class="good-menu-item-link">Reviews</a>
+        </div>
+        <div class="good-menu-selected-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Overview" class="good-menu-item-link">Overview</a>
+        </div>
+        <div class="good-menu-item">
+            <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@ViewBag.GoodUrl/Discussions" class="good-menu-item-link">Discussions</a>
+        </div>
+        <div class="good-menu-additional-block"></div>
+    </div>
+</div>
+
+<div class="overview-container">
+    <div class="overview">
+        @Html.Raw(ViewBag.goodOverview)
+    </div>
+</div>

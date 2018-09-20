@@ -8,7 +8,6 @@ namespace ShakuroMarketplaceNetMVC.Models
     public class Review
     {
         public int Id { get; set; }
-        //public int GoodId { get; set; }
         public string Reviewer { get; set; }
         public string Date { get; set; }
         public string Advantages { get; set; }
@@ -19,7 +18,6 @@ namespace ShakuroMarketplaceNetMVC.Models
         public int DislikesNumber { get; set; }
         public string ExperienceOfUse { get; set; }
         
-        //public virtual Good Good { get; set; }
         public virtual ICollection<Good> Goods { get; set; }
     }
 }

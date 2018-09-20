@@ -265,11 +265,15 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Discussion.cs" />
+    <Compile Include="Models\DiscussionViewModel.cs" />
     <Compile Include="Models\Good.cs" />
     <Compile Include="Models\GoodContext.cs" />
     <Compile Include="Models\GoodViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Overview.cs" />
+    <Compile Include="Models\OverviewGoods.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewGood.cs" />
     <Compile Include="Models\ReviewViewModel.cs" />
@@ -879,6 +883,8 @@
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Slider.cshtml" />
     <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Catalog\Discussions.cshtml" />
+    <Content Include="Views\Catalog\Overview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />

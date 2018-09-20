@@ -19,7 +19,9 @@ namespace ShakuroMarketplaceNetMVC
             routes.MapRoute(name: "SubcategoryRoute", url: "catalog/{category}/{subcategory}/", defaults: new { controller = "Catalog", action = "Subcategory" });
             routes.MapRoute(name: "GoodRoute", url: "catalog/{category}/{subcategory}/{goodName}/", defaults: new { controller = "Catalog", action = "Good" });
             routes.MapRoute(name: "ReviewsRoute", url: "catalog/{category}/{subcategory}/{goodName}/reviews", defaults: new { controller = "Catalog", action = "Reviews" });
-
+            routes.MapRoute(name: "OverviewRoute", url: "catalog/{category}/{subcategory}/{goodName}/overview", defaults: new { controller = "Catalog", action = "Overview" });
+            routes.MapRoute(name: "DiscussionsRoute", url: "catalog/{category}/{subcategory}/{goodName}/discussions", defaults: new { controller = "Catalog", action = "Discussions" });
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

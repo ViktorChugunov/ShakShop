@@ -103,22 +103,22 @@
                 <div class="similar-offers-list-item-number-container">
                     <div class="similar-offers-list-item-number">1</div>
                 </div>
-                <div class="similar-offers-list-item-name">Apple 5 SE</div>
-                <div class="similar-offers-list-item-photo"><img src="/Content/Images/Goods/Cell_phones/Apple-iPhone-SE-32Gb-3.png" width="80" height="60"></div>
+                <div class="similar-offers-list-item-name">@ViewBag.RandomGoodData.GoodName</div>
+                <div class="similar-offers-list-item-photo"><img src="/Content/Images/Goods/@ViewBag.RandomGoodCategory/@ViewBag.RandomGoodSubcategory/@ViewBag.RandomGoodUrl/@ViewBag.RandomGoodData.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]"  height="60"></div>
                 <div class="similar-offers-list-item-rating">
                     <div class="similar-offers-list-item-rating-icon"></div>
-                    <div class="similar-offers-list-item-rating-text">4.2</div>
+                    <div class="similar-offers-list-item-rating-text">@ViewBag.RandomGoodData.GoodRating</div>
                 </div>
                 <div class="similar-offers-list-item-reviews">
                     <div class="similar-offers-list-item-reviews-icon"></div>
-                    <div class="similar-offers-list-item-reviews-text">42</div>
+                    <div class="similar-offers-list-item-reviews-text">@ViewBag.RandomGoodData.ReviewsNumber</div>
                 </div>
                 <div class="similar-offers-list-item-color">
                     <div class="similar-offers-list-item-color-image"></div>
-                    <div class="similar-offers-list-item-color-text">Red</div>
+                    <div class="similar-offers-list-item-color-text">@ViewBag.RandomGoodData.GoodColor</div>
                 </div>
                 <div class="similar-offers-list-item-sale"></div>
-                <div class="similar-offers-list-item-price">1400 $</div>
+                <div class="similar-offers-list-item-price">@ViewBag.RandomGoodData.GoodPrice $</div>
                 <div class="similar-offers-list-item-add-to-cart">
                     <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
                 </div>
