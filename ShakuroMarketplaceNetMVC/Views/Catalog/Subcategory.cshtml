@@ -8,7 +8,7 @@
 <div class="category-goods-conteiner">
     <div class="category-goods">
         <div class="category-goods-list">
-            @foreach (var item in ViewBag.GoodsList)
+            @foreach (var item in Model.SubcategoryGoodsList)
             {
                 <div class="category-goods-list-item">
                     <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@item.GoodUrl" class="category-list-item-link">

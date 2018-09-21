@@ -1,0 +1,44 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.RandomGoodViewModel
+
+<div class="similar-offers-container">
+    <div class="similar-offers">
+        <div class="similar-offers-title">
+            <span class="similar-offers-title-icon"></span>
+            <span class="similar-offers-title-text">Similar offers</span>
+        </div>
+        <div class="similar-offers-list">
+            @for (int i = 1; i <= Model.RandomGoodsList.Count(); i++)
+            {
+                <div class="similar-offers-list-item">
+                    <div class="similar-offers-list-item-number-container">
+                        <div class="similar-offers-list-item-number">@i</div>
+                    </div>
+                    <div class="similar-offers-list-item-name">
+                        <a href="/catalog/@Model.RandomGoodsList[i-1].GoodCategoryUrl/@Model.RandomGoodsList[i-1].GoodSubcategoryUrl/@Model.RandomGoodsList[i-1].GoodUrl">@Model.RandomGoodsList[i-1].GoodBrand @Model.RandomGoodsList[i-1].GoodName</a>
+                    </div>
+                    <div class="similar-offers-list-item-photo">
+                        <img src="/Content/Images/Goods/@Model.RandomGoodsList[i-1].GoodCategoryUrl/@Model.RandomGoodsList[i-1].GoodSubcategoryUrl/@Model.RandomGoodsList[i-1].GoodUrl/@Model.RandomGoodsList[i-1].GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="60">
+                    </div>
+                    <div class="similar-offers-list-item-rating">
+                        <div class="similar-offers-list-item-rating-icon"></div>
+                        <div class="similar-offers-list-item-rating-text">@Model.RandomGoodsList[i-1].GoodRating.ToString("0.00")</div>
+                    </div>
+                    <div class="similar-offers-list-item-reviews">
+                        <div class="similar-offers-list-item-reviews-icon"></div>
+                        <div class="similar-offers-list-item-reviews-text">@Model.RandomGoodsList[i-1].ReviewsNumber</div>
+                    </div>
+                    <div class="similar-offers-list-item-color">
+                        <div class="similar-offers-list-item-color-image" style="background-color: @Model.RandomGoodsList[i-1].GoodColor;"></div>
+                        <div class="similar-offers-list-item-color-text">@Model.RandomGoodsList[i-1].GoodColor</div>
+                    </div>
+                    <div class="similar-offers-list-item-sale"></div>
+                    <div class="similar-offers-list-item-price">@Model.RandomGoodsList[i-1].GoodPrice $</div>
+                    <div class="similar-offers-list-item-add-to-cart">
+                        <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

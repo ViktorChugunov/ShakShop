@@ -274,6 +274,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Overview.cs" />
     <Compile Include="Models\OverviewGoods.cs" />
+    <Compile Include="Models\RandomGoodViewModel.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewGood.cs" />
     <Compile Include="Models\ReviewViewModel.cs" />
@@ -885,6 +886,7 @@
     <Content Include="Views\Shared\Login.cshtml" />
     <Content Include="Views\Catalog\Discussions.cshtml" />
     <Content Include="Views\Catalog\Overview.cshtml" />
+    <Content Include="Views\Catalog\SimilarOffers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />

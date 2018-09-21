@@ -13,7 +13,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
         {
             using (GoodContext db = new GoodContext())
             {
-                ViewBag.CategoriesData = GetCategoriesData();//
+                ViewBag.CategoriesData = GetCategoriesData();
                 ViewBag.PageHeader = "Catalog";
                 return View();
             }
@@ -26,9 +26,10 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             {                
                 if (db.GoodCategories.Where(x => x.CategoryUrl == category).Any())
                 {
-                    ViewBag.PageHeader = db.GoodCategories.Where(x => x.CategoryUrl == category).First().CategoryName;//
-                    ViewBag.SubcategoriesList = db.GoodCategories.Where(x => x.CategoryUrl == category).First().GoodSubcategories;//
+                    ViewBag.PageHeader = db.GoodCategories.Where(x => x.CategoryUrl == category).First().CategoryName;                  
                     ViewBag.CategoryUrl = category;
+                    //
+                    ViewBag.SubcategoriesList = db.GoodCategories.Where(x => x.CategoryUrl == category).First().GoodSubcategories;
                     return View();
                 }
                 else {
@@ -48,8 +49,10 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.CategoryUrl = category;
                     ViewBag.SubcategoryUrl = subcategory;
                     int currentGoodSubcategoryId = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategory).First().Id;
-                    var GoodsList = db.Goods.Where(x => x.GoodSubcategoryId == currentGoodSubcategoryId)
-                        .Select(p => new SubcategoryGoodsViewModel {
+                    //
+                    List<GoodViewModel> SubcategoryGoodsList = db.Goods.Where(x => x.GoodSubcategoryId == currentGoodSubcategoryId)
+                        .Select(p => new GoodViewModel
+                        {
                             Id = p.Id,
                             GoodName = p.GoodName,
                             GoodBrand = p.GoodBrand,
@@ -63,8 +66,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                             ReviewsNumber = p.Reviews.Count(),
                             GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0
                         }).ToList();
-                    ViewBag.GoodsList = GoodsList;
-                    return View();
+                    var viewModel = new SubcategoryGoodsViewModel { SubcategoryGoodsList = SubcategoryGoodsList };
+                    return View(viewModel);
                 }
                 else
                 {
@@ -89,7 +92,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.SubcategoryUrl = subcategory;
                     ViewBag.GoodUrl = goodName;
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodName).First().Id;
-                    var GoodData = db.Goods.Where(x => x.Id == currentGoodId)
+                    
+                    var viewModel = db.Goods.Where(x => x.Id == currentGoodId)
                         .Select(p => new GoodViewModel
                         {
                             Id = p.Id,
@@ -105,43 +109,83 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                             ReviewsNumber = p.Reviews.Count(),
                             GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0,
                             Characteristics = p.Characteristics
-                        }).First();
-                    ViewBag.GoodData = GoodData;
-                    ViewBag.Rev = db.Goods.First().Reviews.First().Mark;
-
-
-                    Random rnd = new Random();
-                    int value = rnd.Next(1, db.Goods.Count());
-
-                    var RandomGoodData = db.Goods.Where(x => x.Id == value)
-                        .Select(p => new GoodViewModel
-                        {
-                            Id = p.Id,
-                            GoodName = p.GoodName,
-                            GoodBrand = p.GoodBrand,
-                            GoodUrl = p.GoodUrl,
-                            GoodColor = p.GoodColor,
-                            GoodImagesUrls = p.GoodImagesUrls,
-                            GoodPrice = p.GoodPrice,
-                            NewGood = p.NewGood,
-                            SalesGood = p.SalesGood,
-                            RecommendedGood = p.RecommendedGood,
-                            ReviewsNumber = p.Reviews.Count(),
-                            GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0,
-                            Characteristics = p.Characteristics
-                        }).First();
-                    ViewBag.RandomGoodData = RandomGoodData;
-                    ViewBag.RandomGoodUrl = db.Goods.Where(x => x.Id == value).First().GoodUrl;
-                    ViewBag.RandomGoodSubcategory = db.Goods.Where(x => x.Id == value).First().GoodSubcategory.SubcategoryUrl;
-                    ViewBag.RandomGoodCategory = db.Goods.Where(x => x.Id == value).First().GoodSubcategory.GoodCategory.CategoryUrl;
-
-
-                    return View();
+                        }).First();             
+                    return View(viewModel);
                 }
                 else
                 {
                     return Redirect("/");
                 }
+            }
+        }
+
+        public PartialViewResult SimilarOffers(string CategoryUrl, string SubcategoryUrl, string goodUrl)
+        {
+            using (GoodContext db = new GoodContext())
+            {            
+                int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
+                ViewBag.CategoryUrl = CategoryUrl;    
+                
+                int[] randomItemsIndexes = new int[4];
+                List<int> goodsIdList = db.Goods.Select(p => p.Id).ToList();           
+                goodsIdList.RemoveAt(goodsIdList.IndexOf(currentGoodId));
+                Random randomNumber = new Random();
+                for (int i = 0; i < 4; i++)
+                {
+                    int randomIndex = randomNumber.Next(0, goodsIdList.Count()-1);
+                    randomItemsIndexes[i] = goodsIdList[randomIndex];
+                    goodsIdList.RemoveAt(goodsIdList.IndexOf(randomIndex));
+                }
+
+
+                //int[] randomItemsIndexes = GetRandomItemsIndexesList(currentGoodId);
+                List<GoodViewModel> RandomGoodsList = new List<GoodViewModel>(4);
+                for (int i = 0; i < 4; i++)
+                {
+                    int randomGoodItem = randomItemsIndexes[i];
+                    var RandomGoodData = db.Goods.Where(x => x.Id == randomGoodItem)
+                    .Select(p => new GoodViewModel
+                    {
+                        Id = p.Id,
+                        GoodName = p.GoodName,
+                        GoodBrand = p.GoodBrand,
+                        GoodCategoryUrl = db.Goods.Where(x => x.Id == randomGoodItem).FirstOrDefault().GoodSubcategory.GoodCategory.CategoryUrl,
+                        GoodSubcategoryUrl = db.Goods.Where(x => x.Id == randomGoodItem).FirstOrDefault().GoodSubcategory.SubcategoryUrl,
+                        GoodUrl = p.GoodUrl,
+                        GoodColor = p.GoodColor,
+                        GoodImagesUrls = p.GoodImagesUrls,
+                        GoodPrice = p.GoodPrice,
+                        NewGood = p.NewGood,
+                        SalesGood = p.SalesGood,
+                        RecommendedGood = p.RecommendedGood,
+                        ReviewsNumber = p.Reviews.Count(),
+                        GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0,
+                        Characteristics = p.Characteristics
+                    }).FirstOrDefault();
+                    RandomGoodsList.Add(RandomGoodData);
+                }
+                var viewModel = new RandomGoodViewModel { RandomGoodsList = RandomGoodsList };
+                return PartialView("SimilarOffers", viewModel);
+            }            
+        }
+
+        public int[] GetRandomItemsIndexesList(int currentGoodId)
+        {
+            using (GoodContext db = new GoodContext())
+            {
+
+                int[] randomItemsIndexes = new[] { 0, 0, 0, 0 };
+                Random randomNumber = new Random();
+                for (int i = 0; i < 4; i++)
+                {
+                    int randomIndex = 0;
+                    while (randomIndex != currentGoodId && randomIndex != randomItemsIndexes[0] && randomIndex != randomItemsIndexes[1])
+                    {
+                        randomIndex = randomNumber.Next(1, db.Goods.Count());
+                        randomItemsIndexes[i] = randomIndex;
+                    };
+                }
+                return randomItemsIndexes;
             }
         }
 
@@ -254,6 +298,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 return reviewsNumberList;
             }
         }
+
+        
 
         public IEnumerable<GoodCategory> GetCategoriesData()
         {
