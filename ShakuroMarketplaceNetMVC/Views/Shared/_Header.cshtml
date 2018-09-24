@@ -6,8 +6,7 @@
                 <input type="submit" value="">
             </form>
         </div>
-        <div class="header-logo">
-        </div>
+        <a href="/" class="header-logo"></a>        
         <div class="header-user-bar">
             <ul class="header-user-bar-list">
                 <li class="header-user-bar-list-item">
@@ -23,7 +22,7 @@
                     </a>
                 </li>
                 <li class="header-user-bar-list-item">
-                    <a href="" class="header-user-bar-list-item-link">
+                    <a href="/cart" class="header-user-bar-list-item-link">
                         <span class="header-user-bar-list-item-icon-cart"></span>
                         <span class="header-user-bar-list-item-text">Cart</span>
                     </a>
@@ -51,15 +50,9 @@
                 <span class="header-bottom-title-star-icon"></span>
                 <span class="header-bottom-title-text">@ViewBag.PageHeader</span>
             </div>
-            <div class="header-bottom-breadcrumb">
-                <div class="header-bottom-breadcrumb-selected-item">Apple iPhone SE 32Gb</div>
-                <div class="header-bottom-breadcrumb-arrow"><</div>
-                <div class="header-bottom-breadcrumb-item"><a href="#">Cell phones</a></div>
-                <div class="header-bottom-breadcrumb-arrow"><</div>
-                <div class="header-bottom-breadcrumb-item"><a href="#">Electronics</a></div>
-                <div class="header-bottom-breadcrumb-arrow"><</div>
-                <div class="header-bottom-breadcrumb-item"><a href="#">Main</a></div>
-            </div>
+            
+            @{Html.RenderAction("BreadCrumbs", new { pageUrl = Request.RequestContext.HttpContext.Request.RawUrl });}
+            
         </div>
     </div>
 }

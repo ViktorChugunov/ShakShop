@@ -257,6 +257,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -264,8 +265,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\BreadCrumb.cs" />
+    <Compile Include="Models\BreadCrumbsListViewModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Discussion.cs" />
+    <Compile Include="Models\DiscussionGood.cs" />
     <Compile Include="Models\DiscussionViewModel.cs" />
     <Compile Include="Models\Good.cs" />
     <Compile Include="Models\GoodContext.cs" />
@@ -273,11 +277,12 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Overview.cs" />
-    <Compile Include="Models\OverviewGoods.cs" />
+    <Compile Include="Models\OverviewGood.cs" />
     <Compile Include="Models\RandomGoodViewModel.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\ReviewGood.cs" />
     <Compile Include="Models\ReviewViewModel.cs" />
+    <Compile Include="Models\SameGoodColorsAndLinks.cs" />
     <Compile Include="Models\Subcategory.cs" />
     <Compile Include="Models\SubcategoryGoodsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -826,6 +831,9 @@
     <Content Include="Content\Styles\Less\_subscribe_form.less" />
     <Content Include="Content\Styles\Less\_variables.less" />
     <Content Include="Content\Styles\Less\_viewed_products.less" />
+    <Content Include="Content\Styles\Less\_reviews.less" />
+    <Content Include="Content\Styles\Less\_discussions.less" />
+    <Content Include="Content\Styles\Less\_cart.less" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -836,6 +844,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\owl.carousel.js" />
     <Content Include="Web.config" />
@@ -887,6 +896,8 @@
     <Content Include="Views\Catalog\Discussions.cshtml" />
     <Content Include="Views\Catalog\Overview.cshtml" />
     <Content Include="Views\Catalog\SimilarOffers.cshtml" />
+    <Content Include="Views\Shared\_BreadCrumbs.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />

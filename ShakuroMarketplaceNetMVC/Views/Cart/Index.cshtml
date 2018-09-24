@@ -1,0 +1,67 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.GoodSubcategory
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="cart-header">
+    <div class="cart-menu">
+        <div class="cart-menu-item">
+            <div class="cart-menu-selected-item-icon-block"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">First step</div>
+                <div class="cart-menu-item-step-block-name">Shopping Cart</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Second step</div>
+                <div class="cart-menu-item-step-block-name">Payment Methods</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Third step</div>
+                <div class="cart-menu-item-step-block-name">Delivery Methods</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Fourth step</div>
+                <div class="cart-menu-item-step-block-name">Delivery Methods</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="goods-in-cart-list-container">
+    <div class="goods-in-cart-list">
+        <div class="goods-in-cart-list-header">
+            <div class="goods-in-cart-list-header-item-img">Items</div>
+            <div class="goods-in-cart-list-header-item-name"></div>
+            <div class="goods-in-cart-list-header-item-price">Price</div>
+            <div class="goods-in-cart-list-header-item-quantity">Quantity</div>
+            <div class="goods-in-cart-list-header-item-total">Total</div>
+            <div class="goods-in-cart-list-header-item-delete"></div>
+        </div>
+        <div class="goods-in-cart-list-item">
+            <div class="goods-in-cart-list-item-img">
+                <img src="/Content/Images/Goods/cell-phones/smart-phones/Apple-iPhone-SE-16GB-Gray/iPhone-SE-Main-Gray.png" height="80">
+            </div>
+            <div class="goods-in-cart-list-item-name">Apple iPhone 7 32 GB</div>
+            <div class="goods-in-cart-list-item-price">$ 455</div>
+            <div class="goods-in-cart-list-item-quantity">
+                <div class="goods-in-cart-list-item-quantity-minus">-</div>
+                <div class="goods-in-cart-list-item-quantity-number">1</div>
+                <div class="goods-in-cart-list-item-quantity-plus">+</div>
+            </div>
+            <div class="goods-in-cart-list-item-total">$ 1100</div>
+            <div class="goods-in-cart-list-item-delete">X</div>
+        </div>
+        <div class="goods-in-cart-list-footer">Total price: $1100</div>
+    </div>
+</div>

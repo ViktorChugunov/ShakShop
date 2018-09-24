@@ -28,6 +28,10 @@
 <div class="discussions-container">
     <div class="discussions">
         <div class="discussions-list">
+            @*if (Model.discussions.Any() == false)
+        {
+            <p>asdasdasd</p>
+        }*@
             @foreach (var discussion in Model.discussions)
             {
                 foreach (var item in discussion.OrderByDescending(p => p.FirstDiscussionMessage).ThenBy(p => p.Date))
@@ -47,7 +51,7 @@
                                     <div class="discussions-list-item-bottom-date-icon"></div>
                                     <div class="discussions-list-item-bottom-date-text">@item.Date.ToShortDateString()</div>
                                 </div>
-                                <div class="discussions-list-item-bottom-reply">
+                                <div class="discussions-list-item-bottom-reply" reply-to="@item.AuthorName" discussion-group="@item.DiscussionGroup">
                                     <div class="discussions-list-item-bottom-reply-icon"></div>
                                     <div class="discussions-list-item-bottom-reply-text">Reply</div>
                                 </div>
@@ -69,7 +73,7 @@
                                     <div class="discussions-list-item-bottom-date-icon"></div>
                                     <div class="discussions-list-item-bottom-date-text">@item.Date.ToShortDateString()</div>
                                 </div>
-                                <div class="discussions-list-item-bottom-reply">
+                                <div class="discussions-list-item-bottom-reply" reply-to="@item.AuthorName" discussion-group="@item.DiscussionGroup">
                                     <div class="discussions-list-item-bottom-reply-icon"></div>
                                     <div class="discussions-list-item-bottom-reply-text">Reply</div>
                                 </div>
@@ -111,5 +115,24 @@
                 <div class="add-message-button">Add message</div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<div class="add-message-block-container">
+    <div class="add-message-block add-message-block-hidden">
+        <form method="POST" action="/Catalog/AddMessage" class="add-message-form">
+            <p class="add-message-form-header">Send Message</p>
+            <textarea rows="5" name="message" required class="message-textarea"></textarea>
+            <input type="hidden" name="categoryUrl" value="@ViewBag.CategoryUrl">
+            <input type="hidden" name="subcategoryUrl" value="@ViewBag.SubcategoryUrl">
+            <input type="hidden" name="goodUrl" value="@ViewBag.GoodUrl">
+            <input type="hidden" name="goodName" value="@ViewBag.GoodName">
+            <input type="hidden" name="discussionGroup" value="-1" class="discussion-group">
+            <span class="add-message-submit-panel">
+                <span class="add-message-cancel-button">Cancel</span>
+                <input type="submit" value="Ok" class="add-message-submit-button" />
+            </span>
+        </form>
     </div>
 </div>

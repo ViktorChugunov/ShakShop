@@ -9,7 +9,8 @@ namespace ShakuroMarketplaceNetMVC.Models
     {
         public int Id { get; set; }
         public string Reviewer { get; set; }
-        public string Date { get; set; }
+        public string ReviewerAvatarSrc { get; set; }
+        public DateTime Date { get; set; }
         public string Advantages { get; set; }
         public string Disadvantages { get; set; }
         public string Comment { get; set; }

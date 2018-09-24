@@ -37,7 +37,18 @@
             border-color: #0024FF;
         }
     }
-
+    /*
+    .header-logo-link {
+        display: block;
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+        border: 1px solid black;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    */
     .header-user-bar {
         order: 3;
         display: flex;
@@ -282,6 +293,7 @@
     height: 40px;
     width: 40px;
     background: url('/Content/Images/Icons/login.png') no-repeat;
+    cursor: pointer;
 }
 
 .header-middle {
@@ -338,7 +350,7 @@
 }
 
 .header-bottom-title {
-    width: 50%;
+    width: 35%;
     margin: 0 0 0 24px;
     display: flex;
     flex-direction: row;
@@ -360,7 +372,7 @@
 }
 
 .header-bottom-breadcrumb {
-    width: 50%;
+    width: 65%;
     font-size: 13px;
     margin: 0 24px 0 0;
     display: flex;
@@ -399,6 +411,22 @@
     background-color: #F7F7F7;
     position: absolute;
     z-index: 2;
+}
+
+.login-form-container-hidden {
+    visibility: hidden;
+}
+
+.login-form-container-visible {
+    visibility: visible;
+}
+
+.user-menu-container-hidden {
+    visibility: hidden;
+}
+
+.user-menu-container-visible {
+    visibility: visible;
 }
 
 .login-form-container-header {

@@ -14,6 +14,7 @@ namespace ShakuroMarketplaceNetMVC.Models
         public string GoodSubcategoryUrl { get; set; }
         public string GoodUrl { get; set; }
         public string GoodColor { get; set; }
+        public List<SameGoodColorsAndLinks> SameGoodColorsAndLinksList { get; set; }
         public string GoodImagesUrls { get; set; }
         public int GoodPrice { get; set; }
         public bool NewGood { get; set; }

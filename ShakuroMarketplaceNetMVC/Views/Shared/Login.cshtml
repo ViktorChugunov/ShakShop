@@ -7,7 +7,7 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-        <div class="user-menu-container">
+        <div class="user-menu-container user-menu-container-hidden">
             <ul class="user-menu-list">
                 <li class="user-menu-list-item">
                     @Html.ActionLink("Profile", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
@@ -22,7 +22,7 @@
 else
 {
     <div class="header-user-bar-login-icon"></div>
-    <div class="login-form-container">
+    <div class="login-form-container login-form-container-hidden">
         <p class="login-form-container-header">Log in</p>
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
         {

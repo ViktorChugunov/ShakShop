@@ -1,0 +1,277 @@
+﻿.discussions-container {
+    margin: 0;
+    width: 100%;
+    background-color: #F7F7F7;
+}
+
+.discussions {
+    width: 1080px;
+    margin: 0 auto;
+    padding: 24px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.discussions-list {
+    width: 825px;
+    margin: 0 30px 0 0;
+}
+
+.discussions-list-item {
+    background-color: #FFF;
+    margin: 0 0 30px 0;
+}
+
+.discussions-list-item-top {
+    border-bottom: 2px solid #F5F5F5;
+    line-height: 20px;
+    padding: 24px;
+    font-size: 13px;
+    color: #B2B2B2;
+}
+
+.discussions-list-item-bottom {
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.discussions-list-item-bottom-author {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 3;
+    margin: 0 0 0 30px;
+}
+
+.discussions-list-item-bottom-author-photo {
+    height: 30px;
+    width: 30px;
+    background-image: url(/Content/Images/Icons/avatar.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+}
+
+.discussions-list-item-bottom-author-name {
+    font-size: 13px;
+    color: #808080;
+    margin: 0 0 0 16px;
+    line-height: 30px;
+}
+
+.discussions-list-item-bottom-date {
+    display: flex;
+    flex-direction: row;
+    margin: 0 24px 0 24px;
+}
+
+.discussions-list-item-bottom-date-icon {
+    height: 24px;
+    width: 24px;
+    border: 2px solid #E5E5E5;
+    border-radius: 12px;
+}
+
+.discussions-list-item-bottom-date-text {
+    font-size: 12px;
+    color: #B2B2B2;
+    line-height: 24px;
+    margin: 0 0 0 12px;
+}
+
+.discussions-list-item-bottom-reply {
+    display: flex;
+    flex-direction: row;
+    margin: 0 24px 0 24px;
+    cursor: pointer;
+}
+
+.discussions-list-item-bottom-reply-icon {
+    //margin: 0 0 0 30px;
+    height: 30px;
+    width: 30px;
+    background-image: url(/Content/Images/Icons/review.png);
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+}
+
+.discussions-list-item-bottom-reply-text {
+    font-size: 12px;
+    color: #B2B2B2;
+    line-height: 30px;
+    margin: 0 0 0 12px;
+}
+
+.discussions-list-item-reply {
+    width: 750px;
+    background-color: #FFF;
+    margin: 0 0 30px 50px;
+    position: relative;
+}
+/*
+.reviews-list-item-reply:before {
+    content: "⇑";
+    color: #D8D8D8;
+    font-size: 36px;
+    position: absolute;
+    top: 16px;
+    left: -30px;
+}
+*/
+
+.show-more-messages {
+    width: 150px;
+    height: 50px;
+    margin: 0 auto;
+    border: 2px solid #EBEBEB;
+    border-radius: 25px;
+    color: #B2B2B2;
+    text-align: center;
+    line-height: 46px;
+    cursor: pointer;
+    background-color: #FFF;
+}
+
+.discussions-info {
+    width: 255px;
+    height: 378px;
+    background-color: #FFF;
+}
+
+.discussions-info-item:last-child {
+    border-top: 2px solid #F5F5F5;
+    height: 88px;
+    width: 100%;
+    padding: 16px 16px 16px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.discussions-info-item:not(:last-child) {
+    border-top: 2px solid #F5F5F5;
+    height: 58px;
+    width: 100%;
+    padding: 16px 16px 16px 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.add-message-button {
+    width: 180px;
+    height: 50px;
+    font-size: 14px;
+    border-radius: 25px;
+    background-color: #0078FF;
+    color: #FFF;
+    line-height: 50px;
+    text-align: center;
+    margin: 0 auto;
+    cursor: pointer;
+}
+
+.discussions-info-item-icon {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #F0F0F0;
+    border-radius: 10px;
+}
+
+.discussions-info-item-text {
+    width: 140px;
+    padding: 0 0 0 16px;
+    font-size: 13px;
+    color: #808080;
+}
+
+.discussions-info-item-number {
+    width: 63px;
+    text-align: right;
+    font-size: 13px;
+    color: #B2B2B2;
+}
+
+
+/* ADD REVIEW BLOCK */
+.add-message-block-container {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+.add-message-block {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(15, 15, 15, .8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-message-block-visible {
+    visibility: visible;
+}
+
+.add-message-block-hidden {
+    visibility: hidden;
+}
+
+.add-message-form {
+    //position: fixed;
+    margin: auto;
+    width: 50%;
+    min-width: 296px;
+    max-width: 480px;
+    padding: 16px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background-color: #FFF;
+}
+
+.add-message-form-header {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    padding: 12px 0 24px 0;
+    color: #808080;
+}
+/*
+.add-message-input-header {
+    margin: 16px 0 16px 16px;
+    font-size: 16px;
+    color: #B2B2B2;
+    font-weight: 600;
+}
+*/
+.message-textarea {
+    font-size: 14px;
+    border-radius: 8px;
+    border: 2px solid #B2B2B2;
+    width: 100%;
+    resize: none;
+    padding: 8px;
+}
+
+.add-message-submit-panel {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.add-message-cancel-button,
+.add-message-submit-button {
+    display: block;
+    width: 140px;
+    height: 50px;
+    margin: 24px 8px;
+    border-radius: 25px;
+    color: #FFF;
+    text-align: center;
+    line-height: 50px;
+    cursor: pointer;
+    background-color: #FF6347;
+}

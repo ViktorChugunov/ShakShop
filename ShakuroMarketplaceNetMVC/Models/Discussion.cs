@@ -11,7 +11,7 @@ namespace ShakuroMarketplaceNetMVC.Models
         public string Message { get; set; }
         public DateTime Date { get; set; }
         public string AuthorName { get; set; }
-        public string AuthorAvatar { get; set; }
+        public string AuthorAvatarSrc { get; set; }
         public bool FirstDiscussionMessage { get; set; }
         public int DiscussionGroup { get; set; }
 

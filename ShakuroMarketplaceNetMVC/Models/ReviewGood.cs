@@ -8,7 +8,7 @@ namespace ShakuroMarketplaceNetMVC.Models
     public class ReviewGood
     {
         public int Id { get; set; }
-        public int Good_Id { get; set; }
         public int Review_Id { get; set; }
+        public int Good_Id { get; set; }        
     }
 }

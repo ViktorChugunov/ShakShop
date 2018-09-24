@@ -74,7 +74,7 @@
                     <div class="reviews-list-item-bottom">
                         <div class="reviews-list-item-bottom-data">
                             <div class="reviews-list-item-bottom-data-icon"></div>
-                            <div class="reviews-list-item-bottom-data-text">@review.Date</div>
+                            <div class="reviews-list-item-bottom-data-text">@review.Date.ToShortDateString()</div>
                         </div>
                         <div class="reviews-list-item-bottom-approval">
                             <div class="reviews-list-item-bottom-approval-like-icon"></div>
@@ -96,7 +96,7 @@
             </div>
             <div class="reviews-info-item-header">
                 Reviews with ratings
-            </div>       
+            </div>
             @for (int i = 4; i >= 0; i--)
             {
                 <div class="reviews-info-item">
@@ -116,7 +116,57 @@
                     <div class="reviews-info-item-number">@Model.reviewsNumberList[i]</div>
                 </div>
             }
+            <div class="add-review-button">Add Review</div>
         </div>
     </div>
 </div>
 
+<div class="add-review-block-container">
+    <div class="add-review-block add-review-block-hidden">
+        <form method="POST" action="/Catalog/AddReview" class="add-review-form">
+            <p class="add-review-form-header">Add Review</p>
+            <p class="add-review-input-header">Advantages:</p>
+            <textarea rows="5" name="advantages" required class="advantages-textarea"></textarea>
+            <br>
+            <p class="add-review-input-header">Disadvantages:</p>
+            <textarea rows="5" name="disadvantages" required class="disadvantages-textarea"></textarea>
+            <br>
+            <p class="add-review-input-header">Comment:</p>
+            <textarea rows="5" name="comment" required class="comment-textarea"></textarea>
+            <br>
+            <p class="add-review-input-header">Experience of use:</p>
+            <input type="text" name="experienceOfUse" required class="experience-of-use">
+            <p class="add-review-input-header">Your Mark:</p>
+            <span class="marks-block">
+                <span class="marks-input">
+                    <input name="mark" type="radio" value="1" class="mark-radio">
+                    <span class="mark-text-value">1</span>
+                </span>
+                <span>
+                    <input name="mark" type="radio" value="2" class="mark-radio">
+                    <span class="mark-text-value">2</span>
+                </span>
+                <span class="marks-input">
+                    <input name="mark" type="radio" value="3" class="mark-radio">
+                    <span class="mark-text-value">3</span>
+                </span>
+                <span class="marks-input">
+                    <input name="mark" type="radio" value="4" class="mark-radio">
+                    <span class="mark-text-value">4</span>
+                </span>
+                <span class="marks-input">
+                    <input name="mark" type="radio" value="5" class="mark-radio" checked>
+                    <span class="mark-text-value">5</span>
+                </span>
+            </span>
+            <input type="hidden" name="categoryUrl" value="@ViewBag.CategoryUrl">
+            <input type="hidden" name="subcategoryUrl" value="@ViewBag.SubcategoryUrl">
+            <input type="hidden" name="goodUrl" value="@ViewBag.GoodUrl">
+            <input type="hidden" name="goodName" value="@ViewBag.GoodName">
+            <span class="add-review-submit-panel">
+                <span class="add-review-cancel-button">Cancel</span>
+                <input type="submit" value="Ok" class="add-review-submit-button" />
+            </span>
+        </form>
+    </div>
+</div>

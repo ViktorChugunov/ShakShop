@@ -1,0 +1,25 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.BreadCrumbsListViewModel
+
+<div class="header-bottom-breadcrumb">
+    @for (int i = 0; i < Model.BreadCrumbsList.Count(); i++)
+    {
+        if (i == 0)
+        {
+            <div class="header-bottom-breadcrumb-selected-item">@Model.BreadCrumbsList[i].Name</div>
+            <div class="header-bottom-breadcrumb-arrow"><</div>
+        }
+        else if (i == Model.BreadCrumbsList.Count() - 1)
+        {
+            <div class="header-bottom-breadcrumb-item">
+                <a href="@Model.BreadCrumbsList[i].Link">@Model.BreadCrumbsList[i].Name</a>
+            </div>
+        }
+        else
+        {
+            <div class="header-bottom-breadcrumb-item">
+                <a href="@Model.BreadCrumbsList[i].Link">@Model.BreadCrumbsList[i].Name</a>
+            </div>
+            <div class="header-bottom-breadcrumb-arrow"><</div>
+        }
+    }
+</div>

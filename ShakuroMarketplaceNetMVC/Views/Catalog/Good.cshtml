@@ -43,13 +43,16 @@
             <p class="good-name">@Model.GoodName</p>
             <div class="select-good-color-container">
                 <select class="select-color" name="color[]">
-                    <option disabled selected>Color</option>
-                    <option value="Audio">Audio</option>
-                    <option value="TV">TV</option>
-                    <option value="Smartphone">Smartphone</option>
-                    <option value="PC">PC</option>
+                    <option disabled selected>@Model.GoodColor</option>
+                    @foreach (var sameGoodColorAndLink in Model.SameGoodColorsAndLinksList)
+                    {
+                        if (sameGoodColorAndLink.GoodColor != Model.GoodColor)
+                        {
+                            <option value="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@sameGoodColorAndLink.GoodUrl" class="choose-color">@sameGoodColorAndLink.GoodColor</option>
+                        }
+                    }
                 </select>
-            </div>
+            </div> 
             <p class="good-description">Product Description</p>
             <ul class="good-description-list">
                 @foreach (var characteristic in Model.Characteristics.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
@@ -75,7 +78,24 @@
                 <div class="purchase-options-delivery-icon"></div>
                 <div class="purchase-options-delivery-text">Delivery of 10$, tomorrow</div>
             </div>
-            <div class="add-to-cart-button">Add to cart</div>
+            @if (Session["GoodIdList"] != null)
+            {
+                if ((Session["GoodIdList"] as List<int>).Contains(Model.Id))
+                {
+                    <div class="add-to-cart-button good-in-cart" good-id="@Model.Id">Remove from cart</div>
+                }
+                else
+                {
+                    <div class="add-to-cart-button good-not-in-cart" good-id="@Model.Id">Add to cart</div>
+                }
+            }
+            else
+            {
+                <div class="add-to-cart-button good-not-in-cart" good-id="@Model.Id">Add to cart</div>
+            }
+
+
+
 
 
             <div class="purchase-options-favorite">
@@ -92,55 +112,3 @@
 </div>
 
 @{Html.RenderAction("SimilarOffers", new { CategoryUrl = @ViewBag.CategoryUrl, SubcategoryUrl = @ViewBag.SubcategoryUrl, GoodUrl = @ViewBag.GoodUrl });}
-
-
-
-@*
-
-
-
-    <div class="similar-offers-container">
-        <div class="similar-offers">
-            <div class="similar-offers-title">
-                <span class="similar-offers-title-icon"></span>
-                <span class="similar-offers-title-text">Similar offers</span>
-            </div>
-            <div class="similar-offers-list">
-                @for (int i = 0; i < Model.RandomGoodsList.Count(); i++)
-                {
-                    <div class="similar-offers-list-item">
-                        <div class="similar-offers-list-item-number-container">
-                            <div class="similar-offers-list-item-number">1</div>
-                        </div>
-                        <div class="similar-offers-list-item-name">
-                            <a href="/catalog/@Model.RandomGoodsList[i].GoodCategoryUrl/@Model.RandomGoodsList[i].GoodSubcategoryUrl/@Model.RandomGoodsList[i].GoodUrl">@Model.RandomGoodsList[i].GoodBrand @Model.RandomGoodsList[i].GoodName</a>
-                        </div>
-                        <div class="similar-offers-list-item-photo">
-                            <img src="/Content/Images/Goods/@Model.RandomGoodsList[i].GoodCategoryUrl/@Model.RandomGoodsList[i].GoodSubcategoryUrl/@Model.RandomGoodsList[i].GoodUrl/@Model.RandomGoodsList[i].GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="60">
-                        </div>
-                        <div class="similar-offers-list-item-rating">
-                            <div class="similar-offers-list-item-rating-icon"></div>
-                            <div class="similar-offers-list-item-rating-text">@Model.RandomGoodsList[i].GoodRating.ToString("0.00")</div>
-                        </div>
-                        <div class="similar-offers-list-item-reviews">
-                            <div class="similar-offers-list-item-reviews-icon"></div>
-                            <div class="similar-offers-list-item-reviews-text">@Model.RandomGoodsList[i].ReviewsNumber</div>
-                        </div>
-                        <div class="similar-offers-list-item-color">
-                            <div class="similar-offers-list-item-color-image" style="background-color: @Model.RandomGoodsList[i].GoodColor;"></div>
-                            <div class="similar-offers-list-item-color-text">@Model.RandomGoodsList[i].GoodColor</div>
-                        </div>
-                        <div class="similar-offers-list-item-sale"></div>
-                        <div class="similar-offers-list-item-price">@Model.RandomGoodsList[i].GoodPrice $</div>
-                        <div class="similar-offers-list-item-add-to-cart">
-                            <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-
-
-
-*@
