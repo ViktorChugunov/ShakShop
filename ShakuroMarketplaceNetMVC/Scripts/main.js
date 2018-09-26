@@ -95,4 +95,22 @@
         $(".change-task-block").removeClass("change-task-block-visible");
     });
 
+
+    $('.delivery-methods-information-fourth-column-addressee-phone-number-input').change(function () {
+        $('.card-owner-name-value').html($('.payment-methods-card-information-first-column-card-owner-name-input').val());
+        $('.card-number-value').html($('.payment-methods-card-information-first-column-card-number-input').val());
+        $('.card-cvv-value').html($('.payment-methods-card-information-second-column-card-cvv-input').val());
+        $('.card-month-value').html($('.select-card-month').val());
+        $('.card-year-value').html($('.select-card-year').val());
+        $('.addressee-first-name-value').html($('.delivery-methods-information-first-column-addressee-first-name-input').val());
+        $('.addressee-second-name-value').html($('.delivery-methods-information-first-column-addressee-second-name-input').val());
+        $('.addressee-country-value').html($('.delivery-methods-information-second-column-addressee-country-input').val());
+        $('.addressee-region-value').html($('.delivery-methods-information-second-column-addressee-region-input').val());
+        $('.addressee-city-value').html($('.delivery-methods-information-second-column-addressee-city-input').val());
+        $('.addressee-index-value').html($('.delivery-methods-information-third-column-addressee-index-input').val());
+        $('.addressee-street-address-value').html($('.delivery-methods-information-third-column-addressee-street-address-input').val());
+        $('.addressee-phone-number-value').text($('.delivery-methods-information-fourth-column-addressee-phone-number-input').val());
+        $('.addressee-email-value').html($('.delivery-methods-information-fourth-column-addressee-email-input').val());    
+    });
+
 });

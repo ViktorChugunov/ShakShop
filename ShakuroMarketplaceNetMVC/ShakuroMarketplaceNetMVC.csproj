@@ -267,6 +267,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BreadCrumb.cs" />
     <Compile Include="Models\BreadCrumbsListViewModel.cs" />
+    <Compile Include="Models\CartGoodsListViewModel.cs" />
+    <Compile Include="Models\CartGoodViewModel.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Discussion.cs" />
     <Compile Include="Models\DiscussionGood.cs" />
@@ -684,11 +686,15 @@
     <Content Include="Content\Images\Goods\viewedProduct4.png" />
     <Content Include="Content\Images\Goods\Xiaomi_Mi.png" />
     <Content Include="Content\Images\Icons\arrow.png" />
+    <Content Include="Content\Images\Icons\arrow_back.png" />
     <Content Include="Content\Images\Icons\avatar.png" />
     <Content Include="Content\Images\Icons\cart.png" />
+    <Content Include="Content\Images\Icons\checkbox-not-selected.png" />
+    <Content Include="Content\Images\Icons\checkbox-selected.png" />
     <Content Include="Content\Images\Icons\closed_envelope.png" />
     <Content Include="Content\Images\Icons\compare.png" />
     <Content Include="Content\Images\Icons\delivery.png" />
+    <Content Include="Content\Images\Icons\done.png" />
     <Content Include="Content\Images\Icons\eye.png" />
     <Content Include="Content\Images\Icons\favorite.png" />
     <Content Include="Content\Images\Icons\icons.png" />
@@ -698,6 +704,7 @@
     <Content Include="Content\Images\Icons\login.png" />
     <Content Include="Content\Images\Icons\new.png" />
     <Content Include="Content\Images\Icons\opened_envelope.png" />
+    <Content Include="Content\Images\Icons\payment.png" />
     <Content Include="Content\Images\Icons\radius_30.png" />
     <Content Include="Content\Images\Icons\recommended.png" />
     <Content Include="Content\Images\Icons\review.png" />
@@ -898,6 +905,7 @@
     <Content Include="Views\Catalog\SimilarOffers.cshtml" />
     <Content Include="Views\Shared\_BreadCrumbs.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Cart\PaymentMethods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />

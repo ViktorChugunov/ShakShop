@@ -1,4 +1,4 @@
-﻿@model ShakuroMarketplaceNetMVC.Models.GoodSubcategory
+﻿@model ShakuroMarketplaceNetMVC.Models.CartGoodsListViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -8,28 +8,28 @@
 <div class="cart-header">
     <div class="cart-menu">
         <div class="cart-menu-item">
-            <div class="cart-menu-selected-item-icon-block"></div>
+            <div class="cart-menu-selected-item-icon-block cart-icon"></div>
             <div class="cart-menu-item-step-block">
                 <div class="cart-menu-item-step-block-number">First step</div>
                 <div class="cart-menu-item-step-block-name">Shopping Cart</div>
             </div>
         </div>
         <div class="cart-menu-item">
-            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-icon-block payment-icon"></div>
             <div class="cart-menu-item-step-block">
                 <div class="cart-menu-item-step-block-number">Second step</div>
                 <div class="cart-menu-item-step-block-name">Payment Methods</div>
             </div>
         </div>
         <div class="cart-menu-item">
-            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-icon-block delivery-icon"></div>
             <div class="cart-menu-item-step-block">
                 <div class="cart-menu-item-step-block-number">Third step</div>
                 <div class="cart-menu-item-step-block-name">Delivery Methods</div>
             </div>
         </div>
         <div class="cart-menu-item">
-            <div class="cart-menu-item-icon-block"></div>
+            <div class="cart-menu-item-icon-block done-icon"></div>
             <div class="cart-menu-item-step-block">
                 <div class="cart-menu-item-step-block-number">Fourth step</div>
                 <div class="cart-menu-item-step-block-name">Delivery Methods</div>
@@ -38,30 +38,279 @@
     </div>
 </div>
 
-<div class="goods-in-cart-list-container">
-    <div class="goods-in-cart-list">
-        <div class="goods-in-cart-list-header">
-            <div class="goods-in-cart-list-header-item-img">Items</div>
-            <div class="goods-in-cart-list-header-item-name"></div>
-            <div class="goods-in-cart-list-header-item-price">Price</div>
-            <div class="goods-in-cart-list-header-item-quantity">Quantity</div>
-            <div class="goods-in-cart-list-header-item-total">Total</div>
-            <div class="goods-in-cart-list-header-item-delete"></div>
+<div class="cart-order-container">
+    @if (Model.CartGoodsList == null)
+    {
+        <div class="goods-in-cart-empty-list">
+            Your cart is empty!
         </div>
-        <div class="goods-in-cart-list-item">
-            <div class="goods-in-cart-list-item-img">
-                <img src="/Content/Images/Goods/cell-phones/smart-phones/Apple-iPhone-SE-16GB-Gray/iPhone-SE-Main-Gray.png" height="80">
+    }
+    else
+    {
+        <form action="#">
+            <div class="goods-in-cart-list">
+                <div class="goods-in-cart-list-header">
+                    <div class="goods-in-cart-list-header-item-img">Items</div>
+                    <div class="goods-in-cart-list-header-item-name"></div>
+                    <div class="goods-in-cart-list-header-item-price">Price</div>
+                    <div class="goods-in-cart-list-header-item-quantity">Quantity</div>
+                    <div class="goods-in-cart-list-header-item-total">Total</div>
+                    <div class="goods-in-cart-list-header-item-delete"></div>
+                </div>
+                @foreach (var item in Model.CartGoodsList)
+                {
+                    <div class="goods-in-cart-list-item">
+                        <div class="goods-in-cart-list-item-img">
+                            <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="80">
+                        </div>
+                        <div class="goods-in-cart-list-item-name">@item.GoodBrand @item.GoodName, @item.GoodColor</div>
+                        <div class="goods-in-cart-list-item-price">$ @item.GoodPrice</div>
+                        <div class="goods-in-cart-list-item-quantity">
+                            <div class="goods-in-cart-list-item-quantity-minus">&#8211;</div>
+                            <div class="goods-in-cart-list-item-quantity-number">1</div>
+                            <div class="goods-in-cart-list-item-quantity-plus">+</div>
+                        </div>
+                        <div class="goods-in-cart-list-item-total">$ 1100</div>
+                        <div class="goods-in-cart-list-item-delete">
+                            <a href="/cart/DeleteGoodFromdCart/@item.Id">&#10006;</a>
+                        </div>
+                    </div>
+                }
+                <div class="goods-in-cart-list-footer">
+                    <div class="goods-in-cart-list-footer-discount">
+
+                    </div>
+                    <div class="goods-in-cart-list-footer-total-price-name">
+                        Total price:
+                    </div>
+                    <div class="goods-in-cart-list-footer-total-price-number">
+                        $1100
+                    </div>
+                    <div class="goods-in-cart-list-footer-empty"></div>
+                </div>
             </div>
-            <div class="goods-in-cart-list-item-name">Apple iPhone 7 32 GB</div>
-            <div class="goods-in-cart-list-item-price">$ 455</div>
-            <div class="goods-in-cart-list-item-quantity">
-                <div class="goods-in-cart-list-item-quantity-minus">-</div>
-                <div class="goods-in-cart-list-item-quantity-number">1</div>
-                <div class="goods-in-cart-list-item-quantity-plus">+</div>
+
+
+            <br>
+            <!-- Payment method-->
+            <div class="payment-methods">
+                <div class="payment-methods-header">
+                    <div class="payment-methods-header-additional-block"></div>
+                    <div class="payment-methods-header-visa active-bank-system"></div>
+                    <div class="payment-methods-header-empty-block"></div>
+                    <div class="payment-methods-header-mastercard"></div>
+                    <div class="payment-methods-header-empty-block"></div>
+                    <div class="payment-methods-header-paypal"></div>
+                    <div class="payment-methods-header-empty-block"></div>
+                    <div class="payment-methods-header-amazon"></div>
+                    <div class="payment-methods-header-additional-block"></div>
+                </div>
+                <div class="payment-methods-card-information">
+                    <div class="payment-methods-card-information-first-column">
+                        <div class="payment-methods-card-information-first-column-card-owner-name">
+                            <p class="payment-methods-card-information-first-column-card-owner-name-header">Name</p>
+                            <input type="text" placeholder="Name" name="card-owner-name" required class="payment-methods-card-information-first-column-card-owner-name-input">
+                        </div>
+                        <div class="payment-methods-card-information-first-column-card-number">
+                            <p class="payment-methods-card-information-first-column-card-number-header">Card Number</p>
+                            <input type="text" placeholder="0000-0000-0000-0000" name="card-number" required pattern="\d{4}-\d{4}-\d{4}-\d{4}" class="payment-methods-card-information-first-column-card-number-input">
+                        </div>
+                    </div>
+                    <div class="payment-methods-card-information-second-column">
+                        <div class="payment-methods-card-information-second-column-month">
+                            <p class="payment-methods-card-information-second-column-card-month-header">Month</p>
+                            <div class="select-card-month-container">
+                                <select class="select-card-month" name="card-month">
+                                    <option value="January" class="card-month-option" selected>January</option>
+                                    <option value="February" class="card-month-option">February</option>
+                                    <option value="March" class="card-month-option">March</option>
+                                    <option value="April" class="card-month-option">April</option>
+                                    <option value="May" class="card-month-option">May</option>
+                                    <option value="June" class="card-month-option">June</option>
+                                    <option value="July" class="card-month-option">July</option>
+                                    <option value="August" class="card-month-option">August</option>
+                                    <option value="September" class="card-month-option">September</option>
+                                    <option value="October" class="card-month-option">October</option>
+                                    <option value="November" class="card-month-option">November</option>
+                                    <option value="December" class="card-month-option">December</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="payment-methods-card-information-second-column-year">
+                            <p class="payment-methods-card-information-second-column-card-year-header">Year</p>
+                            <div class="select-card-month-container">
+                                <select class="select-card-year" name="card-year">
+                                    @{DateTime currentYear = DateTime.Now;}
+                                    <option value="@currentYear.ToString("yyyy")" class="card-year-option" selected>@currentYear.ToString("yyyy")</option>
+                                    @for (int i = 1; i <= 10; i++)
+                                    {
+                                        <option value="@currentYear.AddYears(i).ToString("yyyy")" class="card-year-option">@currentYear.AddYears(i).ToString("yyyy")</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="payment-methods-card-information-second-column-card-cvv">
+                            <p class="payment-methods-card-information-second-column-card-cvv-header">CVV</p>
+                            <input type="text" placeholder="000" maxlength="3" name="card-cvv" pattern="\d{3}" required class="payment-methods-card-information-second-column-card-cvv-input">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="goods-in-cart-list-item-total">$ 1100</div>
-            <div class="goods-in-cart-list-item-delete">X</div>
-        </div>
-        <div class="goods-in-cart-list-footer">Total price: $1100</div>
-    </div>
+
+            <br>
+            <!-- Payment method-->
+            <div class="delivery-methods">
+                <div class="delivery-methods-header">
+                    <div class="delivery-methods-header-additional-block"></div>
+                    <div class="delivery-methods-header-free-delivery active-delivery-type">Free Delivery</div>
+                    <div class="delivery-methods-header-empty-block"></div>
+                    <div class="delivery-methods-header-express-delivery">Express Delivery</div>
+                    <div class="delivery-methods-header-additional-block"></div>
+                </div>
+                <div class="delivery-methods-information">
+                    <div class="delivery-methods-information-first-column">
+                        <div class="delivery-methods-information-first-column-addressee-first-name">
+                            <p class="delivery-methods-information-first-column-addressee-first-name-header">First Name</p>
+                            <input type="text" placeholder="First Name" name="addressee-first-name" required class="delivery-methods-information-first-column-addressee-first-name-input">
+                        </div>
+                        <div class="delivery-methods-information-first-column-addressee-second-name">
+                            <p class="delivery-methods-information-first-column-addressee-second-name-header">Second Name</p>
+                            <input type="text" placeholder="Second Name" name="addressee-second-name" required class="delivery-methods-information-first-column-addressee-second-name-input">
+                        </div>
+                    </div>
+                    <div class="delivery-methods-information-second-column">
+                        <div class="delivery-methods-information-second-column-addressee-country">
+                            <p class="delivery-methods-information-second-column-addressee-country-header">Country</p>
+                            <input type="text" placeholder="Country" name="addressee-country" required class="delivery-methods-information-second-column-addressee-country-input">
+                        </div>
+                        <div class="delivery-methods-information-second-column-addressee-region">
+                            <p class="delivery-methods-information-second-column-addressee-region-header">Region</p>
+                            <input type="text" placeholder="Region" name="addressee-region" required class="delivery-methods-information-second-column-addressee-region-input">
+                        </div>
+                        <div class="delivery-methods-information-second-column-addressee-city">
+                            <p class="delivery-methods-information-second-column-addressee-city-header">City</p>
+                            <input type="text" placeholder="City" name="addressee-city" required class="delivery-methods-information-second-column-addressee-city-input">
+                        </div>
+                    </div>
+                    <div class="delivery-methods-information-third-column">
+                        <div class="delivery-methods-information-third-column-addressee-index">
+                            <p class="delivery-methods-information-third-column-addressee-index-header">Index</p>
+                            <input type="text" placeholder="Index" name="addressee-index" required class="delivery-methods-information-third-column-addressee-index-input">
+                        </div>
+                        <div class="delivery-methods-information-third-column-addressee-street-address">
+                            <p class="delivery-methods-information-third-column-addressee-street-address-header">Street Address</p>
+                            <input type="text" placeholder="Street Address" name="addressee-street-address" required class="delivery-methods-information-third-column-addressee-street-address-input">
+                        </div>
+                    </div>
+                    <div class="delivery-methods-information-fourth-column">
+                        <div class="delivery-methods-information-fourth-column-addressee-phone-number">
+                            <p class="delivery-methods-information-fourth-column-addressee-phone-number-header">Phone Number</p>
+                            <input type="text" placeholder="Phone Number" name="addressee-phone-number" required class="delivery-methods-information-fourth-column-addressee-phone-number-input">
+                        </div>
+                        <div class="delivery-methods-information-fourth-column-addressee-email">
+                            <p class="delivery-methods-information-fourth-column-addressee-email-header">Email</p>
+                            <input type="email" placeholder="Email" name="addressee-email" required class="delivery-methods-information-fourth-column-addressee-email-input">
+                        </div>
+                    </div>
+                    <div class="delivery-methods-information-fifth-column">
+                        <div class="delivery-methods-information-fifth-column-ups-delivery">
+                            <div class="delivery-methods-information-fifth-column-ups-delivery-price">
+                                <div class="delivery-methods-information-fifth-column-ups-delivery-price-icon selected-delivery-method"></div>
+                                <div class="delivery-methods-information-fifth-column-ups-delivery-price-text">$ 80.67</div>
+                            </div>
+                            <div class="delivery-methods-information-fifth-column-ups-delivery-term">UPS Delivery (10-12 Days)</div>
+                        </div>
+                        <div class="delivery-methods-information-fifth-column-dhl-delivery">
+                            <div class="delivery-methods-information-fifth-column-dhl-delivery-price">
+                                <div class="delivery-methods-information-fifth-column-dhl-delivery-price-icon"></div>
+                                <div class="delivery-methods-information-fifth-column-dhl-delivery-price-text">$ 95.50</div>
+                            </div>
+                            <div class="delivery-methods-information-fifth-column-dhl-delivery-term">UPS Delivery (10-12 Days)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+            <!-- Confirm order -->
+            <div class="confirm-order">
+                <p class="confirm-order-header">Submit your order</p>
+
+                <div class="order-info">
+                    <div class="ordered-items">
+                        <div class="ordered-items-title">Ordered items:</div>
+                        <div class="ordered-items-value">
+                            @if (Model.CartGoodsList != null)
+                            {
+                                foreach (var item in Model.CartGoodsList)
+                                {
+                                    <p>@item.GoodBrand @item.GoodName, @item.GoodColor</p>
+                                }
+                            }
+                            else
+                            {
+                                <p>No items</p>
+                            }
+                        </div>
+                    </div>
+                    <div class="total-order-price">
+                        <div class="total-order-price-title">Total order price:</div>
+                        <div class="total-order-price-value">???</div>
+                    </div>
+                    <div class="card-owner-name">
+                        <div class="card-owner-name-title">Card owner name:</div>
+                        <div class="card-owner-name-value"></div>
+                    </div>
+                    <div class="card-number">
+                        <div class="card-number-title">Card number:</div>
+                        <div class="card-number-value"></div>
+                    </div>
+                    <div class="card-cvv">
+                        <div class="card-cvv-title">Card CVV:</div>
+                        <div class="card-cvv-value"></div>
+                    </div>
+                    <div class="card-date">
+                        <div class="card-date-title">Card date:</div>
+                        <div class="card-date-value">
+                            <span class="card-month-value"></span>
+                            <span class="card-year-value"></span>
+                        </div>
+                    </div>
+                    <div class="addressee-name">
+                        <div class="addressee-name-title">Adressee name:</div>
+                        <div class="addressee-name-value">
+                            <span class="addressee-first-name-value"></span>
+                            <span class="addressee-second-name-value"></span>
+                        </div>
+                    </div>
+                    <div class="addressee-address">
+                        <div class="addressee-address-title">Address:</div>
+                        <div class="addressee-address-value">
+                            <span class="addressee-country-value"></span>,
+                            <span class="addressee-region-value"></span>,
+                            <span class="addressee-city-value"></span>,
+                            <span class="addressee-index-value"></span>,
+                            <span class="addressee-street-address-value"></span>
+                        </div>
+                    </div>
+                    <div class="addressee-phone-number">
+                        <div class="addressee-phone-number-title">Phone number:</div>
+                        <div class="addressee-phone-number-value"></div>
+                    </div>
+                    <div class="addressee-email">
+                        <div class="addressee-email-title">Email:</div>
+                        <div class="addressee-email-value"></div>
+                    </div>
+                </div>
+                <input type="submit" value="Submit Order" class="submit-order">
+            </div>
+            
+            <!---->
+            <div class="cart-navigation-buttons">
+                <div class="cart-navigation-buttons-back button-back-to-shopping"><img src="/Content/Images/Icons/arrow_back.png" width="26" height="26"> Shopping Cart</div>
+                <div class="cart-navigation-buttons-foward button-go-to-payment-methods">Payment Methods<img src="/Content/Images/Icons/cart.png" width="26" height="26"></div>
+            </div>
+        </form>
+    }
 </div>

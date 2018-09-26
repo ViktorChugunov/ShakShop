@@ -18,8 +18,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
+            ViewBag.CategoriesData = GetCategoriesData();
+            ViewBag.Message = "Your application description page.";            
             return View();
         }
 

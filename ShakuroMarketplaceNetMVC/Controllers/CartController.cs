@@ -16,104 +16,65 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             {
                 ViewBag.CategoriesData = GetCategoriesData();
                 ViewBag.PageHeader = "Cart";
-                return View();
+
+                //ViewBag.d1 = HttpContext.Request.Cookies["GoodIdList"].Value;
+                CartGoodsListViewModel viewModel = new CartGoodsListViewModel { };
+                if ( (List<int>)Session["GoodIdList"] != null )
+                {
+                    List<CartGoodViewModel> cartGoodsList = new List<CartGoodViewModel>() { };
+                    foreach (int currentGoodId in (List<int>)Session["GoodIdList"])
+                    {
+                        int goodSubcategoryId = db.Goods.Find(currentGoodId).GoodSubcategoryId;
+                        int goodCategoryId = db.GoodSubcategories.Find(goodSubcategoryId).GoodCategoryId;
+                        string goodSubcategoryUrl = db.GoodSubcategories.Where(x => x.Id == goodSubcategoryId).First().SubcategoryUrl;
+                        string goodCategoryUrl = db.GoodCategories.Where(x => x.Id == goodCategoryId).First().CategoryUrl;
+                        CartGoodViewModel goodInfo = db.Goods.Where(x => x.Id == currentGoodId)
+                            .Select(p => new CartGoodViewModel
+                            {
+                                Id = p.Id,
+                                GoodName = p.GoodName,
+                                GoodBrand = p.GoodBrand,
+                                GoodCategoryUrl = goodCategoryUrl,
+                                GoodSubcategoryUrl = goodSubcategoryUrl,
+                                GoodUrl = p.GoodUrl,
+                                GoodColor = p.GoodColor,
+                                GoodImagesUrls = p.GoodImagesUrls,
+                                GoodPrice = p.GoodPrice,
+                                SalesGood = p.SalesGood
+                            }).First();
+                        cartGoodsList.Add(goodInfo);
+                    }
+                    viewModel = new CartGoodsListViewModel { CartGoodsList = cartGoodsList };
+                    //return View(viewModel);
+                }
+                return View(viewModel);
             }
         }
 
-        public PartialViewResult BreadCrumbs(string pageUrl)
+        public ActionResult PaymentMethods()
+        {            
+            return View();
+        }
+
+        public ActionResult DeleteGoodFromdCart(int goodId)
         {
-            using (GoodContext db = new GoodContext())
-            {
-                string[] pageUrlList = pageUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                List<BreadCrumb> breadCrumbsList = new List<BreadCrumb>();
-
-                if (pageUrlList.Length == 1 && pageUrlList[0].ToLower() == "cart")
-                {
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Cart", Link = "/cart" };
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 3 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 4 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string goodUrl = pageUrlList[3];
-
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
-
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 5 && pageUrlList[0].ToLower() == "catalog" && (pageUrlList[4].ToLower() == "reviews" || pageUrlList[4].ToLower() == "discussions" || pageUrlList[4].ToLower() == "overview"))
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string goodUrl = pageUrlList[3];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
-                    BreadCrumb breadCrumbGoodOption = new BreadCrumb { Name = pageUrlList[4], Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl + "/" + pageUrlList[4] };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGoodOption, breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else
-                {
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbMain });
-                }
-
-                var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };
-                return PartialView("_BreadCrumbs", viewModel);
-            }
+            (Session["GoodIdList"] as List<int>).Remove(goodId);
+            return Redirect("/cart");
         }
 
         [HttpGet]
         public JsonResult AddGoodToCart(int goodId)
         {
-            if (Session["GoodIdList"] == null)
+            //Response.Cookies["GoodIdList"].Value = "patrick";
+            //Response.Cookies["GoodIdList"].Expires = DateTime.Now.AddDays(1);
+            if (Response.Cookies["GoodIdList"].Value == null)
             {
                 Session["GoodIdList"] = new List<int>();
             }
             if (!(Session["GoodIdList"] as List<int>).Contains(goodId))
             {
                 (Session["GoodIdList"] as List<int>).Add(goodId);
-            }         
-
+            }
             return Json(Session["GoodIdList"], JsonRequestBehavior.AllowGet);
         }
 
@@ -138,6 +99,38 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             {
                 IEnumerable<GoodCategory> goodCategories = db.GoodCategories.ToList();
                 return goodCategories;
+            }
+        }
+
+        public PartialViewResult BreadCrumbs(string pageUrl)
+        {
+            using (GoodContext db = new GoodContext())
+            {
+                string[] pageUrlList = pageUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                List<BreadCrumb> breadCrumbsList = new List<BreadCrumb>();
+
+                if (pageUrlList.Length == 1 && pageUrlList[0].ToLower() == "cart")
+                {
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Cart", Link = "/cart" };
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCatalog, breadCrumbMain });
+                }
+                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "cart" && pageUrlList[1].ToLower() == "payment-methods")
+                {
+                    string categoryName = "Payment methods";
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbCart = new BreadCrumb { Name = "Cart", Link = "/cart" };
+                    BreadCrumb breadCrumbPaymentMethods = new BreadCrumb { Name = categoryName, Link = "/cart/payment-methods" };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbPaymentMethods, breadCrumbCart, breadCrumbMain });
+                }
+                else
+                {
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbMain });
+                }
+
+                var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };
+                return PartialView("_BreadCrumbs", viewModel);
             }
         }
 

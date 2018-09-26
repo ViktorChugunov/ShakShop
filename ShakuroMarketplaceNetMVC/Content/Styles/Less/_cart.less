@@ -24,15 +24,40 @@
     align-items: center;
 }
 
-.cart-menu-selected-item-icon-block {
+.cart-menu-item-icon-block {
     width: 60px;
     height: 60px;
     border: 2px solid #F0F0F0;
-    border-radius: 30px;
-    background-image: url('/Content/Images/Icons/star.png');
+    border-radius: 30px;    
     background-size: 26px 26px;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.cart-menu-selected-item-icon-block {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #0078FF;
+    border-radius: 30px;
+    background-size: 26px 26px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.cart-icon {
+    background-image: url('/Content/Images/Icons/cart.png');
+}
+
+.payment-icon {
+    background-image: url('/Content/Images/Icons/payment.png');
+}
+
+.delivery-icon {
+    background-image: url('/Content/Images/Icons/delivery.png');
+}
+
+.done-icon {
+    background-image: url('/Content/Images/Icons/done.png');
 }
 
 .cart-menu-item-icon-block {
@@ -62,17 +87,31 @@
 }
 
 //Goods List
-.goods-in-cart-list-container {
+.cart-order-container {
     background-color: #F7F7F7;
     padding: 24px 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
 .goods-in-cart-list {
     width: 1080px;
     background-color: #FFF;
+}
+
+.goods-in-cart-empty-list {
+    width: 1080px;
+    height: 200px;
+    background-color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #808080;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .goods-in-cart-list-header {
@@ -140,7 +179,6 @@
     width: 100%;
     height: 118px;
     border-bottom: 2px solid #F5F5F5;
-    color: #808080;
 }
 
 .goods-in-cart-list-item-img {
@@ -159,6 +197,7 @@
     align-items: center;
     padding-left: 24px;
     font-size: 14px;
+    color: #808080;
 }
 
 .goods-in-cart-list-item-price {
@@ -167,7 +206,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    color: #808080;
 }
 
 .goods-in-cart-list-item-quantity {
@@ -177,18 +216,41 @@
     justify-content: center;
     align-items: center;
     font-size: 16px;
+    color: #B2B2B2;
 }
 
 .goods-in-cart-list-item-quantity-minus {
-
+    width: 45px;
+    height: 40px;
+    border: 2px solid #F0F0F0;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .goods-in-cart-list-item-quantity-number {
-
+    width: 45px;
+    height: 40px;    
+    border-top: 2px solid #F0F0F0;
+    border-bottom: 2px solid #F0F0F0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .goods-in-cart-list-item-quantity-plus {
-
+    width: 45px;
+    height: 40px;
+    border: 2px solid #F0F0F0;
+    border-top-right-radius: 40px;
+    border-bottom-right-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
 }
 
 .goods-in-cart-list-item-total {
@@ -199,6 +261,7 @@
     align-items: center;
     font-weight: bold;
     font-size: 16px;
+    color: #808080;
 }
 
 .goods-in-cart-list-item-delete {
@@ -207,9 +270,533 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #D8D8D8;
+}
+
+.goods-in-cart-list-item-delete a {
+    //cursor: pointer;
+    font-size: 20px;
+    color: #D8D8D8;
+    text-decoration: none;
 }
 
 .goods-in-cart-list-footer {
-
+    width: 100%;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
 }
 
+.goods-in-cart-list-footer-discount {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.goods-in-cart-list-footer-total-price-name {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #B2B2B2;
+    font-size: 14px;
+}
+
+.goods-in-cart-list-footer-total-price-number {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #808080;
+    font-size: 16px;
+}
+
+.goods-in-cart-list-footer-empty {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.cart-navigation-buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.cart-navigation-buttons-back {
+    width: 210px;
+    height: 60px;
+    border: 2px solid #EBEBEB;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    color: #B2B2B2;
+}
+
+.cart-navigation-buttons-back img {
+    margin-right: 8px;
+}
+
+.cart-navigation-buttons-foward {
+    width: 210px;
+    height: 60px;
+    margin-left: 24px;
+    background-color: #0078FF;
+    border-radius: 30px;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cart-navigation-buttons-foward img {
+    margin-left: 8px;
+}
+
+//Payment methods
+.payment-methods {
+    width: 1080px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-methods-header {
+    width: 100%;
+    height: 88px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.payment-methods-header-additional-block {
+    width: calc(~"50% - 192px");
+    height: 100%;
+    border-bottom: 2px solid #F5F5F5;
+}
+
+.payment-methods-header-empty-block {
+    width: 64px;
+    height: 100%;
+    border-bottom: 2px solid #F7F7F7;
+}
+
+.payment-methods-header-visa,
+.payment-methods-header-mastercard,
+.payment-methods-header-paypal,
+.payment-methods-header-amazon {
+    width: 48px;
+    height: 100%;
+    background-image: url('/Content/Images/Icons/visa.png');
+    background-size: 48px 30px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-bottom: 2px solid #F7F7F7;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.payment-methods-header-visa {
+    background-image: url('/Content/Images/Icons/visa.png');
+}
+
+.payment-methods-header-mastercard {
+    background-image: url('/Content/Images/Icons/mastercard.png');
+}
+
+.payment-methods-header-paypal {
+    background-image: url('/Content/Images/Icons/paypal.png');
+}
+
+.payment-methods-header-amazon {
+    background-image: url('/Content/Images/Icons/amazon.png');
+}
+
+.active-bank-system {
+    border-bottom: 2px solid #0078FF !important;
+}
+
+.payment-methods-card-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 540px;
+    padding: 72px 0 72px 0;
+}
+
+.payment-methods-card-information-first-column,
+.payment-methods-card-information-second-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 0 24px 0;
+}
+
+.payment-methods-card-information-first-column-card-owner-name,
+.payment-methods-card-information-first-column-card-number {
+    width: calc(~"50% - 12px");
+}
+
+.payment-methods-card-information-first-column-card-owner-name-input,
+.payment-methods-card-information-first-column-card-number-input,
+.payment-methods-card-information-second-column-card-cvv-input {
+    width: 100%;
+    height: 50px;
+    border: 2px solid #EBEBEB;
+    border-radius: 25px;
+    padding-left: 24px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #B2B2B2;
+
+    &::placeholder {
+        color: #B2B2B2;
+        font-weight: bold;
+    }
+}
+
+.payment-methods-card-information-second-column-month,
+.payment-methods-card-information-second-column-year,
+.payment-methods-card-information-second-column-card-cvv {
+    width: calc(~"(100% / 3) - 16px");
+}
+
+.select-card-month-container,
+.select-card-year-container {
+    width: 100%;
+    height: 50px;
+    background: url(/Content/Images/Icons/arrow.png) no-repeat #FFFFFF;
+    border: 2px solid #EBEBEB;
+    border-radius: 25px;
+    background-position: calc(~"100% - 24px") 50%;
+}
+
+.select-card-month,
+.select-card-year {
+    width: 100%;
+    height: 46px;
+    background: transparent;
+    padding-left: 24px;
+    color: #B2B2B2;
+    -webkit-appearance: none;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.card-month-option {
+    font-size: 12px;
+}
+
+.payment-methods-card-information-first-column-card-owner-name-header,
+.payment-methods-card-information-first-column-card-number-header,
+.payment-methods-card-information-second-column-card-month-header,
+.payment-methods-card-information-second-column-card-year-header,
+.payment-methods-card-information-second-column-card-cvv-header {
+    font-weight: bold;
+    font-size: 12px;
+    color: #999999;
+    margin: 0 0 12px 24px;
+}
+
+.card-year-option {
+    font-size: 12px;
+}
+
+//Delivery Methods
+.delivery-methods {
+    width: 1080px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.delivery-methods-header {
+    width: 100%;
+    height: 88px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.delivery-methods-header-additional-block {
+    width: calc(~"50% - 172px");
+    height: 100%;
+    border-bottom: 2px solid #F5F5F5;
+}
+
+.delivery-methods-header-empty-block {
+    width: 64px;
+    height: 100%;
+    border-bottom: 2px solid #F7F7F7;
+}
+
+.delivery-methods-header-free-delivery,
+.delivery-methods-header-express-delivery {
+    width: 140px;
+    height: 100%;
+    border-bottom: 2px solid #F7F7F7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #666666;
+    font-size: 14px;
+    font-weight: bold;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.active-delivery-type {
+    border-bottom: 2px solid #0078FF !important;
+}
+
+.delivery-methods-information {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 540px;
+    padding: 36px 0 72px 0;
+}
+
+.delivery-methods-information-first-column,
+.delivery-methods-information-second-column,
+.delivery-methods-information-third-column,
+.delivery-methods-information-fourth-column,
+.delivery-methods-information-fifth-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 24px 0 0 0;
+    width: 100%;
+}
+
+.delivery-methods-information-first-column-addressee-first-name-header,
+.delivery-methods-information-first-column-addressee-second-name-header,
+.delivery-methods-information-second-column-addressee-country-header,
+.delivery-methods-information-second-column-addressee-region-header,
+.delivery-methods-information-second-column-addressee-city-header,
+.delivery-methods-information-third-column-addressee-index-header,
+.delivery-methods-information-third-column-addressee-street-address-header,
+.delivery-methods-information-fourth-column-addressee-phone-number-header,
+.delivery-methods-information-fourth-column-addressee-email-header {
+    font-weight: bold;
+    font-size: 12px;
+    color: #999999;
+    margin: 0 0 12px 24px;
+}
+
+.delivery-methods-information-first-column-addressee-first-name-input,
+.delivery-methods-information-first-column-addressee-second-name-input,
+.delivery-methods-information-second-column-addressee-country-input,
+.delivery-methods-information-second-column-addressee-region-input,
+.delivery-methods-information-second-column-addressee-city-input,
+.delivery-methods-information-third-column-addressee-index-input,
+.delivery-methods-information-third-column-addressee-street-address-input,
+.delivery-methods-information-fourth-column-addressee-phone-number-input,
+.delivery-methods-information-fourth-column-addressee-email-input {
+    width: 100%;
+    height: 50px;
+    border: 2px solid #EBEBEB;
+    border-radius: 25px;
+    padding-left: 24px;
+    font-size: 12px;
+    color: #B2B2B2;
+    font-weight: bold;
+
+    &::placeholder {
+        color: #B2B2B2;
+        font-weight: bold;
+    }
+}
+
+.delivery-methods-information-first-column-addressee-first-name,
+.delivery-methods-information-first-column-addressee-second-name {
+    width: calc(~"50% - 12px");
+}
+
+.delivery-methods-information-second-column-addressee-country,
+.delivery-methods-information-second-column-addressee-region,
+.delivery-methods-information-second-column-addressee-city {
+    width: calc(~"(100% / 3) - 16px");
+}
+
+.delivery-methods-information-third-column-addressee-index {
+    width: calc(~"30% - 12px");
+}
+
+.delivery-methods-information-third-column-addressee-street-address {
+    width: calc(~"70% - 12px");
+}
+
+.delivery-methods-information-fourth-column-addressee-phone-number,
+.delivery-methods-information-fourth-column-addressee-email {
+    width: calc(~"50% - 12px");
+}
+
+.delivery-methods-information-fifth-column-ups-delivery,
+.delivery-methods-information-fifth-column-dhl-delivery {
+    width: 260px;
+    height: 90px;
+    border: 2px solid #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 8px;
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.delivery-methods-information-fifth-column-ups-delivery-price,
+.delivery-methods-information-fifth-column-dhl-delivery-price {
+    width: calc(~"100% - 60px");
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.delivery-methods-information-fifth-column-ups-delivery-price-icon,
+.delivery-methods-information-fifth-column-dhl-delivery-price-icon {
+    width: 60px;
+    height: 20px;
+    background-image: url('/Content/Images/Icons/checkbox-not-selected.png');
+    background-size: 20px 20px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.selected-delivery-method {
+    background-image: url('/Content/Images/Icons/checkbox-selected.png');
+}
+
+
+.delivery-methods-information-fifth-column-ups-delivery-price-text,
+.delivery-methods-information-fifth-column-dhl-delivery-price-text {
+    font-size: 20px;
+    color: #808080;
+}
+
+.delivery-methods-information-fifth-column-ups-delivery-term,
+.delivery-methods-information-fifth-column-dhl-delivery-term {
+    font-size: 12px;
+    color: #B2B2B2;
+    padding: 8px 0 0 60px;
+}
+
+//Confirm Order
+.confirm-order {
+    width: 1080px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 0 48px 0;
+}
+
+.confirm-order-header {
+    color: #666666;
+    font-weight: bold;
+    font-size: 24px;
+    padding-bottom: 32px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.order-info {
+    width: 540px;
+}
+
+.ordered-items,
+.total-order-price,
+.card-owner-name,
+.card-number,
+.card-cvv,
+.card-date,
+.addressee-name,
+.addressee-address,
+.addressee-phone-number,
+.addressee-email {
+    display: flex;
+    flex-direction: row;
+    padding: 8px 24px;
+
+    &:nth-child(odd) {
+        background-color: #F7F7F7;
+    }
+
+    &:nth-child(even) {
+        background-color: #FDFDFD;
+    }
+}
+
+.ordered-items-title,
+.total-order-price-title,
+.card-owner-name-title,
+.card-number-title,
+.card-cvv-title,
+.card-date-title,
+.addressee-name-title,
+.addressee-address-title,
+.addressee-phone-number-title,
+.addressee-email-title {
+    width: 50%;
+    color: #B2B2B2;
+    font-weight: bold;
+}
+
+.ordered-items-value,
+.total-order-price-value,
+.card-owner-name-value,
+.card-number-value,
+.card-cvv-value,
+.card-month-value,
+.card-year-value,
+.addressee-first-name-value,
+.addressee-second-name-value,
+.addressee-address-value,
+.addressee-country-value,
+.addressee-region-value,
+.addressee-city-value,
+.addressee-index-value,
+.addressee-street-address-value,
+.addressee-phone-number-value,
+.addressee-email-value {
+    width: 50%;
+    color: #999999;
+}
+
+.submit-order {
+    width: 210px;
+    height: 60px;
+    border: 2px solid #EBEBEB;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFF;
+    color: #B2B2B2;
+    margin-top: 24px;
+    cursor: pointer;
+}
