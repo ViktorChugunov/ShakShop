@@ -11,6 +11,10 @@
             @foreach (var item in Model.SubcategoryGoodsList)
             {
                 <div class="category-goods-list-item">
+                    <div class="category-goods-list-item-special-buttons">
+                        <div class="category-goods-list-item-special-buttons-favorite"></div>
+                        <div class="category-goods-list-item-special-buttons-compare"></div>
+                    </div>
                     <a href="/catalog/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@item.GoodUrl" class="category-list-item-link">
                         <div class="category-goods-list-item-photo">
                             @if (item.NewGood)
@@ -24,11 +28,7 @@
                             else if (item.RecommendedGood)
                             {
                                 <div class="recommended-good"></div>
-                            }
-                            <div class="category-goods-list-item-special-buttons">
-                                <div class="category-goods-list-item-special-buttons-favorite"></div>
-                                <div class="category-goods-list-item-special-buttons-compare"></div>
-                            </div>
+                            }                            
                             <img src="/Content/Images/Goods/@ViewBag.CategoryUrl/@ViewBag.SubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="120">
                         </div>
                         <div class="category-goods-list-item-name"><p>@item.GoodBrand @item.GoodName, @item.GoodColor</p></div>

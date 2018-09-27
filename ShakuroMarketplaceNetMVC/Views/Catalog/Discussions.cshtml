@@ -24,14 +24,9 @@
     </div>
 </div>
 
-
 <div class="discussions-container">
     <div class="discussions">
-        <div class="discussions-list">
-            @*if (Model.discussions.Any() == false)
-        {
-            <p>asdasdasd</p>
-        }*@
+        <div class="discussions-list" showed-discussions="@ViewBag.InitiallyShowedDiscussionsNumber" good-id="@ViewBag.GoodId">
             @foreach (var discussion in Model.discussions)
             {
                 foreach (var item in discussion.OrderByDescending(p => p.FirstDiscussionMessage).ThenBy(p => p.Date))
@@ -82,7 +77,7 @@
                     }
                 }
             }
-            <div class="show-more-messages">Show More</div>
+            <div class="show-more-discussions">Show More</div>
         </div>
 
         <div class="discussions-info">

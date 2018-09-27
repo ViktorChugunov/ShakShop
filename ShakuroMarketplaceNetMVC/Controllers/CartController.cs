@@ -17,9 +17,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 ViewBag.CategoriesData = GetCategoriesData();
                 ViewBag.PageHeader = "Cart";
 
-                //ViewBag.d1 = HttpContext.Request.Cookies["GoodIdList"].Value;
                 CartGoodsListViewModel viewModel = new CartGoodsListViewModel { };
-                if ( (List<int>)Session["GoodIdList"] != null )
+                if ((List<int>)Session["GoodIdList"] != null)
                 {
                     List<CartGoodViewModel> cartGoodsList = new List<CartGoodViewModel>() { };
                     foreach (int currentGoodId in (List<int>)Session["GoodIdList"])
@@ -45,29 +44,15 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                         cartGoodsList.Add(goodInfo);
                     }
                     viewModel = new CartGoodsListViewModel { CartGoodsList = cartGoodsList };
-                    //return View(viewModel);
                 }
                 return View(viewModel);
             }
-        }
-
-        public ActionResult PaymentMethods()
-        {            
-            return View();
-        }
-
-        public ActionResult DeleteGoodFromdCart(int goodId)
-        {
-            (Session["GoodIdList"] as List<int>).Remove(goodId);
-            return Redirect("/cart");
-        }
+        }        
 
         [HttpGet]
         public JsonResult AddGoodToCart(int goodId)
         {
-            //Response.Cookies["GoodIdList"].Value = "patrick";
-            //Response.Cookies["GoodIdList"].Expires = DateTime.Now.AddDays(1);
-            if (Response.Cookies["GoodIdList"].Value == null)
+            if (Session["GoodIdList"] == null)
             {
                 Session["GoodIdList"] = new List<int>();
             }
@@ -81,16 +66,28 @@ namespace ShakuroMarketplaceNetMVC.Controllers
         [HttpGet]
         public JsonResult RemoveGoodFromdCart(int goodId)
         {
-            if (Session["GoodIdList"] == null)
-            {
-                Session["GoodIdList"] = new List<int>();
-            }
             if ((Session["GoodIdList"] as List<int>).Contains(goodId))
             {
                 (Session["GoodIdList"] as List<int>).Remove(goodId);
-            }         
-
+                if (!(Session["GoodIdList"] as List<int>).Any())
+                {
+                    Session["GoodIdList"] = null;
+                }
+            }
             return Json(Session["GoodIdList"], JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult DeleteGoodFromdCart(int goodId)
+        {
+            if ((Session["GoodIdList"] as List<int>).Contains(goodId))
+            {
+                (Session["GoodIdList"] as List<int>).Remove(goodId);
+                if (!(Session["GoodIdList"] as List<int>).Any())
+                {
+                    Session["GoodIdList"] = null;
+                }
+            }
+            return Redirect("/cart");
         }
 
         public IEnumerable<GoodCategory> GetCategoriesData()

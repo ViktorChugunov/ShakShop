@@ -26,7 +26,7 @@
 
 <div class="reviews-container">
     <div class="reviews">
-        <div class="reviews-list">
+        <div class="reviews-list" showed-reviews="@ViewBag.InitiallyShowedReviewsNumber" good-id="@ViewBag.GoodId">
             @foreach (var review in Model.goodReviewsList)
             {
                 <div class="reviews-list-item">
@@ -48,21 +48,15 @@
                     <div class="reviews-list-item-body">
                         <div class="reviews-list-item-body-advantages">
                             <p class="reviews-list-item-body-advantages-header">Advantages</p>
-                            <ul class="reviews-list-item-body-advantages-list">
-                                @foreach (var advantage in review.Advantages.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                                {
-                                    <li class="reviews-list-item-body-advantages-list-item">@advantage</li>
-                                }
-                            </ul>
+                            <p class="reviews-list-item-body-advantages-text">
+                                @review.Advantages
+                            </p>
                         </div>
                         <div class="reviews-list-item-body-disadvantages">
                             <p class="reviews-list-item-body-disadvantages-header">Disadvantages</p>
-                            <ul class="reviews-list-item-body-disadvantages-list">
-                                @foreach (var disadvantage in review.Disadvantages.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries))
-                                {
-                                    <li class="reviews-list-item-body-disadvantages-list-item">@disadvantage</li>
-                                }
-                            </ul>
+                            <p class="reviews-list-item-body-disadvantages-text">
+                                @review.Advantages
+                            </p>
                         </div>
                         <div class="reviews-list-item-body-comment">
                             <p class="reviews-list-item-body-comment-header">Comment</p>
@@ -85,7 +79,7 @@
                     </div>
                 </div>
             }
-            <div class="show-more-reviwes">Show more</div>
+            <div class="show-more-reviews">Show more</div>
         </div>
         <div class="reviews-info">
             <div class="reviews-info-item-button">

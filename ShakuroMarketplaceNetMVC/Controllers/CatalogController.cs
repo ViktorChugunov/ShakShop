@@ -135,20 +135,8 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             using (GoodContext db = new GoodContext())
             {            
                 int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
-                ViewBag.CategoryUrl = CategoryUrl;    
-                
-                int[] randomItemsIndexes = new int[4];
-                List<int> goodsIdList = db.Goods.Select(p => p.Id).ToList();           
-                goodsIdList.RemoveAt(goodsIdList.IndexOf(currentGoodId));
-                Random randomNumber = new Random();
-                for (int i = 0; i < 4; i++)
-                {
-                    int randomIndex = randomNumber.Next(0, goodsIdList.Count());
-                    randomItemsIndexes[i] = goodsIdList[randomIndex];
-                    goodsIdList.RemoveAt(randomIndex);
-                }
-                
-                //int[] randomItemsIndexes = GetRandomItemsIndexesList(currentGoodId);
+                ViewBag.CategoryUrl = CategoryUrl;
+                int[] randomItemsIndexes = GetRandomItemsIndexesList(currentGoodId);
                 List<GoodViewModel> RandomGoodsList = new List<GoodViewModel>(4);
                 for (int i = 0; i < 4; i++)
                 {
@@ -179,102 +167,23 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             }            
         }
 
-        public PartialViewResult BreadCrumbs(string pageUrl)
-        {
-            using (GoodContext db = new GoodContext())
-            {                
-                string[] pageUrlList = pageUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-                List<BreadCrumb> breadCrumbsList = new List<BreadCrumb>();
-
-                if (pageUrlList.Length == 1 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 3 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 4 && pageUrlList[0].ToLower() == "catalog")
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string goodUrl = pageUrlList[3];
-
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
-
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-                else if (pageUrlList.Length == 5 && pageUrlList[0].ToLower() == "catalog" && (pageUrlList[4].ToLower() == "reviews" || pageUrlList[4].ToLower() == "discussions" || pageUrlList[4].ToLower() == "overview"))
-                {
-                    string categoryUrl = pageUrlList[1];
-                    string subcategoryUrl = pageUrlList[2];
-                    string goodUrl = pageUrlList[3];
-                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
-                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
-                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
-                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
-                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
-                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
-                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
-                    BreadCrumb breadCrumbGoodOption = new BreadCrumb { Name = pageUrlList[4], Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl + "/" + pageUrlList[4] };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGoodOption, breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
-                }
-
-                var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };
-                return PartialView("_BreadCrumbs", viewModel);
-            }
-        }
-
         public int[] GetRandomItemsIndexesList(int currentGoodId)
         {
             using (GoodContext db = new GoodContext())
             {
-
-                int[] randomItemsIndexes = new[] { 0, 0, 0, 0 };
+                int[] randomItemsIndexes = new int[4];
+                List<int> goodsIdList = db.Goods.Select(p => p.Id).ToList();
+                goodsIdList.RemoveAt(goodsIdList.IndexOf(currentGoodId));
                 Random randomNumber = new Random();
                 for (int i = 0; i < 4; i++)
                 {
-                    int randomIndex = 0;
-                    while (randomIndex != currentGoodId && randomIndex != randomItemsIndexes[0] && randomIndex != randomItemsIndexes[1])
-                    {
-                        randomIndex = randomNumber.Next(1, db.Goods.Count());
-                        randomItemsIndexes[i] = randomIndex;
-                    };
+                    int randomIndex = randomNumber.Next(0, goodsIdList.Count());
+                    randomItemsIndexes[i] = goodsIdList[randomIndex];
+                    goodsIdList.RemoveAt(randomIndex);
                 }
                 return randomItemsIndexes;
             }
-        }
+        }            
 
         public ActionResult Reviews(string categoryUrl, string subcategoryUrl, string goodUrl)
         {
@@ -291,21 +200,21 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     string fullGoodName = goodBrand + " " + goodName + ", " + goodColor;
                     string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
                     string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
-
-
                     ViewBag.PageHeader = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " + 
                                          db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + " Reviews";
                     ViewBag.CategoryUrl = categoryUrl;
                     ViewBag.SubcategoryUrl = subcategoryUrl;
-                    ViewBag.GoodUrl = goodUrl;                    
+                    ViewBag.GoodUrl = goodUrl;
+                    ViewBag.InitiallyShowedReviewsNumber = 2;
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
+                    ViewBag.GoodId = currentGoodId;
                     ViewBag.GoodName = db.Goods.Find(currentGoodId).GoodName;
                     var viewModel = new ReviewViewModel()
                     {
                         goodRating = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Any() ? 
                                      db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Average(x => x.Mark) : 0,
                         reviewsNumberList = GetReviewsNumberList(currentGoodId),
-                        goodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList()                        
+                        goodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList().GetRange(0, 2)
                     };
                     List<string> breadcrumbList = new List<string>() { "Reviews", fullGoodName, subcategoryName, categoryName, "Catalog", "Main" };
                     ViewBag.breadCrumbList = breadcrumbList;
@@ -315,6 +224,35 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 {
                     return Redirect("/");
                 }
+            }
+        }
+
+        [HttpGet]
+        public JsonResult ShowMoreReviews(int goodId, int showedReviewsNumber, int addedReviewsNumber)
+        {
+            using (GoodContext db = new GoodContext())
+            {
+                var reviewsList = db.Goods.Where(x => x.Id == goodId).First().Reviews
+                    .Select(x => new { Reviewer = x.Reviewer, ReviewerAvatarSrc = x.ReviewerAvatarSrc, Date = x.Date.ToShortDateString(), Advantages = x.Advantages, Disadvantages = x.Disadvantages, Comment = x.Comment, Mark = x.Mark, LikesNumber = x.LikesNumber, DislikesNumber = x.DislikesNumber, ExperienceOfUse = x.ExperienceOfUse })
+                    .ToList();
+                int lastShowedReviewIndex = showedReviewsNumber + addedReviewsNumber;
+                int reviewsListLength = reviewsList.Count();
+                var addedReviewsList = reviewsList;
+                string allReviewsShowed = "false";
+
+                if (lastShowedReviewIndex < reviewsListLength)
+                {
+                    addedReviewsList = reviewsList.GetRange(showedReviewsNumber, addedReviewsNumber);
+                }
+                else
+                {
+                    addedReviewsList = reviewsList.GetRange(showedReviewsNumber, reviewsListLength - showedReviewsNumber);
+                    allReviewsShowed = "true";
+                }
+                System.Web.Script.Serialization.JavaScriptSerializer oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                string addedReviewsJsonList = oSerializer.Serialize(addedReviewsList);
+                string[] jsonResult = { allReviewsShowed, addedReviewsJsonList };
+                return Json(jsonResult, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -413,7 +351,10 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.CategoryUrl = categoryUrl;
                     ViewBag.SubcategoryUrl = subcategoryUrl;
                     ViewBag.GoodUrl = goodUrl;
+                    ViewBag.InitiallyShowedDiscussionsNumber = 2;
+
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
+                    ViewBag.GoodId = currentGoodId;
                     ViewBag.GoodName = db.Goods.Find(currentGoodId).GoodName;
                     DateTime currentDate = DateTime.Now.Date;
                     var viewModel = new DiscussionViewModel()
@@ -423,7 +364,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                         lastMonthReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Where(c => c.Date >= currentDate.AddMonths(-1) && c.Date <= currentDate.AddDays(1)).Count(),
                         lastYearReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Where(c => c.Date >= currentDate.AddYears(-1) && c.Date <= currentDate.AddDays(1)).Count(),
                         allReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Count(),
-                        discussions = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList()
+                        discussions = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList().GetRange(0, 2)
                     };
                     List<string> breadcrumbList = new List<string>() { "Discussions", fullGoodName, subcategoryName, categoryName, "Catalog", "Main" };
                     ViewBag.breadCrumbList = breadcrumbList;
@@ -433,6 +374,43 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 {
                     return Redirect("/");
                 }
+            }
+        }
+
+        [HttpGet]
+        public JsonResult ShowMoreDiscussions(int goodId, int showedDiscussionsNumber, int addedDiscussionsNumber)
+        {
+            using (GoodContext db = new GoodContext())
+            {                
+                var discussionsList = db.Goods.Where(x => x.Id == goodId).First().Discussions
+                    .Select(x => new {
+                        Message = x.Message,
+                        AuthorName = x.AuthorName,
+                        AuthorAvatarSrc = x.AuthorAvatarSrc,
+                        Date = x.Date,
+                        StringDate = x.Date.ToShortDateString(),
+                        FirstDiscussionMessage = x.FirstDiscussionMessage,
+                        DiscussionGroup = x.DiscussionGroup
+                    })
+                    .OrderByDescending(p => p.FirstDiscussionMessage).ThenBy(p => p.Date).GroupBy(p => p.DiscussionGroup).ToList();
+                int lastShowedDiscussionIndex = showedDiscussionsNumber + addedDiscussionsNumber;
+                int discussionsListLength = discussionsList.Count();
+                var addedDiscussionsList = discussionsList;
+                string allDiscussionsShowed = "false";
+
+                if (lastShowedDiscussionIndex < discussionsListLength)
+                {
+                    addedDiscussionsList = discussionsList.GetRange(showedDiscussionsNumber, addedDiscussionsNumber);
+                }
+                else
+                {
+                    addedDiscussionsList = discussionsList.GetRange(showedDiscussionsNumber, discussionsListLength - showedDiscussionsNumber);
+                    allDiscussionsShowed = "true";
+                }
+                System.Web.Script.Serialization.JavaScriptSerializer oSerializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                string addedDiscussionsJsonList = oSerializer.Serialize(addedDiscussionsList);
+                string[] jsonResult = { allDiscussionsShowed, addedDiscussionsJsonList };
+                return Json(jsonResult, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -491,7 +469,83 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 int[] reviewsNumberList = new[] { reviewsNumberWithMarkOne, reviewsNumberWithMarkTwo, reviewsNumberWithMarkThree, reviewsNumberWithMarkFour, reviewsNumberWithMarkFive };
                 return reviewsNumberList;
             }
-        }       
+        }
+
+        public PartialViewResult BreadCrumbs(string pageUrl)
+        {
+            using (GoodContext db = new GoodContext())
+            {
+                string[] pageUrlList = pageUrl.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+                List<BreadCrumb> breadCrumbsList = new List<BreadCrumb>();
+
+                if (pageUrlList.Length == 1 && pageUrlList[0].ToLower() == "catalog")
+                {
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCatalog, breadCrumbMain });
+                }
+                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "catalog")
+                {
+                    string categoryUrl = pageUrlList[1];
+                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
+                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
+                }
+                else if (pageUrlList.Length == 3 && pageUrlList[0].ToLower() == "catalog")
+                {
+                    string categoryUrl = pageUrlList[1];
+                    string subcategoryUrl = pageUrlList[2];
+                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
+                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
+                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
+                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
+                }
+                else if (pageUrlList.Length == 4 && pageUrlList[0].ToLower() == "catalog")
+                {
+                    string categoryUrl = pageUrlList[1];
+                    string subcategoryUrl = pageUrlList[2];
+                    string goodUrl = pageUrlList[3];
+
+                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
+                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
+                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
+                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
+                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
+
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
+                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
+                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
+                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
+                }
+                else if (pageUrlList.Length == 5 && pageUrlList[0].ToLower() == "catalog" && (pageUrlList[4].ToLower() == "reviews" || pageUrlList[4].ToLower() == "discussions" || pageUrlList[4].ToLower() == "overview"))
+                {
+                    string categoryUrl = pageUrlList[1];
+                    string subcategoryUrl = pageUrlList[2];
+                    string goodUrl = pageUrlList[3];
+                    string categoryName = db.GoodCategories.Where(x => x.CategoryUrl == categoryUrl).First().CategoryName;
+                    string subcategoryName = db.GoodSubcategories.Where(x => x.SubcategoryUrl == subcategoryUrl).First().SubcategoryName;
+                    string goodName = db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodBrand + " " +
+                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodName + ", " +
+                                      db.Goods.Where(x => x.GoodUrl == goodUrl).First().GoodColor;
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Catalog", Link = "/catalog" };
+                    BreadCrumb breadCrumbCategory = new BreadCrumb { Name = categoryName, Link = "/catalog/" + categoryUrl };
+                    BreadCrumb breadCrumbSubcategory = new BreadCrumb { Name = subcategoryName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl };
+                    BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
+                    BreadCrumb breadCrumbGoodOption = new BreadCrumb { Name = pageUrlList[4], Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl + "/" + pageUrlList[4] };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGoodOption, breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
+                }
+                var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };
+                return PartialView("_BreadCrumbs", viewModel);
+            }
+        }
 
         public IEnumerable<GoodCategory> GetCategoriesData()
         {

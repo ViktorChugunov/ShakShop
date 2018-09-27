@@ -25,12 +25,14 @@ namespace ShakuroMarketplaceNetMVC
             routes.MapRoute(name: "ReviewsRoute", url: "catalog/{categoryUrl}/{subcategoryUrl}/{goodUrl}/reviews", defaults: new { controller = "Catalog", action = "Reviews" });
             routes.MapRoute(name: "OverviewRoute", url: "catalog/{categoryUrl}/{subcategoryUrl}/{goodUrl}/overview", defaults: new { controller = "Catalog", action = "Overview" });
             routes.MapRoute(name: "DiscussionsRoute", url: "catalog/{categoryUrl}/{subcategoryUrl}/{goodUrl}/discussions", defaults: new { controller = "Catalog", action = "Discussions" });
+            routes.MapRoute(name: "ShowMoreReviewsRoute", url: "catalog/ShowMoreReviews/{goodId}/{showedReviewsNumber}/{addedReviewsNumber}", defaults: new { controller = "Catalog", action = "ShowMoreReviews" });
+            routes.MapRoute(name: "ShowMoreDiscussionsRoute", url: "catalog/ShowMoreDiscussions/{goodId}/{showedDiscussionsNumber}/{addedDiscussionsNumber}", defaults: new { controller = "Catalog", action = "ShowMoreDiscussions" });
 
             routes.MapRoute(name: "UserCartRoute", url: "cart/", defaults: new { controller = "Cart", action = "Index" });
             routes.MapRoute(name: "PaymentMethodsRoute", url: "cart/payment-methods", defaults: new { controller = "Cart", action = "PaymentMethods" });
-            routes.MapRoute(name: "AddGoodToCartRoute", url: "cart/AddGoodToCart/{goodId}", defaults: new { controller = "Cart", action = "AddGoodToCart", goodId = UrlParameter.Optional });
-            routes.MapRoute(name: "RemoveGoodFromdCartRoute", url: "cart/RemoveGoodFromdCart/{goodId}", defaults: new { controller = "Cart", action = "RemoveGoodFromdCart", goodId = UrlParameter.Optional });
-            routes.MapRoute(name: "DeleteGoodFromdCartRoute", url: "cart/DeleteGoodFromdCart/{goodId}", defaults: new { controller = "Cart", action = "DeleteGoodFromdCart", goodId = UrlParameter.Optional });
+            routes.MapRoute(name: "AddGoodToCartRoute", url: "cart/AddGoodToCart/{goodId}", defaults: new { controller = "Cart", action = "AddGoodToCart" });
+            routes.MapRoute(name: "RemoveGoodFromdCartRoute", url: "cart/RemoveGoodFromdCart/{goodId}", defaults: new { controller = "Cart", action = "RemoveGoodFromdCart" });
+            routes.MapRoute(name: "DeleteGoodFromdCartRoute", url: "cart/DeleteGoodFromdCart/{goodId}", defaults: new { controller = "Cart", action = "DeleteGoodFromdCart" });
 
             routes.MapRoute(
                 name: "Default",

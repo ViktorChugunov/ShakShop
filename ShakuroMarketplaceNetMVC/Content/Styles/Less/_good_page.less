@@ -293,8 +293,16 @@
     display: flex;
     flex-direction: row;
     margin: 0 0 18px 0;
-    &:hover{
+    color: #B2B2B2;
+
+    &:hover {
         cursor: pointer;
+        text-decoration: underline;
+        color: #808080;
+    }
+
+    &:hover .purchase-options-favorite-text {
+        color: #808080;
     }
 }
 
@@ -316,8 +324,16 @@
     display: flex;
     flex-direction: row;
     margin: 0 0 18px 0;
+    color: #B2B2B2;
+
     &:hover {
         cursor: pointer;
+        text-decoration: underline;
+        color: #808080;
+    }
+
+    &:hover .purchase-options-compare-text {
+        color: #808080;
     }
 }
 
@@ -510,18 +526,19 @@
 }
 
 .similar-offers-list-item-add-to-cart-button {
-    width: 110px;
+    width: 130px;
     height: 40px;
     font-size: 16px;
     border-radius: 30px;
-    background-color: #0078FF;
+    //background-color: #0078FF;
     color: #FFF;
     line-height: 60px;
+    display: block;
+    line-height: 40px;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-decoration: none;
     font-size: 12px;
+    cursor: pointer;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

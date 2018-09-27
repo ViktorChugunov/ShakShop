@@ -34,7 +34,21 @@
                     <div class="similar-offers-list-item-sale"></div>
                     <div class="similar-offers-list-item-price">@Model.RandomGoodsList[i-1].GoodPrice $</div>
                     <div class="similar-offers-list-item-add-to-cart">
-                        <div class="similar-offers-list-item-add-to-cart-button">Add To Cart</div>
+                        @if (Session["GoodIdList"] != null)
+                        {
+                            if ((Session["GoodIdList"] as List<int>).Contains(Model.RandomGoodsList[i-1].Id))
+                            {
+                        <div class="similar-offers-list-item-add-to-cart-button good-in-cart" good-id="@Model.RandomGoodsList[i-1].Id">Remove from cart</div>
+                            }
+                            else
+                            {
+                                <div class="similar-offers-list-item-add-to-cart-button good-not-in-cart" good-id="@Model.RandomGoodsList[i-1].Id">Add to cart</div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="similar-offers-list-item-add-to-cart-button good-not-in-cart" good-id="@Model.RandomGoodsList[i-1].Id">Add to cart</div>
+                        }
                     </div>
                 </div>
             }

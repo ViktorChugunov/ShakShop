@@ -229,6 +229,15 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+    &::before {
+        content: "–";
+        width: 45px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .goods-in-cart-list-item-quantity-number {
@@ -251,6 +260,15 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+
+    &::before {
+        content: "+";
+        width: 45px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 .goods-in-cart-list-item-total {
@@ -332,35 +350,39 @@
 }
 
 .cart-navigation-buttons-back {
-    width: 210px;
+    width: 240px;
     height: 60px;
     border: 2px solid #EBEBEB;
     border-radius: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #FFF;
+    display: block;
+    line-height: 60px;
+    text-align: center;
+    text-decoration: none;
     color: #B2B2B2;
-}
-
-.cart-navigation-buttons-back img {
-    margin-right: 8px;
+    cursor: pointer;
+    background-image: url('/Content/Images/Icons/arrow_back.png');
+    background-color: #FFF;
+    background-size: 24px;
+    background-position: 24px center;
+    background-repeat: no-repeat;
 }
 
 .cart-navigation-buttons-foward {
-    width: 210px;
+    width: 240px;
     height: 60px;
     margin-left: 24px;
-    background-color: #0078FF;
     border-radius: 30px;
     color: #FFF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.cart-navigation-buttons-foward img {
-    margin-left: 8px;
+    display: block;
+    line-height: 60px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    background-image: url('/Content/Images/Icons/cart.png');
+    background-color: #0078FF;
+    background-size: 24px;
+    background-position: calc(~'100% - 24px') center;
+    background-repeat: no-repeat;
 }
 
 //Payment methods
@@ -438,6 +460,7 @@
     align-items: center;
     width: 540px;
     padding: 72px 0 72px 0;
+    margin: 0 auto;
 }
 
 .payment-methods-card-information-first-column,
@@ -577,6 +600,7 @@
     align-items: center;
     width: 540px;
     padding: 36px 0 72px 0;
+    margin: 0 auto;
 }
 
 .delivery-methods-information-first-column,
@@ -797,6 +821,14 @@
     align-items: center;
     background-color: #FFF;
     color: #B2B2B2;
-    margin-top: 24px;
+    margin-left: 24px;
     cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
+
+.visible {
+    display: block;
 }

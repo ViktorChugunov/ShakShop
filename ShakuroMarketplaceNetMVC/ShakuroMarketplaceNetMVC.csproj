@@ -905,7 +905,6 @@
     <Content Include="Views\Catalog\SimilarOffers.cshtml" />
     <Content Include="Views\Shared\_BreadCrumbs.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Cart\PaymentMethods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />
