@@ -331,31 +331,162 @@
         $('.addressee-email-value').html($('.delivery-methods-information-fourth-column-addressee-email-input').val());    
     });
 
-    //увеличить количество комплектов товарова
+    //уменьшить количество комплектов товарова
     $(".goods-in-cart-list-item-quantity-minus").click(function () {
         var goodQuantity = $(this).parent().children(".goods-in-cart-list-item-quantity-number").text();
         if (Number(goodQuantity) > 1) {
             goodQuantity = Number(goodQuantity) - 1;
         }
-        $(".goods-in-cart-list-item-quantity-number").text(goodQuantity);
-        $(".good-quantity-input").val(goodQuantity);
-
-        var oneItemPrice = $(".goods-in-cart-list-item-price").text();
-        var totalItemPrice = Number(oneItemPrice) * Number(goodQuantity);
+        countGoodTotalPrice($(this), goodQuantity);
+        countOrderPrice();
     });
 
-    //уменьшить количество комплектов товарова
+    //увеличить количество комплектов товарова
     $(".goods-in-cart-list-item-quantity-plus").click(function () {
         var goodQuantity = $(this).parent().children(".goods-in-cart-list-item-quantity-number").text();
         if (Number(goodQuantity) < 100) {
             goodQuantity = Number(goodQuantity) + 1;
         }
-        $(".goods-in-cart-list-item-quantity-number").text(goodQuantity);
-        $(".good-quantity-input").val(goodQuantity);
-
-        var oneItemPrice = $(".goods-in-cart-list-item-price").text();
-        var totalItemPrice = Number(oneItemPrice) * Number(goodQuantity);
-
+        countGoodTotalPrice($(this), goodQuantity);
+        countGoodsTotalPrice();
     });
 
+
+    //Order form validation
+    $('.order-form').validate({
+        rules: {
+            cardOwnerName: {
+                required: true,
+                minlength: 3
+            },
+            cardNumber: {
+                required: true,
+                isCardNumberFormat: true
+            },
+            cardCvv: {
+                required: true,
+                minlength: 3,
+                maxlength: 3,
+                digits: true
+            },
+            addresseeFirstName: {
+                required: true,
+                minlength: 3
+            },
+            addresseeSecondName: {
+                required: true,
+                minlength: 3
+            },
+            addresseeCountry: {
+                required: true,
+                minlength: 3
+            },
+            addresseeRegion: {
+                required: true,
+                minlength: 3
+            },
+            addresseeCity: {
+                required: true,
+                minlength: 3
+            },
+            addresseeIndex: {
+                required: true,
+                minlength: 3,
+                digits: true
+            },
+            addresseeStreetAddress: {
+                required: true,
+                minlength: 10
+            },
+            addresseePhoneNumber: {
+                required: true,
+                minlength: 3,
+                isPhoneNumberFormat: true
+            },
+            addresseeEmail: {
+                required: true
+            }
+        },
+        messages: {
+            cardOwnerName: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            cardNumber: {
+                required: "Field is required",
+                isCardNumberFormat: "Is not a card number format"
+            },
+            cardCvv: {
+                required: "Field is required",
+                minlength: "Enter 3 numbers",
+                maxlength: "Enter 3 numbers",
+                digits: "Only numbers are allowed"
+            },
+            addresseeFirstName: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            addresseeSecondName: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            addresseeCountry: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            addresseeRegion: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            addresseeCity: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters"
+            },
+            addresseeIndex: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters",
+                digits: "Only numbers are allowed"                
+            },
+            addresseeStreetAddress: {
+                required: "Field is required",
+                minlength: "Enter at least 10 characters"
+            },
+            addresseePhoneNumber: {
+                required: "Field is required",
+                minlength: "Enter at least 3 characters",
+                isPhoneNumberFormat: "Is not a phone number format"
+            },
+            addresseeEmail: {
+                required: "Field is required",
+                email: "Is not an email format" 
+            }
+        }
+    });
+    
+    $.validator.addMethod('isPhoneNumberFormat', function (value) {
+        return /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/.test(value);
+    }, "Is not phone number format");
+
+    $.validator.addMethod('isCardNumberFormat', function (value) {
+        return /^[0-9]{4}-[0-9]{4}-[0-9]{4}-[0-9]{4}$/.test(value);
+    }, "Is not card number format");
+
 });
+
+function countGoodTotalPrice(object, goodQuantity) {
+    object.parent().children(".goods-in-cart-list-item-quantity-number").text(goodQuantity);
+    object.parent().parent().children(".good-quantity-input").val(goodQuantity);
+    var goodPrice = object.parent().parent().children(".good-price-input").val();
+    var totalGoodPrice = Number(goodPrice) * Number(goodQuantity);
+    object.parent().parent().children(".good-total-price-input").val(totalGoodPrice);
+    object.parent().parent().children(".goods-in-cart-list-item-total").text("$ " + totalGoodPrice);
+}
+
+function countGoodsTotalPrice() {
+    var goodsTotalPrice = 0;
+    $('.goods-in-cart-list').children(".goods-in-cart-list-item").each(function () {
+        var goodTotalPrice = $(this).children(".good-total-price-input").val();
+        goodsTotalPrice += Number(goodTotalPrice); 
+    });
+    $('.goods-in-cart-list-footer-total-price-number').text("$ " + goodsTotalPrice);
+}

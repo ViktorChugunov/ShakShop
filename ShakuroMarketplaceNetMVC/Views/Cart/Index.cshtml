@@ -47,7 +47,7 @@
     }
     else
     {
-        <form action="#">
+        <form action="#" class="order-form">
             <div class="goods-in-cart-list-container visible">
                 <div class="goods-in-cart-list visible">
                     <div class="goods-in-cart-list-header">
@@ -58,8 +58,9 @@
                         <div class="goods-in-cart-list-header-item-total">Total</div>
                         <div class="goods-in-cart-list-header-item-delete"></div>
                     </div>
-                    @foreach (var item in Model.CartGoodsList)
-                    {
+                    @{int goodsTotalPrice = 0;}
+                      @foreach (var item in Model.CartGoodsList)
+                      {
                         <div class="goods-in-cart-list-item">
                             <div class="goods-in-cart-list-item-img">
                                 <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="80">
@@ -69,14 +70,17 @@
                             <div class="goods-in-cart-list-item-quantity">
                                 <div class="goods-in-cart-list-item-quantity-minus"></div>
                                 <div class="goods-in-cart-list-item-quantity-number">1</div>
-                                <div class="goods-in-cart-list-item-quantity-plus"></div>                                
+                                <div class="goods-in-cart-list-item-quantity-plus"></div>
                             </div>
-                            <div class="goods-in-cart-list-item-total">$ 1100</div>
+                            <div class="goods-in-cart-list-item-total">$ @item.GoodPrice</div>
                             <div class="goods-in-cart-list-item-delete">
                                 <a href="/cart/DeleteGoodFromdCart/@item.Id">&#10006;</a>
                             </div>
                             <input type="hidden" name="goodId[]" value="@item.Id" class="good-id-input">
                             <input type="hidden" name="goodQuantity[]" value="1" class="good-quantity-input">
+                            <input type="hidden" name="goodPrice[]" value="@item.GoodPrice" class="good-price-input">
+                            <input type="hidden" name="goodTotalPrice[]" value="@item.GoodPrice" class="good-total-price-input">
+                            @{goodsTotalPrice += item.GoodPrice;}
                         </div>
                     }
                     <div class="goods-in-cart-list-footer">
@@ -87,9 +91,10 @@
                             Total price:
                         </div>
                         <div class="goods-in-cart-list-footer-total-price-number">
-                            $1100
+                            $ @goodsTotalPrice
                         </div>
                         <div class="goods-in-cart-list-footer-empty"></div>
+                        <input type="hidden" name="goodsTotalPrice[]" value="@goodsTotalPrice" class="goods-total-price-input">
                     </div>
                 </div>
                 <!-- Buttons -->
@@ -117,11 +122,11 @@
                         <div class="payment-methods-card-information-first-column">
                             <div class="payment-methods-card-information-first-column-card-owner-name">
                                 <p class="payment-methods-card-information-first-column-card-owner-name-header">Name</p>
-                                <input type="text" placeholder="Name" name="card-owner-name" required class="payment-methods-card-information-first-column-card-owner-name-input">
+                                <input type="text" placeholder="Name" name="cardOwnerName" class="payment-methods-card-information-first-column-card-owner-name-input">
                             </div>
                             <div class="payment-methods-card-information-first-column-card-number">
                                 <p class="payment-methods-card-information-first-column-card-number-header">Card Number</p>
-                                <input type="text" placeholder="0000-0000-0000-0000" name="card-number" required pattern="\d{4}-\d{4}-\d{4}-\d{4}" class="payment-methods-card-information-first-column-card-number-input">
+                                <input type="text" placeholder="0000-0000-0000-0000" name="cardNumber" class="payment-methods-card-information-first-column-card-number-input">
                             </div>
                         </div>
                         <div class="payment-methods-card-information-second-column">
@@ -159,9 +164,9 @@
                             </div>
                             <div class="payment-methods-card-information-second-column-card-cvv">
                                 <p class="payment-methods-card-information-second-column-card-cvv-header">CVV</p>
-                                <input type="text" placeholder="000" maxlength="3" name="card-cvv" pattern="\d{3}" required class="payment-methods-card-information-second-column-card-cvv-input">
+                                <input type="text" placeholder="000" maxlength="3" name="cardCvv" class="payment-methods-card-information-second-column-card-cvv-input">
                             </div>
-                            <input type="hidden" name="bank-system" value="visa" class="payment-method-input">
+                            <input type="hidden" name="bankSystem" value="visa" class="payment-method-input">
                         </div>
                     </div>
                 </div>
@@ -186,45 +191,45 @@
                         <div class="delivery-methods-information-first-column">
                             <div class="delivery-methods-information-first-column-addressee-first-name">
                                 <p class="delivery-methods-information-first-column-addressee-first-name-header">First Name</p>
-                                <input type="text" placeholder="First Name" name="addressee-first-name" required class="delivery-methods-information-first-column-addressee-first-name-input">
+                                <input type="text" placeholder="First Name" name="addresseeFirstName" class="delivery-methods-information-first-column-addressee-first-name-input">
                             </div>
                             <div class="delivery-methods-information-first-column-addressee-second-name">
                                 <p class="delivery-methods-information-first-column-addressee-second-name-header">Second Name</p>
-                                <input type="text" placeholder="Second Name" name="addressee-second-name" required class="delivery-methods-information-first-column-addressee-second-name-input">
+                                <input type="text" placeholder="Second Name" name="addresseeSecondName" class="delivery-methods-information-first-column-addressee-second-name-input">
                             </div>
                         </div>
                         <div class="delivery-methods-information-second-column">
                             <div class="delivery-methods-information-second-column-addressee-country">
                                 <p class="delivery-methods-information-second-column-addressee-country-header">Country</p>
-                                <input type="text" placeholder="Country" name="addressee-country" required class="delivery-methods-information-second-column-addressee-country-input">
+                                <input type="text" placeholder="Country" name="addresseeCountry" class="delivery-methods-information-second-column-addressee-country-input">
                             </div>
                             <div class="delivery-methods-information-second-column-addressee-region">
                                 <p class="delivery-methods-information-second-column-addressee-region-header">Region</p>
-                                <input type="text" placeholder="Region" name="addressee-region" required class="delivery-methods-information-second-column-addressee-region-input">
+                                <input type="text" placeholder="Region" name="addresseeRegion" class="delivery-methods-information-second-column-addressee-region-input">
                             </div>
                             <div class="delivery-methods-information-second-column-addressee-city">
                                 <p class="delivery-methods-information-second-column-addressee-city-header">City</p>
-                                <input type="text" placeholder="City" name="addressee-city" required class="delivery-methods-information-second-column-addressee-city-input">
+                                <input type="text" placeholder="City" name="addresseeCity" class="delivery-methods-information-second-column-addressee-city-input">
                             </div>
                         </div>
                         <div class="delivery-methods-information-third-column">
                             <div class="delivery-methods-information-third-column-addressee-index">
                                 <p class="delivery-methods-information-third-column-addressee-index-header">Index</p>
-                                <input type="text" placeholder="Index" name="addressee-index" required class="delivery-methods-information-third-column-addressee-index-input">
+                                <input type="text" placeholder="Index" name="addresseeIndex" required class="delivery-methods-information-third-column-addressee-index-input">
                             </div>
                             <div class="delivery-methods-information-third-column-addressee-street-address">
                                 <p class="delivery-methods-information-third-column-addressee-street-address-header">Street Address</p>
-                                <input type="text" placeholder="Street Address" name="addressee-street-address" required class="delivery-methods-information-third-column-addressee-street-address-input">
+                                <input type="text" placeholder="Street Address" name="addresseeStreetAddress" class="delivery-methods-information-third-column-addressee-street-address-input">
                             </div>
                         </div>
                         <div class="delivery-methods-information-fourth-column">
                             <div class="delivery-methods-information-fourth-column-addressee-phone-number">
                                 <p class="delivery-methods-information-fourth-column-addressee-phone-number-header">Phone Number</p>
-                                <input type="text" placeholder="Phone Number" name="addressee-phone-number" required class="delivery-methods-information-fourth-column-addressee-phone-number-input">
+                                <input type="text" placeholder="Phone Number" name="addresseePhoneNumber" class="delivery-methods-information-fourth-column-addressee-phone-number-input">
                             </div>
                             <div class="delivery-methods-information-fourth-column-addressee-email">
                                 <p class="delivery-methods-information-fourth-column-addressee-email-header">Email</p>
-                                <input type="email" placeholder="Email" name="addressee-email" required class="delivery-methods-information-fourth-column-addressee-email-input">
+                                <input type="email" placeholder="Email" name="addresseeEmail" class="delivery-methods-information-fourth-column-addressee-email-input">
                             </div>
                         </div>
                         <div class="delivery-methods-information-fifth-column">
@@ -248,7 +253,8 @@
                 <!-- Buttons -->
                 <div class="cart-navigation-buttons third-step">
                     <div class="cart-navigation-buttons-back button-back-to-payment-methods">Payment Methods</div>
-                    <div class="cart-navigation-buttons-foward button-go-to-confirm">Confirm Order</div>
+                    <input type="submit" value="Submit Order" class="cart-navigation-buttons-foward button-go-to-confirm">
+                    <!-- <div class="cart-navigation-buttons-foward button-go-to-confirm">Confirm Order</div> -->
                 </div>
             </div>
 
@@ -327,8 +333,7 @@
                 <!-- Buttons -->
                 <div class="cart-navigation-buttons third-step">
                     <div class="cart-navigation-buttons-back button-back-to-delivery-methods">Delivery Methods</div>
-                    <div class="cart-navigation-buttons-foward button-go-to-payment-methods to-confirm">Confirm</div>
-                    <input type="submit" value="Submit Order" class="submit-order">
+                    <div class="cart-navigation-buttons-foward button-go-to-payment-methods to-confirm">Confirm</div>                    
                 </div>
             </div>
         </form>

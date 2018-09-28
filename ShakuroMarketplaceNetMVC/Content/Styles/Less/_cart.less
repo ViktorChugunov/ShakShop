@@ -359,8 +359,7 @@
     text-align: center;
     text-decoration: none;
     color: #B2B2B2;
-    cursor: pointer;
-    background-image: url('/Content/Images/Icons/arrow_back.png');
+    cursor: pointer;    
     background-color: #FFF;
     background-size: 24px;
     background-position: 24px center;
@@ -377,13 +376,35 @@
     line-height: 60px;
     text-align: center;
     text-decoration: none;
-    cursor: pointer;
-    background-image: url('/Content/Images/Icons/cart.png');
+    cursor: pointer;    
     background-color: #0078FF;
     background-size: 24px;
     background-position: calc(~'100% - 24px') center;
     background-repeat: no-repeat;
 }
+
+.button-back-to-shopping {
+    background-image: url('/Content/Images/Icons/arrow_back.png');
+}
+
+.button-go-to-payment-methods,
+.button-back-to-payment-methods {
+    background-image: url('/Content/Images/Icons/payment.png');
+}
+
+.button-back-to-cart {
+    background-image: url('/Content/Images/Icons/cart.png');
+}
+
+.button-go-to-delivery-methods {
+    background-image: url('/Content/Images/Icons/delivery.png');
+}
+
+.button-go-to-confirm {
+    background-image: url('/Content/Images/Icons/done.png');
+}
+
+
 
 //Payment methods
 .payment-methods {
@@ -826,9 +847,24 @@
 }
 
 .hidden {
-    display: none;
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
 }
 
 .visible {
+    width: 1080px;
+}
+
+input.error {
+    border: 2px solid #FFA07A;
+}
+
+label.error {
     display: block;
+    margin: 4px auto;
+    color: #FFA07A;
+    font-size: 10px;
+    text-align: center;
+    font-weight: bold;
 }
