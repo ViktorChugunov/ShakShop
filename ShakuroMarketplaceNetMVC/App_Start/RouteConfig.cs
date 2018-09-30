@@ -29,6 +29,9 @@ namespace ShakuroMarketplaceNetMVC
             routes.MapRoute(name: "ShowMoreDiscussionsRoute", url: "catalog/ShowMoreDiscussions/{goodId}/{showedDiscussionsNumber}/{addedDiscussionsNumber}", defaults: new { controller = "Catalog", action = "ShowMoreDiscussions" });
 
             routes.MapRoute(name: "UserCartRoute", url: "cart/", defaults: new { controller = "Cart", action = "Index" });
+            routes.MapRoute(name: "ConfirmOrderRoute", url: "cart/confirm-order", defaults: new { controller = "Cart", action = "ConfirmOrder" });
+            routes.MapRoute(name: "OrderInformationRoute", url: "cart/order-information", defaults: new { controller = "Cart", action = "OrderInformation" });
+
             routes.MapRoute(name: "PaymentMethodsRoute", url: "cart/payment-methods", defaults: new { controller = "Cart", action = "PaymentMethods" });
             routes.MapRoute(name: "AddGoodToCartRoute", url: "cart/AddGoodToCart/{goodId}", defaults: new { controller = "Cart", action = "AddGoodToCart" });
             routes.MapRoute(name: "RemoveGoodFromdCartRoute", url: "cart/RemoveGoodFromdCart/{goodId}", defaults: new { controller = "Cart", action = "RemoveGoodFromdCart" });

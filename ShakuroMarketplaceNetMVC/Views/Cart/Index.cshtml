@@ -32,7 +32,7 @@
             <div class="cart-menu-item-icon-block done-icon"></div>
             <div class="cart-menu-item-step-block">
                 <div class="cart-menu-item-step-block-number">Fourth step</div>
-                <div class="cart-menu-item-step-block-name">Delivery Methods</div>
+                <div class="cart-menu-item-step-block-name">Order Acceptance</div>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
     }
     else
     {
-        <form action="#" class="order-form">
+        <form action="/cart/confirm-order" class="order-form">
             <div class="goods-in-cart-list-container visible">
                 <div class="goods-in-cart-list visible">
                     <div class="goods-in-cart-list-header">
@@ -61,27 +61,32 @@
                     @{int goodsTotalPrice = 0;}
                       @foreach (var item in Model.CartGoodsList)
                       {
-                        <div class="goods-in-cart-list-item">
-                            <div class="goods-in-cart-list-item-img">
-                                <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="80">
-                            </div>
-                            <div class="goods-in-cart-list-item-name">@item.GoodBrand @item.GoodName, @item.GoodColor</div>
-                            <div class="goods-in-cart-list-item-price">$ @item.GoodPrice</div>
-                            <div class="goods-in-cart-list-item-quantity">
-                                <div class="goods-in-cart-list-item-quantity-minus"></div>
-                                <div class="goods-in-cart-list-item-quantity-number">1</div>
-                                <div class="goods-in-cart-list-item-quantity-plus"></div>
-                            </div>
-                            <div class="goods-in-cart-list-item-total">$ @item.GoodPrice</div>
-                            <div class="goods-in-cart-list-item-delete">
-                                <a href="/cart/DeleteGoodFromdCart/@item.Id">&#10006;</a>
-                            </div>
-                            <input type="hidden" name="goodId[]" value="@item.Id" class="good-id-input">
-                            <input type="hidden" name="goodQuantity[]" value="1" class="good-quantity-input">
-                            <input type="hidden" name="goodPrice[]" value="@item.GoodPrice" class="good-price-input">
-                            <input type="hidden" name="goodTotalPrice[]" value="@item.GoodPrice" class="good-total-price-input">
-                            @{goodsTotalPrice += item.GoodPrice;}
+                    <div class="goods-in-cart-list-item">
+                        <div class="goods-in-cart-list-item-img">
+                            <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="80">
                         </div>
+                        <div class="goods-in-cart-list-item-name">
+                            <a href="/catalog/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl" class="goods-in-cart-list-item-name-link">@item.GoodBrand @item.GoodName, @item.GoodColor</a>
+                        </div>
+                        <div class="goods-in-cart-list-item-price">$ @item.GoodPrice</div>
+                        <div class="goods-in-cart-list-item-quantity">
+                            <div class="goods-in-cart-list-item-quantity-minus"></div>
+                            <div class="goods-in-cart-list-item-quantity-number">1</div>
+                            <div class="goods-in-cart-list-item-quantity-plus"></div>
+                        </div>
+                        <div class="goods-in-cart-list-item-total">$ @item.GoodPrice</div>
+                        <div class="goods-in-cart-list-item-delete">
+                            <a href="/cart/DeleteGoodFromdCart/@item.Id">&#10006;</a>
+                        </div>
+                        <input type="hidden" name="goodIdArray" value="@item.Id" class="good-id-input">
+                        <input type="hidden" name="goodNameArray" value="@item.GoodBrand @item.GoodName, @item.GoodColor" class="good-name-input">
+                        <input type="hidden" name="goodLinkArray" value="/catalog/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl" class="good-link-input">
+                        <input type="hidden" name="goodImageUrlArray" value="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" class="good-image-url-input">
+                        <input type="hidden" name="goodQuantityArray" value="1" class="good-quantity-input">
+                        <input type="hidden" name="goodPriceArray" value="@item.GoodPrice" class="good-price-input">
+                        <input type="hidden" name="goodTotalPriceArray" value="@item.GoodPrice" class="good-total-price-input">
+                        @{goodsTotalPrice += item.GoodPrice;}
+                    </div>
                     }
                     <div class="goods-in-cart-list-footer">
                         <div class="goods-in-cart-list-footer-discount">
@@ -94,7 +99,8 @@
                             $ @goodsTotalPrice
                         </div>
                         <div class="goods-in-cart-list-footer-empty"></div>
-                        <input type="hidden" name="goodsTotalPrice[]" value="@goodsTotalPrice" class="goods-total-price-input">
+                        <input type="hidden" name="goodsTotalPrice" value="@goodsTotalPrice" class="goods-total-price-input">
+                        <input type="hidden" name="customerName" value="Viktor Chugunov">
                     </div>
                 </div>
                 <!-- Buttons -->
@@ -109,13 +115,13 @@
                 <div class="payment-methods">
                     <div class="payment-methods-header">
                         <div class="payment-methods-header-additional-block"></div>
-                        <div class="payment-methods-header-visa payment-method active-bank-system" bank-system="visa"></div>
+                        <div class="payment-methods-header-visa payment-method active-bank-system" bank-system="Visa"></div>
                         <div class="payment-methods-header-empty-block"></div>
-                        <div class="payment-methods-header-mastercard payment-method" bank-system="mastercard"></div>
+                        <div class="payment-methods-header-mastercard payment-method" bank-system="Mastercard"></div>
                         <div class="payment-methods-header-empty-block"></div>
-                        <div class="payment-methods-header-paypal payment-method" bank-system="paypal"></div>
+                        <div class="payment-methods-header-paypal payment-method" bank-system="Paypal"></div>
                         <div class="payment-methods-header-empty-block"></div>
-                        <div class="payment-methods-header-amazon payment-method" bank-system="amazon"></div>
+                        <div class="payment-methods-header-amazon payment-method" bank-system="Amazon"></div>
                         <div class="payment-methods-header-additional-block"></div>
                     </div>
                     <div class="payment-methods-card-information">
@@ -133,7 +139,7 @@
                             <div class="payment-methods-card-information-second-column-month">
                                 <p class="payment-methods-card-information-second-column-card-month-header">Month</p>
                                 <div class="select-card-month-container">
-                                    <select class="select-card-month" name="card-month">
+                                    <select class="select-card-month" name="cardMonth">
                                         <option value="January" class="card-month-option" selected>January</option>
                                         <option value="February" class="card-month-option">February</option>
                                         <option value="March" class="card-month-option">March</option>
@@ -152,7 +158,7 @@
                             <div class="payment-methods-card-information-second-column-year">
                                 <p class="payment-methods-card-information-second-column-card-year-header">Year</p>
                                 <div class="select-card-month-container">
-                                    <select class="select-card-year" name="card-year">
+                                    <select class="select-card-year" name="cardYear">
                                         @{DateTime currentYear = DateTime.Now;}
                                         <option value="@currentYear.ToString("yyyy")" class="card-year-option" selected>@currentYear.ToString("yyyy")</option>
                                         @for (int i = 1; i <= 10; i++)
@@ -166,7 +172,7 @@
                                 <p class="payment-methods-card-information-second-column-card-cvv-header">CVV</p>
                                 <input type="text" placeholder="000" maxlength="3" name="cardCvv" class="payment-methods-card-information-second-column-card-cvv-input">
                             </div>
-                            <input type="hidden" name="bankSystem" value="visa" class="payment-method-input">
+                            <input type="hidden" name="bankSystem" value="Visa" class="payment-method-input">
                         </div>
                     </div>
                 </div>
@@ -215,7 +221,7 @@
                         <div class="delivery-methods-information-third-column">
                             <div class="delivery-methods-information-third-column-addressee-index">
                                 <p class="delivery-methods-information-third-column-addressee-index-header">Index</p>
-                                <input type="text" placeholder="Index" name="addresseeIndex" required class="delivery-methods-information-third-column-addressee-index-input">
+                                <input type="text" placeholder="Index" name="addresseeIndex" class="delivery-methods-information-third-column-addressee-index-input">
                             </div>
                             <div class="delivery-methods-information-third-column-addressee-street-address">
                                 <p class="delivery-methods-information-third-column-addressee-street-address-header">Street Address</p>
@@ -232,110 +238,33 @@
                                 <input type="email" placeholder="Email" name="addresseeEmail" class="delivery-methods-information-fourth-column-addressee-email-input">
                             </div>
                         </div>
-                        <div class="delivery-methods-information-fifth-column">
-                            <div class="delivery-methods-information-fifth-column-ups-delivery">
+                        <div class="delivery-methods-information-fifth-column hidden">
+                            <div class="delivery-methods-information-fifth-column-ups-delivery selected-delivery-method" delivery-price="80.67" express-delivery-method="UPS delivery">
                                 <div class="delivery-methods-information-fifth-column-ups-delivery-price">
-                                    <div class="delivery-methods-information-fifth-column-ups-delivery-price-icon selected-delivery-method"></div>
+                                    <div class="delivery-methods-information-fifth-column-ups-delivery-price-icon selected-delivery-method-icon"></div>
                                     <div class="delivery-methods-information-fifth-column-ups-delivery-price-text">$ 80.67</div>
                                 </div>
                                 <div class="delivery-methods-information-fifth-column-ups-delivery-term">UPS Delivery (10-12 Days)</div>
                             </div>
-                            <div class="delivery-methods-information-fifth-column-dhl-delivery">
+                            <div class="delivery-methods-information-fifth-column-dhl-delivery" delivery-price="95.50" express-delivery-method="DHL delivery">
                                 <div class="delivery-methods-information-fifth-column-dhl-delivery-price">
                                     <div class="delivery-methods-information-fifth-column-dhl-delivery-price-icon"></div>
                                     <div class="delivery-methods-information-fifth-column-dhl-delivery-price-text">$ 95.50</div>
                                 </div>
-                                <div class="delivery-methods-information-fifth-column-dhl-delivery-term">UPS Delivery (10-12 Days)</div>
+                                <div class="delivery-methods-information-fifth-column-dhl-delivery-term">DHL Delivery (10-12 Days)</div>
                             </div>
                         </div>
+                        <input type="hidden" name="deliveryMethods" value="Free delivery" class="delivery-methods-input">
+                        <input type="hidden" name="deliveryPrice" value="0" class="delivery-price-input">
                     </div>
                 </div>
                 <!-- Buttons -->
                 <div class="cart-navigation-buttons third-step">
                     <div class="cart-navigation-buttons-back button-back-to-payment-methods">Payment Methods</div>
                     <input type="submit" value="Submit Order" class="cart-navigation-buttons-foward button-go-to-confirm">
-                    <!-- <div class="cart-navigation-buttons-foward button-go-to-confirm">Confirm Order</div> -->
                 </div>
             </div>
-
-            <!-- Confirm order -->
-            <div class="confirm-order-container hidden">
-                <div class="confirm-order">
-                    <p class="confirm-order-header">Submit your order</p>
-
-                    <div class="order-info">
-                        <div class="ordered-items">
-                            <div class="ordered-items-title">Ordered items:</div>
-                            <div class="ordered-items-value">
-                                @if (Model.CartGoodsList != null)
-                                {
-                                    foreach (var item in Model.CartGoodsList)
-                                    {
-                                        <p>@item.GoodBrand @item.GoodName, @item.GoodColor</p>
-                                    }
-                                }
-                                else
-                                {
-                                    <p>No items</p>
-                                }
-                            </div>
-                        </div>
-                        <div class="total-order-price">
-                            <div class="total-order-price-title">Total order price:</div>
-                            <div class="total-order-price-value">???</div>
-                        </div>
-                        <div class="card-owner-name">
-                            <div class="card-owner-name-title">Card owner name:</div>
-                            <div class="card-owner-name-value"></div>
-                        </div>
-                        <div class="card-number">
-                            <div class="card-number-title">Card number:</div>
-                            <div class="card-number-value"></div>
-                        </div>
-                        <div class="card-cvv">
-                            <div class="card-cvv-title">Card CVV:</div>
-                            <div class="card-cvv-value"></div>
-                        </div>
-                        <div class="card-date">
-                            <div class="card-date-title">Card date:</div>
-                            <div class="card-date-value">
-                                <span class="card-month-value"></span>
-                                <span class="card-year-value"></span>
-                            </div>
-                        </div>
-                        <div class="addressee-name">
-                            <div class="addressee-name-title">Adressee name:</div>
-                            <div class="addressee-name-value">
-                                <span class="addressee-first-name-value"></span>
-                                <span class="addressee-second-name-value"></span>
-                            </div>
-                        </div>
-                        <div class="addressee-address">
-                            <div class="addressee-address-title">Address:</div>
-                            <div class="addressee-address-value">
-                                <span class="addressee-country-value"></span>,
-                                <span class="addressee-region-value"></span>,
-                                <span class="addressee-city-value"></span>,
-                                <span class="addressee-index-value"></span>,
-                                <span class="addressee-street-address-value"></span>
-                            </div>
-                        </div>
-                        <div class="addressee-phone-number">
-                            <div class="addressee-phone-number-title">Phone number:</div>
-                            <div class="addressee-phone-number-value"></div>
-                        </div>
-                        <div class="addressee-email">
-                            <div class="addressee-email-title">Email:</div>
-                            <div class="addressee-email-value"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Buttons -->
-                <div class="cart-navigation-buttons third-step">
-                    <div class="cart-navigation-buttons-back button-back-to-delivery-methods">Delivery Methods</div>
-                    <div class="cart-navigation-buttons-foward button-go-to-payment-methods to-confirm">Confirm</div>                    
-                </div>
-            </div>
+                       
         </form>
     }
 </div>

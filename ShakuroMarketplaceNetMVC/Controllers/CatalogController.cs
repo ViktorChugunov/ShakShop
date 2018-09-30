@@ -426,7 +426,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 {
                     Discussion newDiscussion = new Discussion
                     {
-                        AuthorName = "asdasd",
+                        AuthorName = "Viktor Chugunov",
                         AuthorAvatarSrc = "",
                         Date = DateTime.Now.Date.ToUniversalTime(),
                         Message = message,

@@ -1,0 +1,138 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.OrderInformation
+
+@{
+    ViewBag.Title = "ConfirmOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="cart-header">
+    <div class="cart-menu">
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block cart-icon"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">First step</div>
+                <div class="cart-menu-item-step-block-name">Shopping Cart</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block payment-icon"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Second step</div>
+                <div class="cart-menu-item-step-block-name">Payment Methods</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-item-icon-block delivery-icon"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Third step</div>
+                <div class="cart-menu-item-step-block-name">Delivery Methods</div>
+            </div>
+        </div>
+        <div class="cart-menu-item">
+            <div class="cart-menu-selected-item-icon-block done-icon"></div>
+            <div class="cart-menu-item-step-block">
+                <div class="cart-menu-item-step-block-number">Fourth step</div>
+                <div class="cart-menu-item-step-block-name">Order Acceptance</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-order-container">
+    <!-- Confirm order -->
+    <div class="confirm-order-container">
+        <div class="confirm-order">
+            <p class="confirm-order-header">Your order was recieved. Wait for our manager call.<br>Order information is shown below.</p>
+
+            <div class="order-info">
+                <div class="ordered-items">
+                    <div class="ordered-items-title">Ordered items:</div>
+                    <div class="ordered-items-value">
+                        @for(int i = 0; i < Model.goodNameArray.Count(); i++)
+                        {
+                            <div class="ordered-item-value">
+                                <div class="ordered-item-value-image">
+                                    <img src="@Model.goodImageUrlArray[i]" height="60">
+                                </div>
+                                <div class="ordered-item-value-name-and-price">
+                                    <div class="ordered-item-value-name">
+                                        <a href="@Model.goodLinkArray[i]" class="goods-in-cart-list-item-name-link">@Model.goodNameArray[i]</a>                                        
+                                    </div>
+                                    <div class="ordered-item-value-price">
+                                        $ @Model.goodPriceArray[i] X @Model.goodQuantityArray[i] = $ @Model.goodTotalPriceArray[i]
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>              
+                <div class="goods-total-price">
+                    <div class="goods-total-price-title">Total goods price:</div>
+                    <div class="goods-total-price-value">$ @Model.goodsTotalPrice</div>
+                </div>
+                <div class="order-delivery-price">
+                    <div class="order-delivery-price-title">Delivery price:</div>
+                    <div class="order-delivery-price-value">$ @Model.deliveryPrice</div>
+                </div>
+                <div class="total-order-price">
+                    <div class="total-order-price-title">Total order price:</div>
+                    <div class="total-order-price-value">$ @(Model.goodsTotalPrice + Model.deliveryPrice)</div>
+                </div>
+
+                <div class="card-owner-name">
+                    <div class="card-owner-name-title">Card owner name:</div>
+                    <div class="card-owner-name-value">@Model.cardOwnerName</div>
+                </div>
+                <div class="card-bank-system">
+                    <div class="card-bank-system-title">Payments system:</div>
+                    <div class="card-bank-system-value">@Model.bankSystem</div>
+                </div>
+                <div class="card-number">
+                    <div class="card-number-title">Card number:</div>
+                    <div class="card-number-value">@Model.cardNumber</div>
+                </div>
+                <div class="card-cvv">
+                    <div class="card-cvv-title">Card CVV:</div>
+                    <div class="card-cvv-value">@Model.cardCvv</div>
+                </div>
+                <div class="card-date">
+                    <div class="card-date-title">Card date:</div>
+                    <div class="card-date-value">
+                        <span class="card-month-value">@Model.cardMonth</span>
+                        <span class="card-year-value">@Model.cardYear</span>
+                    </div>
+                </div>
+                <div class="addressee-name">
+                    <div class="addressee-name-title">Adressee name:</div>
+                    <div class="addressee-name-value">
+                        <span class="addressee-first-name-value">@Model.addresseeFirstName</span>
+                        <span class="addressee-second-name-value">@Model.addresseeSecondName</span>
+                    </div>
+                </div>
+                <div class="addressee-address">
+                    <div class="addressee-address-title">Address:</div>
+                    <div class="addressee-address-value">
+                        <span class="addressee-country-value">@Model.addresseeCountry</span>,
+                        <span class="addressee-region-value">@Model.addresseeRegion</span>,
+                        <span class="addressee-city-value">@Model.addresseeCity</span>,
+                        <span class="addressee-index-value">@Model.addresseeIndex</span>,
+                        <span class="addressee-street-address-value">@Model.addresseeStreetAddress</span>
+                    </div>
+                </div>
+                <div class="goods-delivery-methods">
+                    <div class="goods-delivery-methods-title">Delivery methods:</div>
+                    <div class="goods-delivery-methods-value">@Model.deliveryMethods</div>
+                </div>
+                <div class="addressee-phone-number">
+                    <div class="addressee-phone-number-title">Phone number:</div>
+                    <div class="addressee-phone-number-value">@Model.addresseePhoneNumber</div>
+                </div>
+                <div class="addressee-email">
+                    <div class="addressee-email-title">Email:</div>
+                    <div class="addressee-email-value">@Model.addresseeEmail</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

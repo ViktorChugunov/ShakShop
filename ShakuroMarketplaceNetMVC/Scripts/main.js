@@ -304,8 +304,7 @@
         $(".delivery-methods-container").addClass("visible").removeClass("hidden");
         $(".payment-icon").addClass("cart-menu-item-icon-block").removeClass("cart-menu-selected-item-icon-block");
         $(".delivery-icon").addClass("cart-menu-selected-item-icon-block").removeClass("cart-menu-item-icon-block");
-    });
-    
+    });    
     
     //перейти в панель методов доставки
     $(".payment-method").click(function () {
@@ -351,9 +350,54 @@
         countGoodsTotalPrice();
     });
 
+    //Choose free delivery
+    $(".delivery-methods-header-free-delivery").click(function () {
+        $(".delivery-methods-header-free-delivery").addClass("active-delivery-type");
+        $(".delivery-methods-header-express-delivery").removeClass("active-delivery-type");
+        $(".delivery-methods-information-fifth-column").addClass("hidden");
+        $(".delivery-price-input").val("0");
+        $(".delivery-methods-input").val("Free delivery");
+
+    });
+
+    //Choose express delivery
+    $(".delivery-methods-header-express-delivery").click(function () {
+        $(".delivery-methods-header-express-delivery").addClass("active-delivery-type");
+        $(".delivery-methods-header-free-delivery").removeClass("active-delivery-type");
+        $(".delivery-methods-information-fifth-column").removeClass("hidden");
+        if ($(".delivery-methods-information-fifth-column-ups-delivery").hasClass("selected-delivery-method")) {
+            $(".delivery-price-input").val($(".delivery-methods-information-fifth-column-ups-delivery").attr("delivery-price"));
+            $(".delivery-methods-input").val("UPS delivery");
+        }
+        else if ($(".delivery-methods-information-fifth-column-dhl-delivery").hasClass("selected-delivery-method")) {
+            $(".delivery-price-input").val($(".delivery-methods-information-fifth-column-dhl-delivery").attr("delivery-price"));
+            $(".delivery-methods-input").val("DHL delivery");
+        }        
+    });
+
+    //Choose UPS express delivery
+    $(".delivery-methods-information-fifth-column-ups-delivery").click(function () {
+        $(".delivery-methods-information-fifth-column-ups-delivery").addClass("selected-delivery-method");
+        $(".delivery-methods-information-fifth-column-dhl-delivery").removeClass("selected-delivery-method");
+        $(".delivery-methods-information-fifth-column-ups-delivery-price-icon").addClass("selected-delivery-method-icon");
+        $(".delivery-methods-information-fifth-column-dhl-delivery-price-icon").removeClass("selected-delivery-method-icon");
+        $(".delivery-price-input").val($(".delivery-methods-information-fifth-column-ups-delivery").attr("delivery-price"));
+        $(".delivery-methods-input").val("UPS delivery");
+    });
+
+    //Choose DHL express delivery
+    $(".delivery-methods-information-fifth-column-dhl-delivery").click(function () {
+        $(".delivery-methods-information-fifth-column-dhl-delivery").addClass("selected-delivery-method");
+        $(".delivery-methods-information-fifth-column-ups-delivery").removeClass("selected-delivery-method");
+        $(".delivery-methods-information-fifth-column-dhl-delivery-price-icon").addClass("selected-delivery-method-icon");
+        $(".delivery-methods-information-fifth-column-ups-delivery-price-icon").removeClass("selected-delivery-method-icon");
+        $(".delivery-price-input").val($(".delivery-methods-information-fifth-column-dhl-delivery").attr("delivery-price"));
+        $(".delivery-methods-input").val("DHL delivery");
+    });
+
 
     //Order form validation
-    $('.order-form').validate({
+    $('.order-form1').validate({
         rules: {
             cardOwnerName: {
                 required: true,

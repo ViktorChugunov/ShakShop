@@ -7,6 +7,7 @@
     justify-content: center;
 }
 
+
 //Cart Menu
 .cart-menu {
     width: 1080px;
@@ -85,6 +86,7 @@
     font-size: 12px;
     font-weight: bold;
 }
+
 
 //Goods List
 .cart-order-container {
@@ -198,6 +200,16 @@
     padding-left: 24px;
     font-size: 14px;
     color: #808080;
+}
+
+.goods-in-cart-list-item-name-link {
+    font-size: 14px;
+    color: #808080;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .goods-in-cart-list-item-price {
@@ -405,7 +417,6 @@
 }
 
 
-
 //Payment methods
 .payment-methods {
     width: 1080px;
@@ -562,6 +573,7 @@
 .card-year-option {
     font-size: 12px;
 }
+
 
 //Delivery Methods
 .delivery-methods {
@@ -731,7 +743,7 @@
     background-repeat: no-repeat;
 }
 
-.selected-delivery-method {
+.selected-delivery-method-icon {
     background-image: url('/Content/Images/Icons/checkbox-selected.png');
 }
 
@@ -767,53 +779,76 @@
     padding-bottom: 32px;
     text-transform: uppercase;
     letter-spacing: 1px;
+    text-align: center;
+    line-height: 40px;
 }
 
 .order-info {
-    width: 540px;
+    width: 600px;
 }
 
+.goods-total-price,
+.order-delivery-price,
+.total-order-price,
 .ordered-items,
 .total-order-price,
 .card-owner-name,
+.card-bank-system,
 .card-number,
 .card-cvv,
 .card-date,
 .addressee-name,
 .addressee-address,
+.goods-delivery-methods,
 .addressee-phone-number,
 .addressee-email {
     display: flex;
     flex-direction: row;
     padding: 8px 24px;
 
-    &:nth-child(odd) {
-        background-color: #F7F7F7;
+    &:nth-child(1) {
+        background-color: #FFF;
     }
 
-    &:nth-child(even) {
+    &:nth-child(odd):not(:first-child) {
         background-color: #FDFDFD;
+    }
+
+    &:not(first):nth-child(even):not(:first-child) {
+        background-color: #F7F7F7;
     }
 }
 
+.goods-total-price-title,
+.order-delivery-price-title,
+.total-order-price-title,
 .ordered-items-title,
 .total-order-price-title,
 .card-owner-name-title,
+.card-bank-system-title,
 .card-number-title,
 .card-cvv-title,
 .card-date-title,
 .addressee-name-title,
 .addressee-address-title,
+.goods-delivery-methods-title,
 .addressee-phone-number-title,
 .addressee-email-title {
-    width: 50%;
+    width: 220px;
     color: #B2B2B2;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
 }
 
+.goods-total-price-value,
+.order-delivery-price-value,
+.total-order-price-value,
 .ordered-items-value,
 .total-order-price-value,
 .card-owner-name-value,
+.card-bank-system-value,
 .card-number-value,
 .card-cvv-value,
 .card-month-value,
@@ -826,10 +861,44 @@
 .addressee-city-value,
 .addressee-index-value,
 .addressee-street-address-value,
+.goods-delivery-methods-value,
 .addressee-phone-number-value,
 .addressee-email-value {
-    width: 50%;
     color: #999999;
+    font-size: 16px;
+}
+
+.ordered-item-value {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+.ordered-item-value-image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.ordered-item-value-name-and-price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    width: 100%;
+    padding-left: 12px;
+}
+
+.ordered-item-value-name a {
+    font-size: 16px;
+    color: #999999;
+}
+
+.ordered-item-value-price {
+    font-size: 16px;
 }
 
 .submit-order {
