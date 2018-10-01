@@ -1,10 +1,11 @@
 ﻿<div class="header">
     <div class="header-top">
         <div class="header-search-box">
-            <form class="search-form">
-                <input type="text" placeholder="Search goods..." required />
+            <form class="search-form" method="get" action="/good-search-result/">
+                <input type="text" name="searchInputData" placeholder="Search goods..." required class="good-search-input" />
                 <input type="submit" value="">
-            </form>
+                <div class="fast-good-search-result"></div>
+            </form>            
         </div>
         <a href="/" class="header-logo"></a>        
         <div class="header-user-bar">

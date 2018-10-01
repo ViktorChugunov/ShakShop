@@ -281,9 +281,12 @@
     <Compile Include="Models\DiscussionViewModel.cs" />
     <Compile Include="Models\Good.cs" />
     <Compile Include="Models\GoodContext.cs" />
+    <Compile Include="Models\GoodSearchResult.cs" />
+    <Compile Include="Models\GoodSearchResultViewModel.cs" />
     <Compile Include="Models\GoodViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderInformation.cs" />
     <Compile Include="Models\Overview.cs" />
     <Compile Include="Models\OverviewGood.cs" />
@@ -848,6 +851,8 @@
     <Content Include="Content\Styles\Less\_reviews.less" />
     <Content Include="Content\Styles\Less\_discussions.less" />
     <Content Include="Content\Styles\Less\_cart.less" />
+    <Content Include="Content\Styles\Less\_overview.less" />
+    <Content Include="Content\Styles\Less\_good_search_results.less" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -912,7 +917,8 @@
     <Content Include="Views\Catalog\SimilarOffers.cshtml" />
     <Content Include="Views\Shared\_BreadCrumbs.cshtml" />
     <Content Include="Views\Cart\Index.cshtml" />
-    <Content Include="Views\Cart\ConfirmOrder.cshtml" />
+    <Content Include="Views\Cart\OrderAcceptance.cshtml" />
+    <Content Include="Views\Home\GoodSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Images\Goods\Cell-phones\Smart-phones\iPhone-6s-Gold\" />

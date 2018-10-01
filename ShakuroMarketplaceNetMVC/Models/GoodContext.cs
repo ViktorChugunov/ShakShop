@@ -16,19 +16,6 @@ namespace ShakuroMarketplaceNetMVC.Models
         public DbSet<Good> Goods { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Discussion> Discussions { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
-    /*
-    protected override void OnModelCreating(DbModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Good>()
-             .HasMany(u => u.Discussions)
-             .WithMany(l => l.Goods)
-             .Map(ul =>
-             {
-                 ul.MapLeftKey("GoodId");
-                 ul.MapRightKey("DiscussionId");
-                 ul.ToTable("DiscussionGoods");
-             });
-    }
-    */
 }

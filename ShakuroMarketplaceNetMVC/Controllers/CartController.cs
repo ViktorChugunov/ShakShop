@@ -54,20 +54,67 @@ namespace ShakuroMarketplaceNetMVC.Controllers
             }
         }
 
+        [HttpPost]
         public ActionResult ConfirmOrder(OrderInformation orderInformation)
         {
             using (GoodContext db = new GoodContext())
-            {
-                ViewBag.CategoriesData = GetCategoriesData();
-                ViewBag.PageHeader = "Cart";
+            {                             
+                Order order = new Order
+                {
+                    GoodIdArray = string.Join(";", string.Join(";", new List<int>(orderInformation.GoodIdArray).ConvertAll(i => i.ToString()).ToArray())),
+                    GoodNameArray = string.Join(";", orderInformation.GoodNameArray),
+                    GoodLinkArray = string.Join(";", orderInformation.GoodLinkArray),
+                    GoodImageUrlArray = string.Join(";", orderInformation.GoodImageUrlArray),
+                    GoodQuantityArray = string.Join(";", new List<int>(orderInformation.GoodQuantityArray).ConvertAll(i => i.ToString()).ToArray()),
+                    GoodPriceArray = string.Join(";", string.Join(";", new List<double>(orderInformation.GoodPriceArray).ConvertAll(i => i.ToString()).ToArray())),
+                    GoodTotalPriceArray = string.Join(";", new List<double>(orderInformation.GoodTotalPriceArray).ConvertAll(i => i.ToString()).ToArray()),
+                    GoodsTotalPrice = orderInformation.GoodsTotalPrice,
+                    DeliveryPrice = orderInformation.DeliveryPrice,
+                    CustomerName = orderInformation.CustomerName,
+                    CardOwnerName = orderInformation.CardOwnerName,
+                    CardNumber = orderInformation.CardNumber,
+                    CardMonth = orderInformation.CardMonth,
+                    CardYear = orderInformation.CardYear,
+                    CardCvv = orderInformation.CardCvv,
+                    BankSystem = orderInformation.BankSystem,
+                    AddresseeFirstName = orderInformation.AddresseeFirstName,
+                    AddresseeSecondName = orderInformation.AddresseeSecondName,
+                    AddresseeCountry = orderInformation.AddresseeCountry,
+                    AddresseeRegion = orderInformation.AddresseeRegion,
+                    AddresseeCity = orderInformation.AddresseeCity,
+                    AddresseeIndex = orderInformation.AddresseeIndex,
+                    AddresseeStreetAddress = orderInformation.AddresseeStreetAddress,
+                    AddresseePhoneNumber = orderInformation.AddresseePhoneNumber,
+                    AddresseeEmail = orderInformation.AddresseeEmail,
+                    DeliveryMethods = orderInformation.DeliveryMethods
+                };
+                db.Orders.Add(order);
+                db.SaveChanges();
+
+                int orderNumber = db.Orders.Max(p => p.Id);
+                SendMail(orderInformation, orderNumber);
                 Session["GoodIdList"] = null;
 
-
-                string orderPrice = (orderInformation.goodsTotalPrice + orderInformation.deliveryPrice).ToString();
-                string productsHTML = "";
-                for (int i = 0; i < orderInformation.goodNameArray.Count(); i++)
-                {
-                    productsHTML += @"
+                TempData["orderInformation"] = orderInformation;
+                return Redirect("/cart/order-acceptance");
+            }
+        }
+        
+        public ActionResult OrderAcceptance()
+        {
+            ViewBag.CategoriesData = GetCategoriesData();
+            ViewBag.PageHeader = "Order Acceptance";
+            OrderInformation viewModel = (OrderInformation)TempData["orderInformation"];
+            return View(viewModel);
+        }
+        
+        public void SendMail(OrderInformation orderInformation, int orderNumber)
+        {
+            string orderPrice = (orderInformation.GoodsTotalPrice + orderInformation.DeliveryPrice).ToString();
+            string productsHTML = "";
+            for (int i = 0; i < orderInformation.GoodNameArray.Count(); i++)
+            {
+                productsHTML += @"
                         <!-- Product -->
                         <tr>
                             <td>
@@ -75,10 +122,10 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                                     <tr><td height='24' colspan ='5'></td></tr>        
                                     <tr>        
                                         <td width='24'></td>         
-                                        <td width='80'><img src='http://localhost:52248/" + orderInformation.goodImageUrlArray[i] + @"' width='80' alt='" + orderInformation.goodNameArray[i] + @"'></td>                  
+                                        <td width='80'><img src='http://localhost:52248/" + orderInformation.GoodImageUrlArray[i] + @"' width='80' alt='" + orderInformation.GoodNameArray[i] + @"'></td>                  
                                         <td width='24'></td>                   
                                         <td >                   
-                                            <a href='#' style='font-size:20px; color:#424A5B; text-decoration:none'>" + orderInformation.goodNameArray[i] + @"</span><br>                          
+                                            <a href='#' style='font-size:20px; color:#424A5B; text-decoration:none'>" + orderInformation.GoodNameArray[i] + @"</span><br>                          
                                             <span style='font-size:12px; color:#939CA2;'>Purchased: " + DateTime.Now.ToUniversalTime() + @"</span >                               
                                         </td>                               
                                         <td width='124'>                                
@@ -86,9 +133,9 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                                                 <tr>                                 
                                                     <td width='24'></td>                                  
                                                     <td width='80' style = 'color:#424A5B; text-align: right;'>
-                                                         " + orderInformation.goodQuantityArray[i] + @" X $"
-                                                        + orderInformation.goodPriceArray[i] + @"<br> $" 
-                                                        + orderInformation.goodTotalPriceArray[i] + @"
+                                                         " + orderInformation.GoodQuantityArray[i] + @" X $"
+                                                    + orderInformation.GoodPriceArray[i] + @"<br> $"
+                                                    + orderInformation.GoodTotalPriceArray[i] + @"
                                                     </td >
                                                     <td width='24'></td>                                         
                                                 </tr>                                         
@@ -100,9 +147,9 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                             </td>                                              
                         </tr>                                              
                         <!-- Product end -->                                                                                   
-                    ";     
-                }
-                string mailBody = @"                    
+                    ";
+            }
+            string mailBody = @"                    
                     <table align='center' bgcolor='#f9f8fb' style='font-family:Helvetica;border-collapse:collapse;width:100%;'>
 			            <tr>
 				            <td colspan='3' height='24'></td>
@@ -143,7 +190,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
 															            <tr>
 																            <td width='13'></td>
 																            <td align='left' height='34' style='font-size:18px; color:#2C3241; vertical-align:middle;'>
-																	            Dear, <span style='font-style: regular; color: #2C3241; font-weight: 600;'>" + orderInformation.customerName + @"</span>!<br>
+																	            Dear, <span style='font-style: regular; color: #2C3241; font-weight: 600;'>" + orderInformation.CustomerName + @"</span>!<br>
 																	            <span style='font-size: 14px;'>You have made an order! Order information is shown below.</span>
 																            </td>										
 															            </tr>
@@ -169,17 +216,17 @@ namespace ShakuroMarketplaceNetMVC.Controllers
 										            <td height='24'></td>
 									            </tr>"
 
-                                                + productsHTML +
+                                            + productsHTML +
 
-                                                @"
+                                            @"
                                                 <!-- Delivery method -->
 									            <tr>
 										            <td>
 											            <table width='100%' style='height:49px; border-collapse:collapse; border-top:1px solid #E5E5E5;'>
 												            <tr>
 													            <td width='24'></td>
-													            <td align='left' style='font-size:12px; color:#939CA2;'>" + orderInformation.deliveryMethods + @"</td>
-													            <td align='right' style='font-size:16px; color:#424A5B;'>$ " + orderInformation.deliveryPrice + @"</td>
+													            <td align='left' style='font-size:12px; color:#939CA2;'>" + orderInformation.DeliveryMethods + @"</td>
+													            <td align='right' style='font-size:16px; color:#424A5B;'>$ " + orderInformation.DeliveryPrice + @"</td>
 													            <td width='24'></td>
 												            </tr>
 											            </table>
@@ -223,38 +270,25 @@ namespace ShakuroMarketplaceNetMVC.Controllers
 			            </tr>
 		            </table>                    
                 ";
-                
-                using (MailMessage mm = new MailMessage("ShakuroMarketplace@gmail.com", "vik-chugun@yandex.ru"))
+
+            using (MailMessage mm = new MailMessage("ShakuroMarketplace@gmail.com", orderInformation.AddresseeEmail))
+            {
+                mm.Subject = "Order №" + orderNumber.ToString();
+                mm.Body = mailBody;
+                mm.IsBodyHtml = true;
+                using (SmtpClient smtp = new SmtpClient())
                 {
-                    mm.Subject = "Order №213";
-                    mm.Body = mailBody;
-                    mm.IsBodyHtml = true;
-                    using (SmtpClient smtp = new SmtpClient())
-                    {
-                        smtp.Host = "smtp.gmail.com";
-                        smtp.EnableSsl = true;
-                        NetworkCredential NetworkCred = new NetworkCredential("ShakuroMarketplace@gmail.com", "ShakuroMarketplace2018");
-                        smtp.UseDefaultCredentials = true;
-                        smtp.Credentials = NetworkCred;
-                        smtp.Port = 587;
-                        smtp.Send(mm);
-                    }
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.EnableSsl = true;
+                    NetworkCredential NetworkCred = new NetworkCredential("ShakuroMarketplace@gmail.com", "ShakuroMarketplace2018");
+                    smtp.UseDefaultCredentials = true;
+                    smtp.Credentials = NetworkCred;
+                    smtp.Port = 587;
+                    smtp.Send(mm);
                 }
-
-
-
-                //return Redirect("cart/order-information");
-                OrderInformation viewModel = orderInformation;
-                return View(viewModel);
             }
         }
-        /*
-        public ActionResult OrderInformationRoute(viewModel)
-        {
 
-            return View(viewModel);
-        }
-        */
         [HttpGet]
         public JsonResult AddGoodToCart(int goodId)
         {
@@ -314,22 +348,23 @@ namespace ShakuroMarketplaceNetMVC.Controllers
 
                 if (pageUrlList.Length == 1 && pageUrlList[0].ToLower() == "cart")
                 {
-                    BreadCrumb breadCrumbCatalog = new BreadCrumb { Name = "Cart", Link = "/cart" };
+                    BreadCrumb breadCrumbCart = new BreadCrumb { Name = "Cart", Link = "/cart" };
                     BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCatalog, breadCrumbMain });
+                    breadCrumbsList.AddRange(new BreadCrumb[] { breadCrumbCart, breadCrumbMain });
                 }
-                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "cart" && pageUrlList[1].ToLower() == "confirm-order")
+                else if (pageUrlList.Length == 2 && pageUrlList[0].ToLower() == "cart" && pageUrlList[1].ToLower() == "order-acceptance")
                 {
-                    string categoryName = "Confirm order";
+                    string categoryName = "Order acceptance";
                     BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
                     BreadCrumb breadCrumbCart = new BreadCrumb { Name = "Cart", Link = "/cart" };
-                    BreadCrumb breadCrumbPaymentMethods = new BreadCrumb { Name = categoryName, Link = "/cart/confirm-order" };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbPaymentMethods, breadCrumbCart, breadCrumbMain });
+                    BreadCrumb breadCrumbOrderAcceptance = new BreadCrumb { Name = categoryName, Link = "/cart/order-acceptance" };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbOrderAcceptance, breadCrumbCart, breadCrumbMain });
                 }
                 else
                 {
                     BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
-                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbMain });
+                    BreadCrumb breadCrumbUnknown = new BreadCrumb { Name = "Unknown Link", Link = "/" };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbUnknown, breadCrumbMain });
                 }
 
                 var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };

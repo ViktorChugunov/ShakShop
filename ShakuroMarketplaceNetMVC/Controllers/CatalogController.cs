@@ -214,7 +214,9 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                         goodRating = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Any() ? 
                                      db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.Average(x => x.Mark) : 0,
                         reviewsNumberList = GetReviewsNumberList(currentGoodId),
-                        goodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList().GetRange(0, 2)
+                        goodReviewsList = db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList().Count() <= 2 
+                                                                      ? db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList() 
+                                                                      : db.Goods.Where(x => x.Id == currentGoodId).First().Reviews.ToList().GetRange(0, 2)
                     };
                     List<string> breadcrumbList = new List<string>() { "Reviews", fullGoodName, subcategoryName, categoryName, "Catalog", "Main" };
                     ViewBag.breadCrumbList = breadcrumbList;
@@ -364,7 +366,9 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                         lastMonthReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Where(c => c.Date >= currentDate.AddMonths(-1) && c.Date <= currentDate.AddDays(1)).Count(),
                         lastYearReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Where(c => c.Date >= currentDate.AddYears(-1) && c.Date <= currentDate.AddDays(1)).Count(),
                         allReviewsNumber = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.Count(),
-                        discussions = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList().GetRange(0, 2)
+                        discussions = db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList().Count() <= 2
+                                      ? db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList()
+                                      : db.Goods.Where(x => x.Id == currentGoodId).First().Discussions.GroupBy(p => p.DiscussionGroup).ToList().GetRange(0, 2)
                     };
                     List<string> breadcrumbList = new List<string>() { "Discussions", fullGoodName, subcategoryName, categoryName, "Catalog", "Main" };
                     ViewBag.breadCrumbList = breadcrumbList;
@@ -541,6 +545,12 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     BreadCrumb breadCrumbGood = new BreadCrumb { Name = goodName, Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl };
                     BreadCrumb breadCrumbGoodOption = new BreadCrumb { Name = pageUrlList[4], Link = "/catalog/" + categoryUrl + "/" + subcategoryUrl + "/" + goodUrl + "/" + pageUrlList[4] };
                     breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbGoodOption, breadCrumbGood, breadCrumbSubcategory, breadCrumbCategory, breadCrumbCatalog, breadCrumbMain });
+                }
+                else
+                {
+                    BreadCrumb breadCrumbMain = new BreadCrumb { Name = "Main", Link = "/" };
+                    BreadCrumb breadCrumbUnknown = new BreadCrumb { Name = "Unknown Link", Link = "/" };
+                    breadCrumbsList.AddRange(new List<BreadCrumb>() { breadCrumbUnknown, breadCrumbMain });
                 }
                 var viewModel = new BreadCrumbsListViewModel { BreadCrumbsList = breadCrumbsList };
                 return PartialView("_BreadCrumbs", viewModel);

@@ -10,7 +10,49 @@
             $(".login-form-container").removeClass("login-form-container-visible");
         }
     });
+    
+    //быстрый поиск товара
+    $(".good-search-input").on('keyup focus',function () {
+        var searchInputData = $(this).val();
+        if (searchInputData.length > 2) {
+            $.get("/FastGoodSearch/" + searchInputData, function (jsonGoodList) {
+                $(".fast-good-search-result").html("");
+                $(".fast-good-search-result").css({
+                    "display": "flex"
+                });
+                goodList = JSON.parse(jsonGoodList);
+                goodList.forEach(function (item) {
+                    $(".fast-good-search-result").append(`
+                        <div class="fast-good-search-result-item">
+                            <a href="` + item.GoodPageLink + `" class="fast-good-search-result-item-link">
+                                <span class="fast-good-search-result-item-image"><img src="` + item.GoodImageUrl + `" height="40" ></span>
+                                <span class="fast-good-search-result-item-text">` + item.GoodBrand + " " + item.GoodName + " " + item.GoodColor + `</span>
+                            </a>
+                        </div>
+                    `
+                    );
+                });
+            });
+        }
+        else {
+            $(".fast-good-search-result").html("");
+            $(".fast-good-search-result").css({
+                "display": "none"
+            });
+        }
+    });
 
+    //скрыть результат поиска
+    $(document).mouseup(function (e) {
+        var block = $(".search-form");
+        if (!block.is(e.target)
+            && block.has(e.target).length === 0) {
+            $(".fast-good-search-result").css({
+                "display": "none"
+            });
+        }
+    });
+    
     //отобразить панель добавления отзыва
     $(".add-review-button").click(function () {
         $(".add-review-block").addClass("add-review-block-visible");
@@ -237,8 +279,8 @@
         });             
     });
 
-    //добавить похожий товар в корзину
-    $(".similar-offers-list-item-add-to-cart-button").click(function () {
+    //добавить похожий товар или товар из результатов поиска в корзину
+    $(".similar-offers-list-item-add-to-cart-button, .good-search-result-list-item-add-to-cart-button").click(function () {
         var goodId = $(this).attr("good-id");
 
         if ($(this).hasClass("good-not-in-cart")) {
@@ -397,7 +439,7 @@
 
 
     //Order form validation
-    $('.order-form1').validate({
+    $('.order-form').validate({
         rules: {
             cardOwnerName: {
                 required: true,
@@ -440,7 +482,7 @@
             },
             addresseeStreetAddress: {
                 required: true,
-                minlength: 10
+                minlength: 5
             },
             addresseePhoneNumber: {
                 required: true,
@@ -493,7 +535,7 @@
             },
             addresseeStreetAddress: {
                 required: "Field is required",
-                minlength: "Enter at least 10 characters"
+                minlength: "Enter at least 5 characters"
             },
             addresseePhoneNumber: {
                 required: "Field is required",

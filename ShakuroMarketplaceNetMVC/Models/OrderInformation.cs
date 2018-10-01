@@ -7,33 +7,33 @@ namespace ShakuroMarketplaceNetMVC.Models
 {
     public class OrderInformation
     {
-        public int[] goodIdArray { get; set; }
-        public string[] goodNameArray { get; set; }
-        public string[] goodLinkArray { get; set; }
-        public string[] goodImageUrlArray { get; set; }
-        public int[] goodQuantityArray { get; set; }
+        public int[] GoodIdArray { get; set; }
+        public string[] GoodNameArray { get; set; }
+        public string[] GoodLinkArray { get; set; }
+        public string[] GoodImageUrlArray { get; set; }
+        public int[] GoodQuantityArray { get; set; }
 
-        public double[] goodPriceArray { get; set; }
-        public double[] goodTotalPriceArray { get; set; }
-        public double goodsTotalPrice { get; set; }
-        public double deliveryPrice { get; set; }
+        public double[] GoodPriceArray { get; set; }
+        public double[] GoodTotalPriceArray { get; set; }
+        public double GoodsTotalPrice { get; set; }
+        public double DeliveryPrice { get; set; }
         
-        public string customerName { get; set; }
-        public string cardOwnerName { get; set; }
-        public string cardNumber { get; set; }
-        public string cardMonth { get; set; }
-        public string cardYear { get; set; }
-        public int cardCvv { get; set; }
-        public string bankSystem { get; set; }
-        public string addresseeFirstName { get; set; }
-        public string addresseeSecondName { get; set; }
-        public string addresseeCountry { get; set; }
-        public string addresseeRegion { get; set; }
-        public string addresseeCity { get; set; }
-        public int addresseeIndex { get; set; }
-        public string addresseeStreetAddress { get; set; }
-        public string addresseePhoneNumber { get; set; }
-        public string addresseeEmail { get; set; }
-        public string deliveryMethods { get; set; }         
+        public string CustomerName { get; set; }
+        public string CardOwnerName { get; set; }
+        public string CardNumber { get; set; }
+        public string CardMonth { get; set; }
+        public string CardYear { get; set; }
+        public int CardCvv { get; set; }
+        public string BankSystem { get; set; }
+        public string AddresseeFirstName { get; set; }
+        public string AddresseeSecondName { get; set; }
+        public string AddresseeCountry { get; set; }
+        public string AddresseeRegion { get; set; }
+        public string AddresseeCity { get; set; }
+        public int AddresseeIndex { get; set; }
+        public string AddresseeStreetAddress { get; set; }
+        public string AddresseePhoneNumber { get; set; }
+        public string AddresseeEmail { get; set; }
+        public string DeliveryMethods { get; set; }         
     }
 }

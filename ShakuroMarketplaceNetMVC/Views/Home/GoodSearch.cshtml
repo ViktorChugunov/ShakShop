@@ -1,0 +1,67 @@
+﻿@model ShakuroMarketplaceNetMVC.Models.GoodSearchResultsViewModel
+
+@{
+    ViewBag.Title = "GoodSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="good-search-result-container">
+    @if (Model.GoodSearchResult.Count() == 0)
+    {
+        <div class="good-search-result-empty-list">
+            Your cart is empty!
+        </div>
+    }
+    else
+    {
+        <div class="good-search-result">
+            <div class="good-search-result-list">
+                @for (int i = 1; i <= Model.GoodSearchResult.Count(); i++)
+                {
+                    <div class="good-search-result-list-item">
+                        <div class="good-search-result-list-item-number-container">
+                            <div class="good-search-result-list-item-number">@i</div>
+                        </div>
+                        <div class="good-search-result-list-item-name">
+                            <a href="/catalog/@Model.GoodSearchResult[i-1].GoodCategoryUrl/@Model.GoodSearchResult[i-1].GoodSubcategoryUrl/@Model.GoodSearchResult[i-1].GoodUrl">@Model.GoodSearchResult[i-1].GoodBrand @Model.GoodSearchResult[i-1].GoodName</a>
+                        </div>
+                        <div class="good-search-result-list-item-photo">
+                            <img src="/Content/Images/Goods/@Model.GoodSearchResult[i-1].GoodCategoryUrl/@Model.GoodSearchResult[i-1].GoodSubcategoryUrl/@Model.GoodSearchResult[i-1].GoodUrl/@Model.GoodSearchResult[i-1].GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="60">
+                        </div>
+                        <div class="good-search-result-list-item-rating">
+                            <div class="good-search-result-list-item-rating-icon"></div>
+                            <div class="good-search-result-list-item-rating-text">@Model.GoodSearchResult[i-1].GoodRating.ToString("0.00")</div>
+                        </div>
+                        <div class="good-search-result-list-item-reviews">
+                            <div class="good-search-result-list-item-reviews-icon"></div>
+                            <div class="good-search-result-list-item-reviews-text">@Model.GoodSearchResult[i-1].ReviewsNumber</div>
+                        </div>
+                        <div class="good-search-result-list-item-color">
+                            <div class="good-search-result-list-item-color-image" style="background-color: @Model.GoodSearchResult[i-1].GoodColor;"></div>
+                            <div class="good-search-result-list-item-color-text">@Model.GoodSearchResult[i-1].GoodColor</div>
+                        </div>
+                        <div class="good-search-result-list-item-sale"></div>
+                        <div class="good-search-result-list-item-price">@Model.GoodSearchResult[i-1].GoodPrice $</div>
+                        <div class="good-search-result-list-item-add-to-cart">
+                            @if (Session["GoodIdList"] != null)
+                            {
+                                if ((Session["GoodIdList"] as List<int>).Contains(Model.GoodSearchResult[i-1].Id))
+                                {
+                            <div class="good-search-result-list-item-add-to-cart-button good-in-cart" good-id="@Model.GoodSearchResult[i-1].Id">Remove from cart</div>
+                                }
+                                else
+                                {
+                                    <div class="good-search-result-list-item-add-to-cart-button good-not-in-cart" good-id="@Model.GoodSearchResult[i-1].Id">Add to cart</div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="good-search-result-list-item-add-to-cart-button good-not-in-cart" good-id="@Model.GoodSearchResult[i-1].Id">Add to cart</div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
