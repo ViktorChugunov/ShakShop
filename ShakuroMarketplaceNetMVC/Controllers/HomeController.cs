@@ -12,22 +12,127 @@ namespace ShakuroMarketplaceNetMVC.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.CategoriesData = GetCategoriesData();
-            return View();
-        }
+            using (GoodContext db = new GoodContext())
+            {
+                ViewBag.CategoriesData = GetCategoriesData();
+                MainPageViewModel viewModel = new MainPageViewModel { };
+                List<GoodViewModel> viewedGoodsList = new List<GoodViewModel>() { };
 
-        public ActionResult About()
-        {
-            ViewBag.CategoriesData = GetCategoriesData();
-            ViewBag.Message = "Your application description page.";            
-            return View();
-        }
+                if ((List<int>)Session["recentlyViewedGoods"] != null)
+                {                    
+                    foreach (int currentGoodId in (List<int>)Session["recentlyViewedGoods"])
+                    {
+                        int goodSubcategoryId = db.Goods.Where(x => x.Id == currentGoodId).First().GoodSubcategoryId;
+                        int goodCategoryId = db.GoodSubcategories.Where(x => x.Id == goodSubcategoryId).First().GoodCategoryId;
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
+                        string goodSubcategoryUrl = db.GoodSubcategories.Where(x => x.Id == goodSubcategoryId).First().SubcategoryUrl;
+                        string goodCategoryUrl = db.GoodCategories.Where(x => x.Id == goodCategoryId).First().CategoryUrl;
+                        GoodViewModel goodInfo = db.Goods.Where(x => x.Id == currentGoodId)
+                            .Select(p => new GoodViewModel
+                            {
+                                Id = p.Id,
+                                GoodName = p.GoodName,
+                                GoodBrand = p.GoodBrand,
+                                GoodCategoryUrl = goodCategoryUrl,
+                                GoodSubcategoryUrl = goodSubcategoryUrl,
+                                GoodUrl = p.GoodUrl,
+                                GoodColor = p.GoodColor,
+                                GoodImagesUrls = p.GoodImagesUrls,
+                                GoodPrice = p.GoodPrice,
+                                SalesGood = p.SalesGood
+                            }).First();
+                        viewedGoodsList.Add(goodInfo);
+                    }                    
+                }
 
-            return View();
+                List<GoodViewModel> interestingGoodsList = new List<GoodViewModel>() { };
+                if (HttpContext.Request.RawUrl == "/sales-goods")
+                {
+                    interestingGoodsList = db.Goods.Where(x => x.SalesGood == true)
+                        .Select(p => new GoodViewModel
+                        {
+                            Id = p.Id,
+                            GoodName = p.GoodName,
+                            GoodBrand = p.GoodBrand,
+                            GoodCategoryUrl = db.GoodCategories.Where(x => x.Id == db.Goods.Where(y => y.Id == p.Id).FirstOrDefault().GoodSubcategory.GoodCategoryId).FirstOrDefault().CategoryUrl,
+                            GoodSubcategoryUrl = db.Goods.Where(x => x.Id == p.Id).FirstOrDefault().GoodSubcategory.SubcategoryUrl,
+                            GoodUrl = p.GoodUrl,
+                            GoodColor = p.GoodColor,
+                            GoodImagesUrls = p.GoodImagesUrls,
+                            GoodPrice = p.GoodPrice,
+                            NewGood = p.NewGood,
+                            SalesGood = p.SalesGood,
+                            RecommendedGood = p.RecommendedGood,
+                            ReviewsNumber = p.Reviews.Count(),
+                            GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0
+                        }).ToList().GetRange(0, 8);
+                }
+                else if (HttpContext.Request.RawUrl == "/recommended-goods")
+                {
+                    interestingGoodsList = db.Goods.Where(x => x.RecommendedGood == true)
+                        .Select(p => new GoodViewModel
+                        {
+                            Id = p.Id,
+                            GoodName = p.GoodName,
+                            GoodBrand = p.GoodBrand,
+                            GoodCategoryUrl = db.GoodCategories.Where(x => x.Id == db.Goods.Where(y => y.Id == p.Id).FirstOrDefault().GoodSubcategory.GoodCategoryId).FirstOrDefault().CategoryUrl,
+                            GoodSubcategoryUrl = db.Goods.Where(x => x.Id == p.Id).FirstOrDefault().GoodSubcategory.SubcategoryUrl,
+                            GoodUrl = p.GoodUrl,
+                            GoodColor = p.GoodColor,
+                            GoodImagesUrls = p.GoodImagesUrls,
+                            GoodPrice = p.GoodPrice,
+                            NewGood = p.NewGood,
+                            SalesGood = p.SalesGood,
+                            RecommendedGood = p.RecommendedGood,
+                            ReviewsNumber = p.Reviews.Count(),
+                            GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0
+                        }).ToList().GetRange(0, 8);
+                }
+                else if (HttpContext.Request.RawUrl == "/new-goods")
+                {
+                    interestingGoodsList = db.Goods.Where(x => x.NewGood == true )
+                        .Select(p => new GoodViewModel
+                        {
+                            Id = p.Id,
+                            GoodName = p.GoodName,
+                            GoodBrand = p.GoodBrand,
+                            GoodCategoryUrl = db.GoodCategories.Where(x => x.Id == db.Goods.Where(y => y.Id == p.Id).FirstOrDefault().GoodSubcategory.GoodCategoryId).FirstOrDefault().CategoryUrl,
+                            GoodSubcategoryUrl = db.Goods.Where(x => x.Id == p.Id).FirstOrDefault().GoodSubcategory.SubcategoryUrl,
+                            GoodUrl = p.GoodUrl,
+                            GoodColor = p.GoodColor,
+                            GoodImagesUrls = p.GoodImagesUrls,
+                            GoodPrice = p.GoodPrice,
+                            NewGood = p.NewGood,
+                            SalesGood = p.SalesGood,
+                            RecommendedGood = p.RecommendedGood,
+                            ReviewsNumber = p.Reviews.Count(),
+                            GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0
+                        }).ToList().GetRange(0, 8);
+                }
+                else
+                {
+                    interestingGoodsList = db.Goods.Where(x => x.SalesGood == true || x.NewGood == true || x.RecommendedGood == true)
+                        .Select(p => new GoodViewModel
+                        {
+                            Id = p.Id,
+                            GoodName = p.GoodName,
+                            GoodBrand = p.GoodBrand,
+                            GoodCategoryUrl = db.GoodCategories.Where(x => x.Id == db.Goods.Where(y => y.Id == p.Id).FirstOrDefault().GoodSubcategory.GoodCategoryId).FirstOrDefault().CategoryUrl,
+                            GoodSubcategoryUrl = db.Goods.Where(x => x.Id == p.Id).FirstOrDefault().GoodSubcategory.SubcategoryUrl,
+                            GoodUrl = p.GoodUrl,
+                            GoodColor = p.GoodColor,
+                            GoodImagesUrls = p.GoodImagesUrls,
+                            GoodPrice = p.GoodPrice,
+                            NewGood = p.NewGood,
+                            SalesGood = p.SalesGood,
+                            RecommendedGood = p.RecommendedGood,
+                            ReviewsNumber = p.Reviews.Count(),
+                            GoodRating = p.Reviews.Any() ? p.Reviews.Average(x => x.Mark) : 0
+                        }).ToList().GetRange(0, 8);
+                }
+                viewModel = new MainPageViewModel { InterestingGoodsList = interestingGoodsList, ViewedGoodsList = viewedGoodsList };
+                return View(viewModel);
+            }
         }
 
         public PartialViewResult Register()
@@ -48,7 +153,12 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                 ViewBag.CategoriesData = GetCategoriesData();
                 ViewBag.PageHeader = "Good Search Results";
 
-                var GoodSearchResultList = db.Goods.Where(x => x.GoodName.Contains(searchInputData) || x.GoodBrand.Contains(searchInputData))
+                var GoodSearchResultList = db.Goods.Where(x => (x.GoodBrand + " " + x.GoodName + " " + x.GoodColor).Contains(searchInputData)
+                                                            || (x.GoodBrand + " " + x.GoodColor + " " + x.GoodName).Contains(searchInputData)
+                                                            || (x.GoodName + " " + x.GoodBrand + " " + x.GoodColor).Contains(searchInputData)
+                                                            || (x.GoodName + " " + x.GoodColor + " " + x.GoodBrand).Contains(searchInputData)
+                                                            || (x.GoodColor + " " + x.GoodName + " " + x.GoodBrand).Contains(searchInputData)
+                                                            || (x.GoodColor + " " + x.GoodBrand + " " + x.GoodName).Contains(searchInputData))
                     .Select(p => new GoodViewModel
                     {
                         Id = p.Id,
@@ -77,7 +187,12 @@ namespace ShakuroMarketplaceNetMVC.Controllers
         {
             using (GoodContext db = new GoodContext())
             {   
-                var goodList = db.Goods.Where(x => x.GoodName.Contains(searchInputData) || x.GoodBrand.Contains(searchInputData))
+                var goodList = db.Goods.Where(x => (x.GoodBrand + " " + x.GoodName + " " + x.GoodColor).Contains(searchInputData)
+                                                || (x.GoodBrand + " " + x.GoodColor + " " + x.GoodName).Contains(searchInputData)
+                                                || (x.GoodName + " " + x.GoodBrand + " " + x.GoodColor).Contains(searchInputData)
+                                                || (x.GoodName + " " + x.GoodColor + " " + x.GoodBrand).Contains(searchInputData)
+                                                || (x.GoodColor + " " + x.GoodName + " " + x.GoodBrand).Contains(searchInputData)
+                                                || (x.GoodColor + " " + x.GoodBrand + " " + x.GoodName).Contains(searchInputData))
                     .Select(p => new {
                         GoodName = p.GoodName,
                         GoodBrand = p.GoodBrand,

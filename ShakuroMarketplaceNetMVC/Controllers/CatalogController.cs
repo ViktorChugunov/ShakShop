@@ -102,7 +102,26 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.SubcategoryUrl = subcategoryUrl;
                     ViewBag.GoodUrl = goodUrl;
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
-                    
+
+                    //Add current Good to Session
+                    if (Session["recentlyViewedGoods"] == null)
+                    {
+                        Session["recentlyViewedGoods"] = new List<int>() { };
+                    }
+                    if (!(Session["recentlyViewedGoods"] as List<int>).Contains(currentGoodId))
+                    {
+                        int listLength = (Session["recentlyViewedGoods"] as List<int>).Count();
+                        if (listLength >= 4)
+                        {
+                            (Session["recentlyViewedGoods"] as List<int>).Insert(0, currentGoodId);
+                            Session["recentlyViewedGoods"] = (Session["recentlyViewedGoods"] as List<int>).GetRange(0, 4);
+                        }
+                        else
+                        {
+                            (Session["recentlyViewedGoods"] as List<int>).Insert(0, currentGoodId);
+                        }                        
+                    }
+
                     var viewModel = db.Goods.Where(x => x.Id == currentGoodId)
                         .Select(p => new GoodViewModel
                         {
@@ -320,7 +339,7 @@ namespace ShakuroMarketplaceNetMVC.Controllers
                     ViewBag.SubcategoryUrl = subcategoryUrl;
                     ViewBag.GoodUrl = goodUrl;
                     int currentGoodId = db.Goods.Where(x => x.GoodUrl == goodUrl).First().Id;
-                    ViewBag.goodOverview = db.Goods.Where(x => x.Id == currentGoodId).First().Overviews.Any() == true ? db.Goods.Where(x => x.Id == currentGoodId).First().Overviews.First().Text : "<p class='overview-header'>There is no overview</p>";
+                    ViewBag.goodOverview = db.Goods.Where(x => x.Id == currentGoodId).First().Overviews.Any() == true ? db.Goods.Where(x => x.Id == currentGoodId).First().Overviews.First().Text : "<p class='no-overview-message'>There is no overview</p>";
                     List<string> breadcrumbList = new List<string>() { "Overview", fullGoodName, subcategoryName, categoryName, "Catalog", "Main" };
                     ViewBag.breadCrumbList = breadcrumbList;
                     return View();

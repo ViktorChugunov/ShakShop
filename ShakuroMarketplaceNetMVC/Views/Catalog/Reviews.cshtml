@@ -26,61 +26,72 @@
 
 <div class="reviews-container">
     <div class="reviews">
-        <div class="reviews-list" showed-reviews="@ViewBag.InitiallyShowedReviewsNumber" good-id="@ViewBag.GoodId">
-            @foreach (var review in Model.goodReviewsList)
-            {
+        @if (Model.goodReviewsList.Count() == 0)
+        {
+            <div class="reviews-list">
                 <div class="reviews-list-item">
-                    <div class="reviews-list-item-top">
-                        <div class="reviews-list-item-top-mark">
-                            <div class="reviews-list-item-top-mark-icon">★ </div>
-                            <div class="reviews-list-item-top-mark-number">@review.Mark</div>
-                        </div>
-                        <div class="reviews-list-item-top-experience-of-use">
-                            <div class="reviews-list-item-top-experience-of-use-icon"></div>
-                            <div class="reviews-list-item-top-experience-of-use-text">Experience of use:</div>
-                            <div class="reviews-list-item-top-experience-of-use-number">@review.ExperienceOfUse</div>
-                        </div>
-                        <div class="reviews-list-item-top-author">
-                            <div class="reviews-list-item-top-author-avatar"></div>
-                            <div class="reviews-list-item-top-author-name">@review.Reviewer</div>
-                        </div>
-                    </div>
-                    <div class="reviews-list-item-body">
-                        <div class="reviews-list-item-body-advantages">
-                            <p class="reviews-list-item-body-advantages-header">Advantages</p>
-                            <p class="reviews-list-item-body-advantages-text">
-                                @review.Advantages
-                            </p>
-                        </div>
-                        <div class="reviews-list-item-body-disadvantages">
-                            <p class="reviews-list-item-body-disadvantages-header">Disadvantages</p>
-                            <p class="reviews-list-item-body-disadvantages-text">
-                                @review.Advantages
-                            </p>
-                        </div>
-                        <div class="reviews-list-item-body-comment">
-                            <p class="reviews-list-item-body-comment-header">Comment</p>
-                            <p class="reviews-list-item-body-comment-text">
-                                @review.Comment
-                            </p>
-                        </div>
-                    </div>
-                    <div class="reviews-list-item-bottom">
-                        <div class="reviews-list-item-bottom-data">
-                            <div class="reviews-list-item-bottom-data-icon"></div>
-                            <div class="reviews-list-item-bottom-data-text">@review.Date.ToShortDateString()</div>
-                        </div>
-                        <div class="reviews-list-item-bottom-approval">
-                            <div class="reviews-list-item-bottom-approval-like-icon"></div>
-                            <div class="reviews-list-item-bottom-approval-like-number">@review.LikesNumber</div>
-                            <div class="reviews-list-item-bottom-approval-dislike-icon"></div>
-                            <div class="reviews-list-item-bottom-approval-dislike-number">@review.DislikesNumber</div>
-                        </div>
-                    </div>
+                    <p class="no-reviews-message">There are not any review!</p>
                 </div>
-            }
-            <div class="show-more-reviews">Show more</div>
-        </div>
+            </div>
+        }
+        else
+        {
+            <div class="reviews-list" showed-reviews="@ViewBag.InitiallyShowedReviewsNumber" good-id="@ViewBag.GoodId">
+                @foreach (var review in Model.goodReviewsList)
+                {
+                    <div class="reviews-list-item">
+                        <div class="reviews-list-item-top">
+                            <div class="reviews-list-item-top-mark">
+                                <div class="reviews-list-item-top-mark-icon">★ </div>
+                                <div class="reviews-list-item-top-mark-number">@review.Mark</div>
+                            </div>
+                            <div class="reviews-list-item-top-experience-of-use">
+                                <div class="reviews-list-item-top-experience-of-use-icon"></div>
+                                <div class="reviews-list-item-top-experience-of-use-text">Experience of use:</div>
+                                <div class="reviews-list-item-top-experience-of-use-number">@review.ExperienceOfUse</div>
+                            </div>
+                            <div class="reviews-list-item-top-author">
+                                <div class="reviews-list-item-top-author-avatar"></div>
+                                <div class="reviews-list-item-top-author-name">@review.Reviewer</div>
+                            </div>
+                        </div>
+                        <div class="reviews-list-item-body">
+                            <div class="reviews-list-item-body-advantages">
+                                <p class="reviews-list-item-body-advantages-header">Advantages</p>
+                                <p class="reviews-list-item-body-advantages-text">
+                                    @review.Advantages
+                                </p>
+                            </div>
+                            <div class="reviews-list-item-body-disadvantages">
+                                <p class="reviews-list-item-body-disadvantages-header">Disadvantages</p>
+                                <p class="reviews-list-item-body-disadvantages-text">
+                                    @review.Advantages
+                                </p>
+                            </div>
+                            <div class="reviews-list-item-body-comment">
+                                <p class="reviews-list-item-body-comment-header">Comment</p>
+                                <p class="reviews-list-item-body-comment-text">
+                                    @review.Comment
+                                </p>
+                            </div>
+                        </div>
+                        <div class="reviews-list-item-bottom">
+                            <div class="reviews-list-item-bottom-data">
+                                <div class="reviews-list-item-bottom-data-icon"></div>
+                                <div class="reviews-list-item-bottom-data-text">@review.Date.ToShortDateString()</div>
+                            </div>
+                            <div class="reviews-list-item-bottom-approval">
+                                <div class="reviews-list-item-bottom-approval-like-icon"></div>
+                                <div class="reviews-list-item-bottom-approval-like-number">@review.LikesNumber</div>
+                                <div class="reviews-list-item-bottom-approval-dislike-icon"></div>
+                                <div class="reviews-list-item-bottom-approval-dislike-number">@review.DislikesNumber</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="show-more-reviews">Show more</div>
+            </div>
+        }
         <div class="reviews-info">
             <div class="reviews-info-item-button">
                 <div class="good-rating">

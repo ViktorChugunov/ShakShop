@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ShakuroMarketplaceNetMVC.Models.MainPageViewModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -12,102 +14,100 @@
                     <span class="product-bar-title-text">Interesting offers</span>
                 </div>
                 <div class="products-type">
-                    <div class="popular-button">Popular</div>
-                    <div class="trending-button">Trending</div>
-                    <div class="new-button">New</div>
+                    @if (Request.Path == "/recommended-goods")
+                    {
+                        <a href="/sales-goods" class="sales-button">Sales</a>
+                        <a href="/recommended-goods" class="recommended-button active-sorting-button">Recommended</a>
+                        <a href="/new-goods" class="new-button">New</a>
+                    }
+                    else if (Request.Path == "/new-goods")
+                    {
+                        <a href="/sales-goods" class="sales-button">Sales</a>
+                        <a href="/recommended-goods" class="recommended-button">Recommended</a>
+                        <a href="/new-goods" class="new-button active-sorting-button">New</a>
+                    }
+                    else if (Request.Path == "/sales-goods")
+                    {
+                        <a href="/sales-goods" class="sales-button active-sorting-button">Sales</a>
+                        <a href="/recommended-goods" class="recommended-button">Recommended</a>
+                        <a href="/new-goods" class="new-button">New</a>
+                    }
+                    else
+                    {
+                        <a href="/sales-goods" class="sales-button">Sales</a>
+                        <a href="/recommended-goods" class="recommended-button">Recommended</a>
+                        <a href="/new-goods" class="new-button">New</a>
+                    }
+
+
                 </div>
                 <div class="products-sorting">
                     <div class="select-category-box">
                         <select class="select-category" name="categories[]">
-                            <option disabled selected>Categories</option>
-                            <option value="Audio">Audio</option>
-                            <option value="TV">TV</option>
-                            <option value="Smartphone">Smartphone</option>
-                            <option value="PC">PC</option>
+                            <option selected>All Categories</option>
+                            <option value="Laptops">Laptops</option>
+                            <option value="Tablets & eBooks">Tablets & eBooks</option>
+                            <option value="Desktop Computers">Desktop Computers</option>
+                            <option value="Cell Phones">Cell Phones</option>
+                            <option value="TV & Media">TV & Media</option>
+                            <option value="Photo Cameras">Photo Cameras</option>
+                            <option value="Consoles & Games">Consoles & Games</option>
                         </select>
                     </div>
-                    <div class="select-date-box">
-                        <div class="date-button">Date <span class="date-button-arrow-icon"></span></div>
-                    </div>
+                    <!--
+                        <div class="select-date-box">
+                            <div class="date-button">Date <span class="date-button-arrow-icon"></span></div>
+                        </div>
+                    -->
                 </div>
             </div>
             <div class="products-preview-list">
-                <!-- 1 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Recommend</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Asus_ZenFone.png">
+                @foreach (var item in Model.InterestingGoodsList)
+                {
+                    <div class="category-goods-list-item">
+                        <div class="category-goods-list-item-special-buttons">
+                            <div class="category-goods-list-item-special-buttons-favorite"></div>
+                            <div class="category-goods-list-item-special-buttons-compare"></div>
+                        </div>
+                        <a href="/catalog/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl" class="category-list-item-link">
+                            <div class="category-goods-list-item-photo">
+                                @if (item.NewGood)
+                                {
+                                    <div class="new-good"></div>
+                                }
+                                else if (item.SalesGood)
+                                {
+                                    <div class="sales-good"></div>
+                                }
+                                else if (item.RecommendedGood)
+                                {
+                                    <div class="recommended-good"></div>
+                                }
+                                <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" height="120">
+                            </div>
+                            <div class="category-goods-list-item-name"><p>@item.GoodBrand @item.GoodName, @item.GoodColor</p></div>
+                            <div class="category-goods-list-item-rating-and-reviews">
+                                <div class="stars-container">
+                                    <div class="stars-container-green-block" style='width: @Convert.ToInt32(20*item.GoodRating)%;'></div>
+                                    <div class="stars-container-gray-block" style="width: calc(100% - @Convert.ToInt32(20*item.GoodRating)%); left: @Convert.ToInt32(20*item.GoodRating)%;"></div>
+                                </div>
+                                <div class="category-goods-list-item-review">
+                                    <div class="category-goods-list-item-reviews-number">@item.ReviewsNumber</div>
+                                    <!-- <div class="category-goods-list-item-reviews-icon"></div> -->
+                                </div>
+                            </div>
+                            <div class="category-goods-list-item-price">
+                                $ @item.GoodPrice
+                            </div>
+                        </a>
                     </div>
-                    <div class="product-name">Asus ZenFone Go ZB452KG</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 2 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Bestseller</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Xiaomi_Mi.png">
-                    </div>
-                    <div class="product-name">Xiaomi Mi Band 2</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 3 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Goods of the week</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/LG_43UH610V.png">
-                    </div>
-                    <div class="product-name">LG 43UH610V</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 4 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Recommend</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Apple_mac_27.png">
-                    </div>
-                    <div class="product-name">Apple iMac 27 Retina 5K</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 5 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">New product</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Asus_Condi.png">
-                    </div>
-                    <div class="product-name">Asus Condi ZB452KG</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 6 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Recommend</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Electrolux_EZB.png">
-                    </div>
-                    <div class="product-name">Electrolux EZB 52410 AK</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 7 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Bestseller</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Beats_studio.png">
-                    </div>
-                    <div class="product-name">Beats studio wireless</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
-                <!-- 8 -->
-                <div class="products-preview-list-item">
-                    <div class="product-group">Recommend</div>
-                    <div class="product-photo">
-                        <img src="/Content/Images/Goods/Nikon_D3300.png">
-                    </div>
-                    <div class="product-name">Nikon D3300 Kit</div>
-                    <div class="product-price">$ 384.4</div>
-                </div>
+                }
             </div>
+            <!--
             <div class="show-more-products-box">
                 <div class="show-more-products-button" onClick="showMoreProducts()">Show More</div>
             </div>
+            -->
         </div>
     </div>
     <div class="subscribe-box">
@@ -118,74 +118,39 @@
             </div>
             <div class="subscribe-box-field">
                 <div class="subscribe-box-form-closed-envelope-icon"></div>
-                <input type="email" placeholder="Your e-mail" class="subscribe-box-email-input">
-                <input type="submit" value="Subscribe" class="subscribe-box-submit">
+                <form class="subscribe-box-form" action="#">
+                    <input type="email" placeholder="Your e-mail" required class="subscribe-box-email-input">
+                    <input type="submit" value="Subscribe" class="subscribe-box-submit">
+                </form>
             </div>
         </div>
     </div>
-    <div class="viewed-products-box">
-        <div class="viewed-products-box-title">
-            <div class="viewed-products-box-eye-icon"></div>
-            <div class="viewed-products-box-title">Recently viewed products</div>
+    @if (Session["recentlyViewedGoods"] != null)
+    {
+        <div class="viewed-products-box">
+            <div class="viewed-products-box-title">
+                <div class="viewed-products-box-eye-icon"></div>
+                <div class="viewed-products-box-title">Recently viewed products</div>
+            </div>
+            <div class="viewed-products-list">
+                @foreach (var item in Model.ViewedGoodsList)
+                {
+                    <div class="viewed-products-list-item">
+                        <div class="viewed-products-image">
+                            <img src="/Content/Images/Goods/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl/@item.GoodImagesUrls.Split("::".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)[0]" />
+                        </div>
+                        <div class="viewed-products-info">
+                            <div class="viewed-product-name">
+                                <p><a href="/catalog/@item.GoodCategoryUrl/@item.GoodSubcategoryUrl/@item.GoodUrl" class="viewed-product-item-link">@item.GoodBrand @item.GoodName</a></p>
+                                <p>@item.GoodColor</p>
+                            </div>
+                            <div class="viewed-product-price">
+                                <p>$ @item.GoodPrice</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-        <div class="viewed-products-list">
-            <!-- 1 -->
-            <div class="viewed-products-list-item">
-                <div class="viewed-products-image">
-                    <img src="/Content/Images/Goods/viewedProduct1.png" />
-                </div>
-                <div class="viewed-products-info">
-                    <div class="viewed-product-name">
-                        <p><a href="#" class="viewed-product-item-link">Apple iPhone 7</a></p>
-                    </div>
-                    <div class="viewed-product-price">
-                        <p>$ 670</p>
-                    </div>
-                </div>
-            </div>
-            <!-- 2 -->
-            <div class="viewed-products-list-item">
-                <div class="viewed-products-image">
-                    <img src="/Content/Images/Goods/viewedProduct2.png" />
-                </div>
-                <div class="viewed-products-info">
-                    <div class="viewed-product-name">
-                        <p><a href="#" class="viewed-product-item-link">LG 43UH610V</a></p>
-                    </div>
-                    <div class="viewed-product-price">
-                        <p>$ 670</p>
-                    </div>
-                </div>
-            </div>
-            <!-- 3 -->
-            <div class="viewed-products-list-item">
-                <div class="viewed-products-image">
-                    <img src="/Content/Images/Goods/viewedProduct3.png" />
-                </div>
-                <div class="viewed-products-info">
-                    <div class="viewed-product-name">
-                        <p><a href="#" class="viewed-product-item-link">LG G6 H870DS</a></p>
-                    </div>
-                    <div class="viewed-product-price">
-                        <p>$ 670</p>
-                    </div>
-                </div>
-            </div>
-            <!-- 4 -->
-            <div class="viewed-products-list-item">
-                <div class="viewed-products-image">
-                    <img src="/Content/Images/Goods/viewedProduct4.png" />
-                </div>
-                <div class="viewed-products-info">
-                    <div class="viewed-product-name">
-                        <p><a href="#" class="viewed-product-item-link">Asus ZenFone</a></p>
-                    </div>
-                    <div class="viewed-product-price">
-                        <p>$ 670</p>
-                    </div>
-                </div>
-            </div>
-            <!--  -->
-        </div>
-    </div>
+    }
 </div>

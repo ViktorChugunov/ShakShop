@@ -14,6 +14,10 @@ namespace ShakuroMarketplaceNetMVC
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(name: "IndexRoute", url: "", defaults: new { controller = "Home", action = "Index" });
+            routes.MapRoute(name: "newGoodsRoute", url: "new-goods", defaults: new { controller = "Home", action = "Index" });
+            routes.MapRoute(name: "salesGoodsRoute", url: "sales-goods", defaults: new { controller = "Home", action = "Index" });
+            routes.MapRoute(name: "recommendedGoodsRoute", url: "recommended-goods", defaults: new { controller = "Home", action = "Index" });
+
             routes.MapRoute(name: "FastGoodSearchRoute", url: "FastGoodSearch/{searchInputData}", defaults: new { controller = "Home", action = "FastGoodSearch" });
             routes.MapRoute(name: "GoodSearchRoute", url: "good-search-result/{searchInputData}", defaults: new { controller = "Home", action = "GoodSearch", searchInputData = UrlParameter.Optional });
 

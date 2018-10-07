@@ -2,7 +2,7 @@
     <div class="header-top">
         <div class="header-search-box">
             <form class="search-form" method="get" action="/good-search-result/">
-                <input type="text" name="searchInputData" placeholder="Search goods..." required class="good-search-input" />
+                <input type="text" name="searchInputData" autocomplete="off" placeholder="Search goods..." required class="good-search-input" />
                 <input type="submit" value="">
                 <div class="fast-good-search-result"></div>
             </form>            
@@ -43,7 +43,7 @@
         </ul>
     </div>
 </div>
-@if (Request.Path != "/")
+@if (Request.Path != "/" && Request.Path != "/recommended-goods" && Request.Path != "/new-goods" && Request.Path != "/sales-goods")
 {
     <div class="header-bottom">
         <div class="header-bottom-inside">

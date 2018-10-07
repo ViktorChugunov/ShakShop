@@ -285,6 +285,7 @@
     <Compile Include="Models\GoodSearchResultViewModel.cs" />
     <Compile Include="Models\GoodViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\MainPageViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderInformation.cs" />
@@ -842,7 +843,7 @@
     <Content Include="Content\Styles\Less\_good_page.less" />
     <Content Include="Content\Styles\Less\_header.less" />
     <Content Include="Content\Styles\Less\_mixins.less" />
-    <Content Include="Content\Styles\Less\_products_preview.less" />
+    <Content Include="Content\Styles\Less\_interesting_offers.less" />
     <Content Include="Content\Styles\Less\_reset.less" />
     <Content Include="Content\Styles\Less\_slider.less" />
     <Content Include="Content\Styles\Less\_subscribe_form.less" />
