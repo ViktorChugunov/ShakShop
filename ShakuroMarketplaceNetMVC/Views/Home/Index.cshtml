@@ -1,7 +1,7 @@
 ﻿@model ShakuroMarketplaceNetMVC.Models.MainPageViewModel
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "Shakuro Marketplace";
 }
 
 <div class="content">
@@ -17,18 +17,18 @@
                     @if (Request.Path == "/recommended-goods")
                     {
                         <a href="/sales-goods" class="sales-button">Sales</a>
-                        <a href="/recommended-goods" class="recommended-button active-sorting-button">Recommended</a>
+                        <a href="/" class="recommended-button active-sorting-button">Recommended</a>
                         <a href="/new-goods" class="new-button">New</a>
                     }
                     else if (Request.Path == "/new-goods")
                     {
                         <a href="/sales-goods" class="sales-button">Sales</a>
                         <a href="/recommended-goods" class="recommended-button">Recommended</a>
-                        <a href="/new-goods" class="new-button active-sorting-button">New</a>
+                        <a href="/" class="new-button active-sorting-button">New</a>
                     }
                     else if (Request.Path == "/sales-goods")
                     {
-                        <a href="/sales-goods" class="sales-button active-sorting-button">Sales</a>
+                        <a href="/" class="sales-button active-sorting-button">Sales</a>
                         <a href="/recommended-goods" class="recommended-button">Recommended</a>
                         <a href="/new-goods" class="new-button">New</a>
                     }
@@ -38,8 +38,6 @@
                         <a href="/recommended-goods" class="recommended-button">Recommended</a>
                         <a href="/new-goods" class="new-button">New</a>
                     }
-
-
                 </div>
                 <div class="products-sorting">
                     <div class="select-category-box">

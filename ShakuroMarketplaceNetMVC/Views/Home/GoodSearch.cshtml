@@ -1,7 +1,7 @@
 ﻿@model ShakuroMarketplaceNetMVC.Models.GoodSearchResultsViewModel
 
 @{
-    ViewBag.Title = "GoodSearch";
+    ViewBag.Title = ViewBag.PageHeader;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,7 +9,7 @@
     @if (Model.GoodSearchResult.Count() == 0)
     {
         <div class="good-search-result-empty-list">
-            Your cart is empty!
+            We didn't find anything!
         </div>
     }
     else

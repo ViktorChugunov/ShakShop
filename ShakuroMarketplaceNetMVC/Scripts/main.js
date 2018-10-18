@@ -196,7 +196,6 @@
                 $(".discussions-list").attr("showed-discussions", showedDiscussionsNumber);
             }
             else {
-                alert();
                 showedDiscussionsNumber = Number(showedDiscussionsNumber) + Number(addedDiscussionsNumber);
                 $(".discussions-list").attr("showed-discussions", showedDiscussionsNumber);
             }
@@ -575,4 +574,5 @@ function countGoodsTotalPrice() {
         goodsTotalPrice += Number(goodTotalPrice); 
     });
     $('.goods-in-cart-list-footer-total-price-number').text("$ " + goodsTotalPrice);
+    $('.goods-total-price-input').val(goodsTotalPrice);
 }

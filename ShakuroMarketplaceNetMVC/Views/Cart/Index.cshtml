@@ -1,7 +1,7 @@
 ﻿@model ShakuroMarketplaceNetMVC.Models.CartGoodsListViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -255,7 +255,7 @@
                             </div>
                         </div>
                         <input type="hidden" name="deliveryMethods" value="Free delivery" class="delivery-methods-input">
-                        <input type="hidden" name="deliveryPrice" value="0" class="delivery-price-input">
+                        <input type="hidden" name="deliveryPrice" value="0" class="delivery-price-input" style="display: none;">
                     </div>
                 </div>
                 <!-- Buttons -->
